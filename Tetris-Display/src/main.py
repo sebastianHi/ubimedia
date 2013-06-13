@@ -1,8 +1,11 @@
-'''
-Created on 02.06.2013
+import Gui,Controller
 
-@author: sebastian
-'''
+def main():
+    gui = Gui()
+    controller = Controller(gui)
+    controller.start()
+
 
 if __name__ == '__main__':
-    print "let's do this!"
+    main()
+    
