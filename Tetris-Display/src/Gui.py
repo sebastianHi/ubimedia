@@ -3,7 +3,7 @@ import StoneGenerator
 class Gui(object):
    
 
-    def __init__(self, stonegenerator):
+    def __init__(self, stonegenerator, ipStorage):
         pass
        
     def newGame(self):
