@@ -1,3 +1,4 @@
+import httplib
 '''
 Created on 15.06.2013
 
@@ -7,6 +8,7 @@ Created on 15.06.2013
 class IPStorage():
     def __init__(self):
         self._ipList=dict({})
+        self._gui = None;
         
     def addNewClient(self,ip,connection): ##adds a new Client to the Dictionary
         self._ipList[ip]=connection 
@@ -23,4 +25,9 @@ class IPStorage():
     def updateAll(self,msg): #sends Message to all connected Clients
         for key in self._ipList:
             self._ipList[key].sendMessage(msg)
-        
+       
+    def initGui(self,gui):
+        self._gui = gui;
+            
+    def eventHandler(self,msg):
+        pass
