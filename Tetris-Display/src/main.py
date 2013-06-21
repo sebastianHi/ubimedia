@@ -1,10 +1,11 @@
-from Gui import *
+from Gui import Gui
 from IPStorage import *
-from StoneGenerator import *
 from twisted.internet import reactor
 from twisted.python import log
 from autobahn.websocket import WebSocketServerFactory,WebSocketServerProtocol, listenWS
-import sys,thread
+import sys,thread  
+import socket      
+
 
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####
 class EchoServerProtocol(WebSocketServerProtocol):
@@ -24,25 +25,20 @@ class EchoServerProtocol(WebSocketServerProtocol):
         self.sendMessage("Received: "+msg, binary)##send back message to initiating client
         
 
-
 class Main():
     
     def __init__(self):
-        gui = Gui(ipStorage);
+        gui = Gui(ipStorage)
         ipStorage.initGui(gui)
         thread.start_new_thread(self.initializeWebSocket, ()) ##start the WebSocket in new Thread
         gui.player.play()
         
-        
-
-        
     def initializeWebSocket(self):##Starts the WebSocket
         log.startLogging(sys.stdout)##Create a logfile (not necessary)
-        self.factory = WebSocketServerFactory("ws://localhost:9000", debug = False)
+        self.factory = WebSocketServerFactory("ws://localhost:55555", debug = False)
         self.factory.protocol = EchoServerProtocol ##assign our Protocol to send/receive Messages
         listenWS(self.factory)
-        reactor.run(installSignalHandlers=0)##"installSignalHandlers=0" Necessary for Multithreading @UndefinedVariable<-------------------------------------War davor ein Fehler!!!
-
+        reactor.run(installSignalHandlers=0)##"installSignalHandlers=0" Necessary for Multithreading @UndefinedVariable
 if __name__ == '__main__':
     ipStorage = IPStorage()
     Main()

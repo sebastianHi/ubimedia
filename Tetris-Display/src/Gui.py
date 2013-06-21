@@ -1,11 +1,11 @@
-from StoneGenerator import *
-from libavg import AVGApp, avg
+from libavg import AVGApp
 from TextRectNode import *
-import time
+import socket
+
 
 class Gui(AVGApp):
     
-    def __init__(self, ipStorage):
+    def __init__(self, ipStorage):   
         self.keepCountingToStart = True
         self.modus = 0
         self.playerAmountRdy = 0
@@ -26,7 +26,8 @@ class Gui(AVGApp):
     
         self.startMainMenue()
         
-        
+#-----------------------------------------------Main Menu-------------------------------------------------------------------------------------------------------------------------------      
+    
     def startMainMenue(self):
         self.divNodeMainMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size)
         self.background = avg.RectNode(parent = self.divNodeMainMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeMainMenue.size )  
@@ -73,8 +74,12 @@ class Gui(AVGApp):
         self.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.button1vs1, self.onClickMain1v1)
         self.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.button2vs2, self.onClickMain2v2)
         self.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.button1vs1vs1, self.onClickMain1v1v1)
+        self.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button1vs1, self.onClickMain1v1)
+        self.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button2vs2, self.onClickMain2v2)
+        self.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button1vs1vs1, self.onClickMain1v1v1)
     
-        
+#-----------------------------------------------Lobby Menue--------------------------------------------------------------------------------------------------------------------------        
+  
     def startLobby(self, modus):
         self.modus = modus
         if(self.modus==2):
@@ -95,40 +100,49 @@ class Gui(AVGApp):
         else:
             raise SyntaxError("Falscher Modus in startlobby")
             
-        self.divNodelobbyMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size)
+        self.divNodelobbyMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
         self.background = avg.RectNode(parent = self.divNodelobbyMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodelobbyMenue.size )  
+        
         self.gameName = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,0),
                                    fillcolor ="0040FF",
                                    fillopacity=1,
                                    color = "0040FF",
-                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07))
-        self.gameName.addText("IP:   " + "TODO")
-        
-        self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
-                                   pos = (self.divNodelobbyMenue.size[0]/2,0),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "0040FF",
-                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07))
-        self.playStyle.addText("Playstyle:   " + self.playstyleModus)
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
+        self.gameName.addTextForLobbyLine("IP:",socket.gethostbyname(socket.gethostname()))
         
         self.port = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07),
                                    fillcolor ="0040FF",
                                    fillopacity=1,
                                    color = "0040FF",
-                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07))
-        self.port.addText("Port:   " + "TODO")
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
+        self.port.addTextForLobbyLine("Port:" , "55555")
         
-        self.numberPlayers = TextRectNode(parent = self.divNodelobbyMenue, 
-                                   pos = (self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07),
+        self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),
                                    fillcolor ="0040FF",
                                    fillopacity=1,
                                    color = "0040FF",
-                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07))
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
+        self.playStyle.addTextForLobbyLine("Playstyle:" , self.playstyleModus)
         
-        self.numberPlayers.addText("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+        self.numberPlayers = TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07),
+                                   fillcolor ="0040FF",
+                                   fillopacity=1,
+                                   color = "0040FF",
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
+        
+        self.numberPlayers.addTextForLobbyLine("Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
+        
+        self.backButton =  TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (self.divNodelobbyMenue.size[0]/2.4,0),
+                                   fillcolor ="0404B4",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(2*(self.divNodelobbyMenue.size[0]/2- self.divNodelobbyMenue.size[0]/2.4), self.divNodelobbyMenue.size[1]*0.14))
+        self.backButton.addTextForBackButton("Back")
         
         self.teamOne = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
@@ -148,7 +162,7 @@ class Gui(AVGApp):
         
         aktuelleHoehe = self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07 + self.divNodelobbyMenue.size[1]*0.15
         
-        if(self.modus != 3):
+        if(self.modus == 4):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
                                    fillcolor ="0040FF",
@@ -182,6 +196,23 @@ class Gui(AVGApp):
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.forthPlayer.addText(self.player4)
+        
+        elif(self.modus == 2):
+            self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (0,aktuelleHoehe),
+                                   fillcolor ="0040FF",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
+            self.firstPlayer.addText(self.player1)
+            
+            self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
+                                   fillcolor ="0040FF",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
+            self.secondPlayer.addText(self.player2)
             
         else:
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
@@ -211,51 +242,71 @@ class Gui(AVGApp):
             self.thirdPlayer.addText(self.player3)
             
         
-#--------------------------------------test- kann geloescht werden--------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------test- kann geloescht werden----------------------------------------------------------------------------------------------------------------------------
         self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.firstPlayer, self.test)
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        self.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.backButton, self.backToMenue)
+        self.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.backButton, self.backToMenue)
         self.endMainMenue()
         self.divNodelobbyMenue.active = True
-
+        
+        
+#-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
+    
     def gameCounter(self):
-        count = 10
-        print self.modus
+        self.count = 9
         if(self.modus == 2):
-            self.firstPlayer.active = False
-            self.secondPlayer.active = False
+            self.firstPlayer.setInactiv()
+            self.secondPlayer.setInactiv()
         elif(self.modus == 3):
-            print self.firstPlayer.active
-            self.firstPlayer.active = False
-            print self.firstPlayer.active
-            self.secondPlayer.active = False
-            self.thirdPlayer.active = False
+            self.firstPlayer.setInactiv()
+            self.secondPlayer.setInactiv()
+            self.thirdPlayer.setInactiv()
         elif(self.modus == 4):
-            self.firstPlayer.active = False
-            self.secondPlayer.active = False
-            self.thirdPlayer.active = False
-            self.forthPlayer.active = False
+            self.firstPlayer.setInactiv()
+            self.secondPlayer.setInactiv()
+            self.thirdPlayer.setInactiv()
+            self.forthPlayer.setInactiv()
         else:
             raise SyntaxError("Wrong Modus gameCounter")
-            
+         
         self.countNode = TextRectNode(parent = self.divNodelobbyMenue, 
-                                   pos = (self.divNodelobbyMenue.size[0]/4,self.divNodelobbyMenue.size[1]*0.35   +  self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07 + self.divNodelobbyMenue.size[1]*0.15),
-                                   fillcolor ="0040FF",
+                                   pos = (self.divNodelobbyMenue.size[0]/4,self.divNodelobbyMenue.size[1]*0.45),
+                                   fillcolor ="0404B4",
                                    fillopacity=1,
-                                   color = "0040FF",
+                                   color = "0404B4",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
+        self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
         self.countNode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.countNode, self.interruptCount)
-        while(count>=0 & self.keepCountingToStart ):
-            print count
-            self.gameName.addText("Gamestart: "+ str(count))
-            count-=1
-            time.sleep(1)
+        self.timer = self.player.setInterval(1000, self.countCount)
+        self.gameStartTimer = self.player.setInterval(10000, self.maybeStart)
+        
+        
+    def maybeStart(self):
+        self.player.clearInterval(self.gameStartTimer)
+        self.player.clearInterval(self.timer)
+        self.countNode.setInactiv()
         if(self.keepCountingToStart):
-            self.initGame()   
-    
-    def initGame(self):
-        print "Game Can Start now"
-        self.endLobby()
-    
+            self.initGame()
+             
+        elif(self.modus == 2):
+            self.divNodelobbyMenue.active = True
+            self.firstPlayer.setActiv()
+            self.secondPlayer.setActiv()
+        elif(self.modus == 3):
+            self.divNodelobbyMenue.active = True
+            self.firstPlayer.setActiv()
+            self.secondPlayer.setActiv()
+            self.thirdPlayer.setActiv()
+        elif(self.modus == 4):
+            self.divNodelobbyMenue.active = True
+            self.firstPlayer.setActiv()
+            self.secondPlayer.setActiv()
+            self.thirdPlayer.setActiv()
+            self.forthPlayer.setActiv()
+        else:
+            raise SyntaxError("Wrong Modus gameCounter")
+        
     def updatePlayerName(self):
         #self.player1-4 om startlobby text updaten der rectnodes
         pass
@@ -270,7 +321,10 @@ class Gui(AVGApp):
         self.connectedPlayers-=1
         self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
     
-    
+    def countCount(self):
+        self.count -=1
+        self.countNode.updateTextNode("Gamestart: "+ str(self.count))
+        
     def updateJoinedPlayerNumber(self):
         self.connectedPlayers+=1
         if(self.connectedPlayers>self.modus):
@@ -278,10 +332,22 @@ class Gui(AVGApp):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         
         self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+        
+      
+#-----------------------------------------------Tetris Feld -----------------------------------------------------------------------------------------------------------------------------     
+    
+    def initGame(self):
+        print "Game Can Start now"
+        self.endLobby()
     
     
-#-----------------------------------------------Interaction with App/socket------------------------------------------------------------------------------------------------------------------
     
+    
+    
+    
+    
+#-----------------------------------------------Interaction with App/socket--------------------------------------------------------------------------------------------------------------
+
     
     
     def eventHandler(self):
@@ -293,7 +359,7 @@ class Gui(AVGApp):
     
     
     
-#-------------------------------------------------MenuesOffSwitches--------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
         
     def endMainMenue(self):
         self.divNodeMainMenue.active = False
@@ -308,7 +374,7 @@ class Gui(AVGApp):
     def test(self, event):  ## <<-----------------loeschbar nur zum counter test
         self.gameCounter()
     
-#----------------------------------------------------------EventHandler-----------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------EventHandler-----------------------------------------------------------------------------------------------------------------
     
     def onClickMain1v1(self, event):
         self.startLobby(2)
@@ -319,11 +385,68 @@ class Gui(AVGApp):
     def onClickMain2v2(self, event):
         self.startLobby(4)
         
+    def backToMenue(self, event):
+        self.endLobby()
+        self.divNodeMainMenue.active = True
+        self.ipStorage.getAllCurrentConnections()
+        for ip in self.ipStorage.getAllCurrentConnections():
+            self.ipStorage.dropConnection(ip)
+        
     def interruptCount(self, event):
         self.keepCountingToStart = False
+        self.maybeStart()
         
-#-----------------------------------------------------------Erinnerungen was noch zutun ist---------------------------------------------------------------------------------------------------   
+#-----------------------------------------------------------Eventuell unnuetz: Notfall fuer IP Mac Probleme-------------------------------------------------------------------------------   
 
+# import os
+# 
+# import socket
+# 
+# if os.name != "nt":
+# 
+#     import fcntl
+# 
+#     import struct
+# 
+#     def get_interface_ip(ifname):
+# 
+#         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# 
+#         return socket.inet_ntoa(fcntl.ioctl(
+# 
+#                 s.fileno(),
+# 
+#                 0x8915,  # SIOCGIFADDR
+# 
+#                 struct.pack('256s', ifname[:15])
+# 
+#             )[20:24])
+# 
+# 
+# 
+# def get_lan_ip():
+# 
+#     ip = socket.gethostbyname(socket.gethostname())
+# 
+#     if ip.startswith("127.") and os.name != "nt":
+# 
+#         interfaces = ["eth0","eth1","eth2","wlan0","wlan1","wifi0","ath0","ath1","ppp0"]
+# 
+#         for ifname in interfaces:
+# 
+#             try:
+# 
+#                 ip = get_interface_ip(ifname)
+# 
+#                 break;
+# 
+#             except IOError:
+# 
+#                 pass
+# 
+#     return ip
+#-----------------------------------------------------------Erinnerungen was noch zutun ist-----------------------------------------------------------------------------------------------
+   
     def newGame(self):
         pass
     
