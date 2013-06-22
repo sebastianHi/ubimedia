@@ -5,7 +5,8 @@ import socket
 
 class Gui(AVGApp):
     
-    def __init__(self, ipStorage):   
+    def __init__(self, ipStorage):
+        self.blocksize = 0   
         self.keepCountingToStart = True
         self.modus = 0
         self.playerAmountRdy = 0
@@ -25,6 +26,9 @@ class Gui(AVGApp):
         self.rootNode=self.canvas.getRootNode()
     
         self.startMainMenue()
+        
+                                
+                            
         
 #-----------------------------------------------Main Menu-------------------------------------------------------------------------------------------------------------------------------      
     
@@ -337,10 +341,118 @@ class Gui(AVGApp):
 #-----------------------------------------------Tetris Feld -----------------------------------------------------------------------------------------------------------------------------     
     
     def initGame(self):
-        print "Game Can Start now"
+        self.divNodeGameMenue= avg.DivNode(parent = self.rootNode, size  = self.rootNode.size)
+        self.background = avg.RectNode(parent = self.divNodeGameMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeGameMenue.size )
+        xstartFeld1 = self.divNodeGameMenue.size[0] * 0.02
+        xendFeld1   = self.divNodeGameMenue.size[0] * 0.45
+        xstartFeld2 = self.divNodeGameMenue.size[0]/2 + self.divNodeGameMenue.size[0] *0.05
+        xendFeld2   = self.divNodeGameMenue.size[0] - self.divNodeGameMenue.size[0] * 0.02
+        self.initFeld(xstartFeld1, xendFeld1)
+        self.initFeld(xstartFeld2, xendFeld2)
+        self.timelimit =  avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.20),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="TimeLimit", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        self.timerLimit = avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.23),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="500", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
+        
+        self.roundText = avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.33),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Round", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.roundNumber = avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.36),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="1", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.speedText = avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.46),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Speed", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.speedNumber = avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.49),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="1", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.scoreTeam1 = avg.WordsNode(pos = ((xstartFeld1 + xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Score:  000000", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        self.scoreTeam2 = avg.WordsNode(pos = ((xstartFeld2 + xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Score:  000000",  
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+        
+        
+        self.blocksize = (xendFeld1 - xstartFeld1)/14
+        self.test = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (200,200), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         self.endLobby()
     
-    
+    def initFeld (self, startX, endX):
+#linker Rahmen
+        avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (startX , self.divNodeGameMenue.size[1] * 0.03), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025 ,self.divNodeGameMenue.size[1]* 0.87)
+                                  )
+#rechter Rahmen
+        avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (endX - self.divNodeGameMenue.size[0]*0.025 , self.divNodeGameMenue.size[1] * 0.03), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025, self.divNodeGameMenue.size[1]* 0.87)
+                                  )
+#Boden
+        avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (startX, self.divNodeGameMenue.size[1] * 0.9), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(endX - startX ,self.divNodeGameMenue.size[1]*0.04)
+                                  )
     
     
     
@@ -372,7 +484,8 @@ class Gui(AVGApp):
     
     
     def test(self, event):  ## <<-----------------loeschbar nur zum counter test
-        self.gameCounter()
+        self.initGame()
+    
     
 #----------------------------------------------------------EventHandler-----------------------------------------------------------------------------------------------------------------
     
@@ -396,6 +509,10 @@ class Gui(AVGApp):
         self.keepCountingToStart = False
         self.maybeStart()
         
+    def timerLCountDown (self):
+        count = int (self.timerLimit.text)
+        count -= 1
+        self.timerLimit.text = str(count)
 #-----------------------------------------------------------Eventuell unnuetz: Notfall fuer IP Mac Probleme-------------------------------------------------------------------------------   
 
 # import os
