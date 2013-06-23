@@ -347,6 +347,8 @@ class Gui(AVGApp):
         xendFeld1   = self.divNodeGameMenue.size[0] * 0.45
         xstartFeld2 = self.divNodeGameMenue.size[0]/2 + self.divNodeGameMenue.size[0] *0.05
         xendFeld2   = self.divNodeGameMenue.size[0] - self.divNodeGameMenue.size[0] * 0.02
+        self.blocksize = (xendFeld1 - xstartFeld1)/14
+        self.tetrishoehe = self.blocksize * 18
         self.initFeld(xstartFeld1, xendFeld1)
         self.initFeld(xstartFeld2, xendFeld2)
         self.timelimit =  avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.20),
@@ -415,7 +417,7 @@ class Gui(AVGApp):
                                       sensitive = False)
         
         
-        self.blocksize = (xendFeld1 - xstartFeld1)/14
+        
         self.test = avg.RectNode(parent = self.divNodeGameMenue, 
                                   pos = (200,200), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
@@ -439,13 +441,13 @@ class Gui(AVGApp):
         avg.RectNode(parent = self.divNodeGameMenue, 
                                   pos = (startX , self.divNodeGameMenue.size[1] * 0.03), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025 ,self.divNodeGameMenue.size[1]* 0.87)
+                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025 ,self.tetrishoehe) #self.divNodeGameMenue.size[1]* 0.87
                                   )
 #rechter Rahmen
         avg.RectNode(parent = self.divNodeGameMenue, 
                                   pos = (endX - self.divNodeGameMenue.size[0]*0.025 , self.divNodeGameMenue.size[1] * 0.03), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025, self.divNodeGameMenue.size[1]* 0.87)
+                                  size = avg.Point2D(self.divNodeGameMenue.size[0]*0.025, self.tetrishoehe)
                                   )
 #Boden
         avg.RectNode(parent = self.divNodeGameMenue, 
