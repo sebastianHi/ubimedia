@@ -1,4 +1,8 @@
- // The watch id references the current `watchAcceleration`
+//The Coordinate IDs
+    var xacc = 0;
+    var yacc = 0;
+
+// The watch id references the current `watchAcceleration`
     var watchID = null;
 
     // Wait for Cordova to load
@@ -33,7 +37,13 @@
     // onSuccess: Get a snapshot of the current acceleration
     //
     function onSuccess(acceleration) {
-        return { xacc: acceleration.x, yacc: acceleration.y, zacc: acceleration.z };
+        xacc = acceleration.x;
+        yacc = acceleration.y;
+        
+        if(yacc>4 || yacc<(-4)){
+            //Rotate Shit
+        } else { //DON't Rotate Shit. }
+        
     }
 
     // onError: Failed to get the acceleration
