@@ -4,7 +4,7 @@ Created on 24.06.2013
 @author: sebastian
 '''
 
-class fallingBlock(object):
+class FallingBlock(object):
   
     def __init__(self):
         pass

@@ -1,14 +1,11 @@
-'''
-Created on 24.06.2013
-
-@author: sebastian
-'''
+from Gravity import Gravity
+from FallingBlock import FallingBlock
 
 class Field(object):
 
     def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten):
-        self.fallingBlock = None
-        
+        self.fallingBlock = FallingBlock()
+        self.gravity = Gravity()
         pass
         
         
