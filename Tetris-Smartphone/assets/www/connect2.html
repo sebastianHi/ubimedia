@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body>
+       <div id="connecting" data-role="page" data-add-back-btn="true" data-back-btn-text="Back">
+         <header data-role="header">
+             <h1>Lobby</h1>
+         </header>
+           <div data-role="content">
+            <p>Connected to: <script>getIp();buildHost();</script> <b id="connectto"></b></p>
+            <p>Your role: <p id="role"></p>
+            <p>Log:</p><p id="connection"></p>
+            </div>
+        </div>
+    </body>
+</html>

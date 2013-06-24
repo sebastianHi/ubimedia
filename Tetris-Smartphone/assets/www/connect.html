@@ -1,43 +1,21 @@
-
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<title>Multiline Tetris</title> 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-	
-</head> 
-
-<body> 
-
-<div data-role="page">
-
-	<div data-role="header">
-		<h1>Connect to Server</h1>
-	</div><!-- /header -->
-
-	<div data-role="content">	
-		<p>Enter a Server's IP-Address</p><br>
-		<label for="basic">IP</label>
-    	<input type="text" name="name" id="basic" value=""  />
-    	<a href="#" data-role="button">Connect</a>
-    	<a href="index.html" data-role="button" data-rel="external">Back</a>
-		<script type="text/javascript" src="cordova-2.7.0.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-	</div><!-- /content -->
-	
-	<div data-role="footer">
-		<h4>Made by Seb, Niko and Kevsn</h4>
-	</div><!-- /footer -->
-	
-</div><!-- /page -->
-
-</body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body>
+      <div id="connect1" data-role="page" data-add-back-btn="true" data-back-btn-text="Back">
+         <header data-role="header">
+             <h1>Connect to Server</h1>
+         </header>
+         <div data-role="content">
+             <label for="basic">IP Adress:</label>
+             <input type="text" name="name" id="ipinput" value="" />
+             <a href="connect2.html" data-role="button" onClick="setIp();">Connect</a>
+         </div>
+          
+          
+      </div>
+   </body>
 </html>
