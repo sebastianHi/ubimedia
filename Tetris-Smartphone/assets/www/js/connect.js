@@ -6,6 +6,8 @@ function buildHost() {
     
     sock.onopen = function () {
         console.log("connected to " + wsuri);
+        var message = "Test";
+        send(message);
     };
     sock.onclose = function (e) {
         console.log("connection closed (" + e.code + ")");
@@ -17,8 +19,8 @@ function buildHost() {
     };
 }
 
-function send() {
-    var msg = document.getElementById('message').value;
+function send(e) {
+    var msg = e;
     sock.send(msg);
 }
 		
