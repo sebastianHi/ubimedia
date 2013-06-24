@@ -20,9 +20,9 @@ class EchoServerProtocol(WebSocketServerProtocol):
         ipStorage.updateAll("New Client with IP "+self.peer.host+" has joined")
               
     def onMessage(self, msg, binary):
-        ipStorage.eventHandler(msg);
         print "sending echo:", msg ##print incoming message
         self.sendMessage("Received: "+msg, binary)##send back message to initiating client
+        ipStorage.eventHandler(msg);
         
 
 class Main():

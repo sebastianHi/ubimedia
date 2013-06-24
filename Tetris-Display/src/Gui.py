@@ -263,7 +263,6 @@ class Gui(AVGApp):
         self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.firstPlayer, self.test)
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.backButton, self.backToMenue)
-        self.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.backButton, self.backToMenue)
         self.endMainMenue()
         self.divNodelobbyMenue.active = True
         
@@ -482,7 +481,12 @@ class Gui(AVGApp):
     
     
     def eventHandler(self):
-        pass
+        self.initGame()
+        self.test   = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (200, 200), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
     
     
     
