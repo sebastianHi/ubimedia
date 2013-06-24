@@ -96,8 +96,23 @@ class GameMenue(object):
         print "Tetrisfeldbegrenzungen:   lX1:",self.linksFeld1X,"  rF1: ",self.rechtsFeld1X,"   lF2: ",self.linksFeld2X,"  rF2:  ",self.rechtsFeld2X,"  yO: ", self.yOben," yU: ", self.yUnten
         
         
-        self.test = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (self.linksFeld1X, self.yOben), 
+        self.test1 = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (self.linksFeld1X+ self.blocksize, self.yOben), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
+        self.test2 = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (self.linksFeld1X+ self.blocksize+ self.blocksize, self.yOben), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
+        self.test3 = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (self.linksFeld1X+ self.blocksize+ self.blocksize+ self.blocksize, self.yOben), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
+        self.test4 = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (self.linksFeld1X+ self.blocksize+ self.blocksize, self.yOben+ self.blocksize), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
@@ -123,9 +138,17 @@ class GameMenue(object):
                                   pos = (startX, self.tetrishoehe+self.divNodeGameMenue.size[1] * 0.03), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(endX - startX ,self.divNodeGameMenue.size[1]*0.04))
-                                  
+           
+        self.player.setInterval(5, self.drop)                       
                                   
     def timerLCountDown (self):
         count = int (self.timerLimit.text)
         count -= 1
         self.timerLimit.text = str(count)
+        
+    def drop(self):
+        if(self.test3.pos[1]+2*self.blocksize<=self.yUnten):
+            self.test1.pos = (self.test1.pos[0],self.test1.pos[1]+1)
+            self.test2.pos = (self.test2.pos[0],self.test2.pos[1]+1)
+            self.test3.pos = (self.test3.pos[0],self.test3.pos[1]+1)
+            self.test4.pos = (self.test4.pos[0],self.test4.pos[1]+1)
