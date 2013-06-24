@@ -6,6 +6,16 @@ import socket
 class Gui(AVGApp):
     
     def __init__(self, ipStorage):
+        #/////////Eckpunkte///////////////////
+        self.linksFeld1X    =0
+        self.linksFeld2X    =0
+        self.rechtsFeld1X   =0
+        self.rechtsFeld2X   =0
+        self.yOben          =0
+        self.yUnten         =0
+        #/////////////////////////////////////
+        self.matrix = [[]]
+        #/////////////////////////////////////
         self.blocksize = 0   
         self.keepCountingToStart = True
         self.modus = 0
@@ -81,9 +91,12 @@ class Gui(AVGApp):
         self.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button1vs1, self.onClickMain1v1)
         self.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button2vs2, self.onClickMain2v2)
         self.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.button1vs1vs1, self.onClickMain1v1v1)
+        
+        
     
 #-----------------------------------------------Lobby Menue--------------------------------------------------------------------------------------------------------------------------        
-  
+
+
     def startLobby(self, modus):
         self.modus = modus
         if(self.modus==2):
@@ -341,16 +354,17 @@ class Gui(AVGApp):
 #-----------------------------------------------Tetris Feld -----------------------------------------------------------------------------------------------------------------------------     
     
     def initGame(self):
-        self.divNodeGameMenue= avg.DivNode(parent = self.rootNode, size  = self.rootNode.size)
+        self.divNodeGameMenue= avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
         self.background = avg.RectNode(parent = self.divNodeGameMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeGameMenue.size )
         xstartFeld1 = self.divNodeGameMenue.size[0] * 0.02
         xendFeld1   = self.divNodeGameMenue.size[0] * 0.45
         xstartFeld2 = self.divNodeGameMenue.size[0]/2 + self.divNodeGameMenue.size[0] *0.05
         xendFeld2   = self.divNodeGameMenue.size[0] - self.divNodeGameMenue.size[0] * 0.02
-        self.blocksize = (xendFeld1 - xstartFeld1)/14
-        self.tetrishoehe = self.blocksize * 18
+        self.blocksize = ((xendFeld1 - self.divNodeGameMenue.size[0]*0.025) - (xstartFeld1 + self.divNodeGameMenue.size[0]*0.025))/14
+        self.tetrishoehe = self.blocksize * 20
         self.initFeld(xstartFeld1, xendFeld1)
         self.initFeld(xstartFeld2, xendFeld2)
+        
         self.timelimit =  avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.20),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
                                       text ="TimeLimit", 
@@ -415,27 +429,30 @@ class Gui(AVGApp):
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
+       
+        self.linksFeld1X   = xstartFeld1 + self.divNodeGameMenue.size[0]*0.025
+        self.rechtsFeld1X  = xendFeld1 -self.divNodeGameMenue.size[0]*0.025
         
+        self.linksFeld2X   = xstartFeld2 + self.divNodeGameMenue.size[0]*0.025
+        self.rechtsFeld2X  = xendFeld2 -self.divNodeGameMenue.size[0]*0.025
+ 
+        self.yOben = self.divNodeGameMenue.size[1] * 0.03
+        self.yUnten =  self.yOben + self.tetrishoehe
+        
+        print "Blocksize: ", self.blocksize
+        print "Tetrisfeldbegrenzungen:   lX1:",self.linksFeld1X,"  rF1: ",self.rechtsFeld1X,"   lF2: ",self.linksFeld2X,"  rF2:  ",self.rechtsFeld2X,"  yO: ", self.yOben," yU: ", self.yUnten
         
         
         self.test = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (200,200), 
+                                  pos = (self.linksFeld1X, self.yOben), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+       
         self.endLobby()
-    
+        self.divNodeGameMenue.active = True
+        
+        
     def initFeld (self, startX, endX):
 #linker Rahmen
         avg.RectNode(parent = self.divNodeGameMenue, 
@@ -451,7 +468,7 @@ class Gui(AVGApp):
                                   )
 #Boden
         avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (startX, self.divNodeGameMenue.size[1] * 0.9), 
+                                  pos = (startX, self.tetrishoehe+self.divNodeGameMenue.size[1] * 0.03), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(endX - startX ,self.divNodeGameMenue.size[1]*0.04)
                                   )
@@ -471,6 +488,8 @@ class Gui(AVGApp):
     
     
     
+#---------------------------------------------------Tetris Spiel Berechnungen-------------------------------------------------------------------------------------------------------------  
+
     
     
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
