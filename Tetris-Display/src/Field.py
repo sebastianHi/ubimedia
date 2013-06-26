@@ -1,26 +1,26 @@
-from Gravity import Gravity
 from FallingBlock import FallingBlock
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten):
-        self.fallingBlock = FallingBlock()
-        self.gravity = Gravity()
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize):
+        self.xWertLinksOben = xWertLinksOben
+        self.xWertRechtsOben = xWertRechtsOben
+        self.yWertOben = yWertOben
+        self.yWertUnten = yWertUnten
+        
+        self.gravity = 1
+        #queue die gefuellt wird durch phone, new falling stone danach mit dem naechsten rufen
         pass
         
         
-    def checkLeftBound(self, node): #return true wenn bewegung moeglich
-        pass
     
-    def checkRightBound(self, node):#return true wenn bewegung moeglich
-        pass
     
     def hitGround(self, node):#return true wenn bewegung moeglich
         pass
     
-    def gravity (self, value):
+   
+    def newFallingStone(self, node):#  <-- rufe stein, der macht den rest. gebe das feld mit.
+        ##if queue leer dann random sonst erstes element der queue
         pass
-  
-    def newFallingStone(self, node):
-        pass
+    
     

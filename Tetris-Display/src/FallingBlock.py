@@ -23,3 +23,13 @@ class FallingBlock(object):
     
     def rotateRight(self, node):
         pass
+    
+    
+    def hitGround(self): #<-- ruf feld.hitground auf um zu zeigen neuer stein kann fallen.
+        pass
+    
+    def checkLeftBound(self, node): #return true wenn bewegung moeglich
+        pass
+    
+    def checkRightBound(self, node):#return true wenn bewegung moeglich
+        pass

@@ -12,19 +12,6 @@ import sys,thread
 class Gui(AVGApp):
     
     def __init__(self,ipStorage):
-        #/////////////////////////////////////
-        self.field1 = None
-        self.field2 = None
-        #/////////Eckpunkte///////////////////
-        self.linksFeld1X    =0
-        self.linksFeld2X    =0
-        self.rechtsFeld1X   =0
-        self.rechtsFeld2X   =0
-        self.yOben          =0
-        self.yUnten         =0
-        #/////////////////////////////////////
-        self.matrix = [[]]
-        #/////////////////////////////////////
         self.leftFallingBlock = None
         self.rightFallingBlock = None
         self.blocksize = 0   

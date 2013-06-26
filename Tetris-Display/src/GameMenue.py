@@ -18,6 +18,22 @@ class GameMenue(object):
         self.initFeld(xstartFeld1, xendFeld1)
         self.initFeld(xstartFeld2, xendFeld2)
         
+        self.linksFeld1X   = xstartFeld1 + self.divNodeGameMenue.size[0]*0.025
+        self.rechtsFeld1X  = xendFeld1 -self.divNodeGameMenue.size[0]*0.025
+        
+        self.linksFeld2X   = xstartFeld2 + self.divNodeGameMenue.size[0]*0.025
+        self.rechtsFeld2X  = xendFeld2 -self.divNodeGameMenue.size[0]*0.025
+ 
+        self.yOben = self.divNodeGameMenue.size[1] * 0.03
+        self.yUnten =  self.yOben + self.tetrishoehe
+        self.field1 = Field(self.linksFeld1X, self.rechtsFeld1X, self.yOben, self.yUnten)
+        self.field2 = Field(self.linksFeld2X, self.rechtsFeld2X, self.yOben, self.yUnten)
+        
+        print "Blocksize: ", self.blocksize
+        print "Tetrisfeldbegrenzungen:   lX1:",self.linksFeld1X,"  rF1: ",self.rechtsFeld1X,"   lF2: ",self.linksFeld2X,"  rF2:  ",self.rechtsFeld2X,"  yO: ", self.yOben," yU: ", self.yUnten
+        
+        
+        
         self.timelimit =  avg.WordsNode(pos = (xendFeld1 + (xstartFeld2 - xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.20),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
                                       text ="TimeLimit", 
@@ -83,19 +99,7 @@ class GameMenue(object):
                                       alignment = "center",
                                       sensitive = False)
        
-        self.linksFeld1X   = xstartFeld1 + self.divNodeGameMenue.size[0]*0.025
-        self.rechtsFeld1X  = xendFeld1 -self.divNodeGameMenue.size[0]*0.025
-        
-        self.linksFeld2X   = xstartFeld2 + self.divNodeGameMenue.size[0]*0.025
-        self.rechtsFeld2X  = xendFeld2 -self.divNodeGameMenue.size[0]*0.025
- 
-        self.yOben = self.divNodeGameMenue.size[1] * 0.03
-        self.yUnten =  self.yOben + self.tetrishoehe
-        
-        print "Blocksize: ", self.blocksize
-        print "Tetrisfeldbegrenzungen:   lX1:",self.linksFeld1X,"  rF1: ",self.rechtsFeld1X,"   lF2: ",self.linksFeld2X,"  rF2:  ",self.rechtsFeld2X,"  yO: ", self.yOben," yU: ", self.yUnten
-        
-        
+
         self.test1 = avg.RectNode(parent = self.divNodeGameMenue, 
                                   pos = (self.linksFeld1X+ self.blocksize, self.yOben), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
@@ -116,8 +120,7 @@ class GameMenue(object):
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        self.field1 = Field(self.linksFeld1X, self.rechtsFeld1X, self.yOben, self.yUnten)
-        self.field2 = Field(self.linksFeld2X, self.rechtsFeld2X, self.yOben, self.yUnten)
+
     
         
     def initFeld (self, startX, endX):
