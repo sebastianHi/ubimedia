@@ -1,5 +1,6 @@
 from FallingBlock import FallingBlock
 from FallingBlocks import *
+from libavg import avg
 import random
 
 class Field(object):
@@ -66,7 +67,7 @@ class Field(object):
         for l in range (14):
             self.Matrix[l][row] = False
             #TODO: nicht inactive sondern loeschen
-            (self.matrixSteadyRectNodes[l][row]).inactive = False
+            (self.matrixSteadyRectNodes[l][row]).unlink()
             self.matrixSteadyRectNodes[l][row] = None
             
         j = row
@@ -196,3 +197,28 @@ class Field(object):
             self.block.part2.pos = (self.part2.pos[0],self.part2.pos[1] + self.GameMenue.blocksize)
             self.block.part3.pos = (self.part3.pos[0],self.part3.pos[1] + self.GameMenue.blocksize)
             self.block.part4.pos = (self.part4.pos[0],self.part4.pos[1] + self.GameMenue.blocksize)
+
+
+    def moveLeft(self):
+        if(self.block == None):
+            pass
+        else:
+            self.block.moveBlockLeft()
+    
+    def moveRight(self):
+        if(self.block == None):
+            pass
+        else:
+            self.block.moveBlockRight()
+    
+    def rotateLeft(self):
+        if(self.block == None):
+            pass
+        else:
+            self.block.rotateLeft()
+            
+    def rotateRight(self):
+        if(self.block == None):
+            pass
+        else:
+            self.block.rotateRight()

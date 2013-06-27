@@ -165,21 +165,45 @@ class Gui(AVGApp):
 #----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
         elif(  (befehl == "moveLeft" )   & (self.zustand == 2)):
             print "GotMoveLeft"
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.moveLeft()
+            elif(ip == self.lobbyMenu.player[2]):
+                self.gameMenu.field2.moveLeft()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
         elif((befehl == "moveRight")   & (self.zustand == 2)):
             print "GotMoveRight"
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.moveRight()
+            elif(ip == self.lobbyMenu.player[2]):
+                self.gameMenu.field2.moveRight()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
         elif((befehl == "moveRotateR" )& (self.zustand == 2)):
             print "GotMoveRotateR"
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.rotateRight()
+            elif(ip == self.lobbyMenu.player[2]):
+                self.gameMenu.field2.rotateRight()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
         elif((befehl == "moveRotateL" )& (self.zustand == 2)):
             print "GotRotateL"
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.rotateLeft()
+            elif(ip == self.lobbyMenu.player[2]):
+                self.gameMenu.field2.rotateLeft()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
     
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
 
     
-    def test(self, event):  ## <<-----------------loeschbar nur zum counter test
+    def test(self, event):  ## <<-----------------loeschbar nur zum gamestart mit mausklick
         self.initGame()
     
     
