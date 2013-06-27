@@ -10,7 +10,7 @@
              <h1>Lobby</h1>
          </header>
            <div data-role="content">
-            <p>Connected to: <script>getIp();buildHost();</script> <b id="connectto"></b></p>
+            <p>Connected to: <script>getIp();buildHost();getNickname();send(ip+"###"+"nickname:"+nickname);</script> <b id="connectto"></b>as <p id="nick2"></p>
             <p>Your role: <p id="role"></p>
             <p>Log:</p><p id="connection"></p>
             </div>

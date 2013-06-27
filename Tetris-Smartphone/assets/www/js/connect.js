@@ -3,6 +3,7 @@ var wsuri = "ws://localhost:9000";
 var ip = null;
 var currIP = null;
 var currCmd = null;
+var nickname = null;
 
 function buildHost() {
     sock = new WebSocket(wsuri);
@@ -103,4 +104,13 @@ function buildHost() {
     //Compute the character arrays to strings and give it to the current Signals.
      currIp = ip.join("");
      currCmd = cmd.join("");
+}
+
+function getNickname(){
+     document.getElementById('nick2').innerHTML = document.getElementById('nick').value;
+}
+
+function setNickname(){
+    nickname = document.getElementById('nick').value;
+    console.log("Nickname set as: "+ nickname);
 };
