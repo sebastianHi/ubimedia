@@ -235,55 +235,6 @@ class Gui(AVGApp):
         listenWS(self.factory)
         reactor.run(installSignalHandlers=0)##"installSignalHandlers=0" Necessary for Multithreading @UndefinedVariable
         
-
-#-----------------------------------------------------------Erinnerungen was noch zutun ist-----------------------------------------------------------------------------------------------
-   
-    def newGame(self):
-        pass
-    
-    def getRdy (self):
-        pass
-    
-    def movePlayer(self):
-        pass
-    
-    def setRole(self):
-        pass
-    
-    def startNewRound(self):
-        pass
-    
-    def speedUp(self):
-        pass
-    
-    def updateScore(self):
-        pass
-    
-    def pause(self):
-        pass
-    
-    def timer(self):
-        pass
-
-    def usedSkill(self):
-        pass
-    
-    def usedSpecialSkill(self):
-        pass
-    
-    def alertNotEnoughMoney(self):
-        pass
-     
-    def updateClock(self):
-        pass
-    
-    def updateCooldowns(self):
-        pass
-    
-    def chanceLevel(self):
-        pass
-
- 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####
 class EchoServerProtocol(WebSocketServerProtocol):
