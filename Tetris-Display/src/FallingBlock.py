@@ -6,8 +6,6 @@ Created on 24.06.2013
 
 class FallingBlock(object):
   
-    def __init__(self):
-        pass
     
     ####hier stone generator
         
