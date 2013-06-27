@@ -13,7 +13,7 @@ function buildHost() {
     };
     sock.onclose = function (e) {
         console.log("connection closed (" + e.code + ")");
-        document.getElementById('connection').innerHTML += '<br>connection closed (' + e.code + ')';
+        document.getElementById('connection').innerHTML += '<p>connection closed (' + e.code + ')';
        
     };
     sock.onmessage = function (e) {
@@ -60,7 +60,7 @@ function buildHost() {
         }
         }
         console.log("message received: " + e.data);
-        document.getElementById('connection').innerHTML = '<br>' + e.data;
+        document.getElementById('connection').innerHTML = '<p>' + e.data + '</p>';
     }
    };
 
