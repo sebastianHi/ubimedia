@@ -147,7 +147,7 @@ class Gui(AVGApp):
         count = 0
         for c in msg:
             if(switch):
-                ip+= ip
+                ip+= c
             elif(c == '#' & count <3):
                 switch = False
                 count+=1
