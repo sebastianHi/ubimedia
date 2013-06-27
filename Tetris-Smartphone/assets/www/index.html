@@ -34,6 +34,7 @@
         <script type="text/javascript" src="js/defender.js"></script>
         <script type="text/javascript">
             app.initialize();
+            $.mobile.buttonMarkup.hoverDelay = 0;
         </script>
         <title>MultiTetris</title>
     </head>
@@ -45,16 +46,21 @@
             	<h1>MultiTetris</h1>
        			 </div><!-- /header -->
  
-        		<div data-role="content">
-                <p>A fast paced Tetris interpretation</p>
-            	<p> <a href="connect.html" data-role="button">Connect</a>
-            		<a href="about.html" data-role="button">About</a>
-            		<a href="index.html" data-role="button">Exit</a>
-            	</p>
-        		</div><!-- /content -->
-            
+        <div data-role="content">
+            <div class="ui-grid-solo">
+	           <div class="ui-block-a" align="center"><img src="MT.png"><br><b>It's not Lupus!</b></div>
             </div>
-       
         
+            <div class="ui-grid-a">
+	           <div class="ui-block-a"><a href="connect.html"  data-role="button">Play</a></div>
+	           <div class="ui-block-b"><a href="about.html"  data-role="button">About</a></div>	   
+            </div>
+            
+            <div class="ui-grid-solo">
+	           <div class="ui-block-a"><a href="index.html" data-role="button">Exit</a></div>
+            </div>
+        </div><!-- /content -->
+            
+    </div>    
     </body>
 </html>

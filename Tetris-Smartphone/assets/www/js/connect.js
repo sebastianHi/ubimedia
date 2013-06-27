@@ -10,6 +10,7 @@ function buildHost() {
     
     sock.onopen = function () {
         console.log("connected to " + wsuri);
+        $.mobile.changePage("connect2.html", null, true, true);
     };
     sock.onclose = function (e) {
         console.log("connection closed (" + e.code + ")");
