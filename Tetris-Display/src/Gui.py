@@ -234,7 +234,9 @@ class EchoServerProtocol(WebSocketServerProtocol):
          
     def onOpen(self):
         ipStorage.addNewClient(self.peer.host, self) ##adds current Connection and Client IP to the Storage
+        self.sendMessage(self.peer.host) #Sends IP-Adress to Target
         ipStorage.updateAll("New Client with IP "+self.peer.host+" has joined")
+        self.sendMessage(self.peer.host+"###"+"Test") ##See if Parser Works.
                
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message

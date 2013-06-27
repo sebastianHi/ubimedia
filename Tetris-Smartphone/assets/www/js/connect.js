@@ -20,15 +20,18 @@ function buildHost() {
         //We use an generic simple parser to decode the message
         //The messages are composed in the following scheme:
         // "IP###COMMAND", e.g. "192.168.0.2###Test".
-        
+        if(ip == null){
+            ip = e.data;
+            console.log("IP Regocnized and transmitted.");
+        } else {
         parse(e.data);
         
-        if (currIP !== ip) {
-            ip = null;
+        if (currIp != ip) {
+            //Nothing to do here
         } else {
             switch (currCmd) {
             case "Test":
-                    //test cmd
+                    console.log("Got Test Signal. Parser seems to work.");
                 break;
             case "SWP_POS":
                     //change team-role
@@ -53,6 +56,7 @@ function buildHost() {
                 break;
             }
         }
+        }
         console.log("message received: " + e.data);
         document.getElementById('connection').innerHTML = '<br>' + e.data;
     }
@@ -71,30 +75,32 @@ function buildHost() {
         document.getElementById('connectto').innerHTML = document.getElementById('ipinput').value;
     }
 
-    function parse(e) {
-        //Get us some basic variables for iteration
-        //The messages are composed in the following scheme:
-        // "IP###COMMAND", e.g. "192.168.0.2###Test".
-        var count = 0;
-        //Split our Message in pieces
-        var splitArr = e.split("");
-        //our current cmd states
-        var ip, cmd = "";
-        //Iterate through code Array and grab the cmds
-        for (var i = 0; i < splitArr.length; i++) {
-            if (splitArr[i] == "#" && count != 3){
-                //if we have a #, then we need to count to 3 before we can assume to interpret a cmd
-                 count += 1;
-                } else {
-        		  if (count =! 3 && splitArr[i] != "#") {
-                      ip.concat(splitArr[i]);
-        		  } else {
-                      if (count == 3 && splitArr[i] != "#") {
-                          cmd.concat(splitArr[i]); 
-                      }		 
-   			  }
-		  }
-	   }
-    currIp = ip;
-    currCmd = cmd;
-    };
+ function parse(e){
+	var count = 0;
+    //Split the Array to operate character-wise.
+	var splitArr = e.split("");
+	
+    //Define two arrays
+	var ip = [];
+    var cmd = [];
+	
+	for (var i = 0; i < splitArr.length; i++){
+		if(splitArr[i] == "#" && count != 3){
+            //If we encounter 3 #'s we can assume that the next characters are commando characters
+			count +=1;
+		} else {
+			if (count != 3 && splitArr[i] != "#"){
+                //As long as we haven't computed three #, we get a ip address.
+				ip.push(splitArr[i]);
+			} else {
+				if (count == 3 && splitArr[i] != "#"){
+                    //If we have parsed 3x #, we can assume we have a cmd.
+					cmd.push(splitArr[i]);
+				}
+			}
+		}
+	}
+    //Compute the character arrays to strings and give it to the current Signals.
+     currIp = ip.join("");
+     currCmd = cmd.join("");
+};

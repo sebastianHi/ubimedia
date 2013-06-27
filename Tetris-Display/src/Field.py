@@ -17,20 +17,26 @@ class Field(object):
         
         
     def generateRandomBlock(self):
-        
         RandomNumber = random.randint(1,6)
+        
         if (RandomNumber == 1):
-            return cubeFallingBlock()
+            #return cubeFallingBlock()
+            return 1
         elif (RandomNumber == 2):
-            return IFallingBlock()
+            # return IFallingBlock()
+            return 2
         elif (RandomNumber == 3):
-            return LFallingBlock()
+            #return LFallingBlock()
+            return 3
         elif (RandomNumber == 4):
-            return reverseLFallingBlock()
+            # return reverseLFallingBlock()
+            return 4
         elif (RandomNumber == 5):
-            return reverseZFallingBlock()
+            #return reverseZFallingBlock()
+            return 5
         else:
-            return ZFallingBlock()
+            # return ZFallingBlock()
+            return 6
         pass
     
     def hitGround(self, node):#return true wenn bewegung moeglich
@@ -40,8 +46,8 @@ class Field(object):
     def newFallingStone(self, node):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         ##if queue leer dann random sonst erstes element der queue
         if not self.Queue:
-            return generateRandomBlock()
-        else
+            return self.generateRandomBlock()
+        else:
             return self.Queue.pop()
         pass
     
