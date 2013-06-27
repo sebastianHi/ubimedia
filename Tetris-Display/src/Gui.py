@@ -12,15 +12,9 @@ import sys,thread
 class Gui(AVGApp):
     
     def __init__(self,ipStorage):
-
-############################################################
-#        zustand = 0    :    Gui ist im MainMenu
-#        zustand = 1    :    Gui ist im LobbyMenu
-#        zustand = 2    :    Gui ist im Gamemenu
-############################################################
-
-        self.zustand = 0
-         
+        self.leftFallingBlock = None
+        self.rightFallingBlock = None
+        self.blocksize = 0   
         self.ipStorage = ipStorage
     
         self.keepCountingToStart = True
@@ -39,28 +33,25 @@ class Gui(AVGApp):
         self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
         self.mainMenu.divNodeMainMenue.active = True 
         
-        
+        thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread
                                 
         
     def initLobby(self, modus):
         self.lobbyMenu = LobbyMenue(self.rootNode, modus) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToMenue)
         self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test) 
+        self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToMenue)
         self.lobbyMenu.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.secondPlayer, self.gameCounter)  
         
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
-        self.zustand = 1
-        #ZumUebergangZumGame      
-        thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
+        #ZumUebergangZumGame               
         
     def initGame(self):
         self.gameMenu = GameMenue(self.rootNode, self.player)
         
         self.lobbyMenu.divNodelobbyMenue.active = False 
-        self.gameMenu.divNodeGameMenue.active = True
-        self.zustand = 2
-        self.ipStorage.updateAll("gamestarts")
+        self.gameMenu.divNodeGameMenue.active = True 
 
    
 
@@ -137,43 +128,16 @@ class Gui(AVGApp):
     
 #-----------------------------------------------Interaction with App/socket--------------------------------------------------------------------------------------------------------------
 
-    def eventHandler(self,msg):
-##parser
-        ip = ""
-        befehl = ""
-        gotNick = False
-        switch = True
-        count = 0
-        for c in msg:
-            if(switch):
-                ip+= ip
-            elif(c == '#' & count <3):
-                switch = False
-                count+=1
-            elif(befehl == "nickname:"):
-                gotNick = True
-                befehl = "c"
-            else:
-                befehl+=c
-                
-##eigentlicher eventhander mit befehl:
-#----------------------Anmeldung Des Clients-------------------------------
-        if(gotNick & self.zustand == 1):
-            print "GotNickForIP : ",ip," Nick: ",befehl
-            self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl)
-#----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
-        elif(  befehl == "moveLeft"    & self.zustand == 2):
-            print "GotMoveLeft"
-            
-        elif(befehl == "moveRight"   & self.zustand == 2):
-            print "GotMoveRight"
-            
-        elif(befehl == "moveRotateR" & self.zustand == 2):
-            print "GotMoveRotateR"
-            
-        elif(befehl == "moveRotateL" & self.zustand == 2):
-            print "GotRotateL"
-            
+    def eventHandler(self):
+        self.initGame()
+        self.test   = avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (200, 200), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.blocksize ,self.blocksize)
+                                  )
+    
+    
+  
     
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
 
@@ -182,7 +146,7 @@ class Gui(AVGApp):
         self.initGame()
     
     
-#----------------------------------------------------------EventHandlerButtoms----------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------EventHandler-----------------------------------------------------------------------------------------------------------------
     
     def onClickMain1v1(self, event):
         self.initLobby(2)
@@ -277,7 +241,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message
         self.sendMessage("Received: "+msg, binary)##send back message to initiating client
-        ipStorage.eventHandler(msg);
+        #ipStorage.eventHandler(msg);
 
 if __name__ == '__main__':
     ipStorage = IPStorage()
