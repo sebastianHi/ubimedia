@@ -5,17 +5,22 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
    </head>
    <body>
-       <div id="connecting" data-role="page" data-add-back-btn="true" data-back-btn-text="Back">
+       <div id="connecting" data-role="page" data-add-back-btn="true" data-url="connect2.html" data-back-btn-text="Back">
          <header data-role="header">
              <h1>Lobby</h1>
          </header>
            <div data-role="content">
-            <p>Connected to: <script>getIp();getNickname();</script> <b id="connectto"></b>as <p id="nick2"></p>
-            <p>Your role: <p id="role"></p>
-            <p>Log:</p><p id="connection"></p>
-            <p>Debug Mode - Play As:</p>
-            <a href="defender.html" data-role="button" onClick="startWatch();">Defender</a>
-            <p>Attacker not yet</p>
+               <script>getIp();getNickname();</script>
+               <div class="ui-grid-b">
+	               <div class="ui-block-a">.//connection info<br><p>Connected to: <b id="connectto"></b></p><br><p>Username: <i id="nick2"></i></p></div>
+	               <div class="ui-block-b">Ready?<br><a href="#" data-role="button" data-iconpos="top" data-icon="check" onClick="">Ready!</a></div>
+	               <div class="ui-block-c">.//game info<br><p>Your role: <p id="role"></p></div>
+               </div><!-- /grid-b -->
+                <div class="ui-grid-b">
+	               <div class="ui-block-a">.//etc<br><p>Log:</p><p id="connection"></p></div>
+	               <div class="ui-block-b"><a href="#" data-role="button" data-icon="delete" data-iconpos="top" onClick="">Disconnect</a></div>
+	               <div class="ui-block-c">.//debug mode<br><a href="defender.html" data-iconpos="top"  data-icon="gear" data-role="button" onClick="startWatch();">Defender</a></div>
+               </div><!-- /grid-b -->
             </div>
         </div>
     </body>
