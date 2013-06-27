@@ -24,6 +24,7 @@ function buildHost() {
         if(ip == null){
             ip = e.data;
             console.log("IP Regocnized and transmitted.");
+            transmitNickname();
         } else {
         parse(e.data);
         
@@ -63,9 +64,19 @@ function buildHost() {
     }
    };
 
+    function prepareSocket(){
+        buildHost();
+        
+    }
+
     function send(e) {
         var msg = e;
         sock.send(msg);
+    }
+
+    function transmitNickname(){
+        console.log("Transmitting command:"+ ip+"###nickname:"+nickname);
+        send(ip+"###nickname:"+nickname);
     }
 		
     function setIp() {

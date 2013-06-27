@@ -40,9 +40,13 @@
         xacc = acceleration.x;
         yacc = acceleration.y;
         
-        if(yacc>4 || yacc<(-4)){
-            //Rotate Shit
-        } else { //DON't Rotate Shit. }
+        if(yacc<(-4)){
+            send(ip+"###RotateL");
+        } else {
+            if(yacc>4){
+            send(ip+"###RotateR");
+            } else { }
+        }
         
     }
 

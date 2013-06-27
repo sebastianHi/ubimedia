@@ -276,7 +276,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
                
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message
-        self.sendMessage("Received: "+msg, binary)##send back message to initiating client
+        #self.sendMessage("Received: "+msg, binary)##send back message to initiating client
         ipStorage.eventHandler(msg);
 
 if __name__ == '__main__':
