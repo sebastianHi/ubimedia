@@ -5,30 +5,36 @@ import socket
 class LobbyMenue(object):
     
     def __init__(self, parent, modus):
+        
+#####################################################################################
+#        player[0] ist immer Defender Feld 1
+#        player[1] ist immer Defender Feld 2
+#        player[2] ist immer Attacker fuer Team Feld1
+#        player[3] ist immer Attacker fuer Team Feld2
+#####################################################################################
         self.rootNode = parent
         self.playerAmountRdy = 0
-        self.player1 = ""
-        self.player2 = ""
-        self.player3 = ""
-        self.player4 = ""
+        self.player = ["","","",""]
+        self.playerIP = ["","","",""]
         self.connectedPlayers = 0
+       
         self.playstyleModus = ""
         self.modus = modus
         if(self.modus==2):
             self.playstyleModus = "1vs1"
-            self.player1 = "Player 1"
-            self.player2 = "Player 2"
+            self.player[0] = "Player 1"
+            self.player[1] = "Player 2"
         elif(self.modus == 3):
             self.playstyleModus = "1vs1vs1"
-            self.player1 = "Defender"
-            self.player2 = "Defender"
-            self.player3 = "Attacker"
+            self.player[0] = "Defender"
+            self.player[1] = "Defender"
+            self.player[2] = "Attacker"
         elif(self.modus == 4):
             self.playstyleModus = "2vs2"
-            self.player1 = "Defender"
-            self.player2 = "Defender"
-            self.player3 = "Attacker"
-            self.player4 = "Attacker"
+            self.player[0] = "Defender"
+            self.player[1] = "Defender"
+            self.player[2] = "Attacker"
+            self.player[3] = "Attacker"
         else:
             raise SyntaxError("Falscher Modus in startlobby")
             
@@ -102,7 +108,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.firstPlayer.addText(self.player1)
+            self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
@@ -110,7 +116,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.secondPlayer.addText(self.player2)
+            self.secondPlayer.addText(self.player[1])
             
             aktuelleHoehe += self.divNodelobbyMenue.size[1]*0.35    
             
@@ -120,7 +126,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.thirdPlayer.addText(self.player3)
+            self.thirdPlayer.addText(self.player[2])
             
             self.forthPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
@@ -128,7 +134,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.forthPlayer.addText(self.player4)
+            self.forthPlayer.addText(self.player[3])
         
         elif(self.modus == 2):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
@@ -137,7 +143,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.firstPlayer.addText(self.player1)
+            self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
@@ -145,7 +151,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.secondPlayer.addText(self.player2)
+            self.secondPlayer.addText(self.player[1])
             
         else:
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
@@ -154,7 +160,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.firstPlayer.addText(self.player1)
+            self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
@@ -162,7 +168,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.secondPlayer.addText(self.player2)
+            self.secondPlayer.addText(self.playe[1])
             
             aktuelleHoehe += self.divNodelobbyMenue.size[1]*0.35
             
@@ -172,11 +178,11 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.thirdPlayer.addText(self.player3)
+            self.thirdPlayer.addText(self.player[2])
             
 #         
 #     def updatePlayerName(self):
-#         #self.player1-4 om startlobby text updaten der rectnodes
+#         #self.player[1-4] om startlobby text updaten der rectnodes
 #         pass
 #     
 #     
@@ -190,15 +196,13 @@ class LobbyMenue(object):
 #         self.connectedPlayers-=1
 #         self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
 #     
-#     def countCount(self):
-#         self.count -=1
-#         self.countNode.updateTextNode("Gamestart: "+ str(self.count))
-#         
-#     def updateJoinedPlayerNumber(self):
-#         self.connectedPlayers+=1
-#         if(self.connectedPlayers>self.modus):
-#             self.connectedPlayers-=1
-#             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
-#         
-#         self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
-#         
+       
+    def updateJoinedPlayerNumber(self, ip, name):
+        if(self.connectedPlayers+1>self.modus):
+            raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
+        else:
+            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+            self.player[self.connectedPlayers] = name
+            self.playerIP[self.connectedPlayers] = ip
+            self.connectedPlayers+=1
+            
