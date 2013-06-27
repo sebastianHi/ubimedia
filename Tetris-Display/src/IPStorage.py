@@ -30,5 +30,4 @@ class IPStorage():
         self._gui = gui;
 #schnittstelle von gui und ipstorage           
     def eventHandler(self,msg):
-        if(msg == "Test"):
-            self._gui.eventHandler()
+        self._gui.eventHandler()
