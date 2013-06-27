@@ -28,6 +28,3 @@ class IPStorage():
 #setter fuer gui 
     def initGui(self,gui):
         self._gui = gui;
-#schnittstelle von gui und ipstorage           
-    def eventHandler(self,msg):
-        self._gui.eventHandler(msg)

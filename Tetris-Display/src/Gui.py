@@ -139,40 +139,40 @@ class Gui(AVGApp):
 
     def eventHandler(self,msg):
 ##parser
-        print "msg"
+        print msg
         ip = ""
-        befehl = ""
-        gotNick = False
-        switch = True
+        l = []
         count = 0
         for c in msg:
-            if(switch):
-                ip+= c
-            elif(c == '#' & count <3):
-                switch = False
+            if(c == '#'):
+                if(count ==0):
+                    ip = ''.join(l)
+                    l = []
                 count+=1
-            elif(befehl == "nickname:"):
-                gotNick = True
-                befehl = "c"
+                
             else:
-                befehl+=c
-        print "befehl: ",befehl,"nick: ",gotNick   
+                l.append(c)
+          
+        
+        befehl = ''.join(l)
+        
+        print "befehl: ",befehl,"ip: ",ip   
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
-        if(gotNick & self.zustand == 1):
-            print "GotNickForIP : ",ip," Nick: ",befehl
-            self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl)
+        if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
+            print "GotNickForIP : ",ip," Nick: ", befehl[9:befehl.__len__()]
+            self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
 #----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
-        elif(  befehl == "moveLeft"    & self.zustand == 2):
+        elif(  (befehl == "moveLeft" )   & (self.zustand == 2)):
             print "GotMoveLeft"
             
-        elif(befehl == "moveRight"   & self.zustand == 2):
+        elif((befehl == "moveRight")   & (self.zustand == 2)):
             print "GotMoveRight"
             
-        elif(befehl == "moveRotateR" & self.zustand == 2):
+        elif((befehl == "moveRotateR" )& (self.zustand == 2)):
             print "GotMoveRotateR"
             
-        elif(befehl == "moveRotateL" & self.zustand == 2):
+        elif((befehl == "moveRotateL" )& (self.zustand == 2)):
             print "GotRotateL"
             
     
@@ -278,7 +278,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message
         #self.sendMessage("Received: "+msg, binary)##send back message to initiating client
-        ipStorage.eventHandler(msg);
+        gui.eventHandler(msg)
 
 if __name__ == '__main__':
     ipStorage = IPStorage()
