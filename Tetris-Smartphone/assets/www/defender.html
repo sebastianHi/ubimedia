@@ -4,22 +4,12 @@
 	<title>Defender!</title> 
 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<!--<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
 	<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 	<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script> -->
 	<style>
-	html, body { padding: 0; margin: 0; }
-	html, .ui-mobile, .ui-mobile body {
-    	height: 435px;
-	}
-	.ui-mobile, .ui-mobile .ui-page {
-    	min-height: 435px;
-	}
-	.ui-content{
-		padding:10px 15px 0px 15px;
-	}
-	.panel-content { padding:15px; }
-    .alignleft { float: left; }
+	.panel-content { padding:10px; }
+    .alignleft { float: left;  }
     .alignright { float: right; }
 	</style>
 </head> 
@@ -29,19 +19,22 @@
 		<div data-role="header">
     		<h1>Game On!</h1>
 		</div>
-		<div data-role="content"> 
-			<div id="skillselector">
-                <p class="alignleft"> <a href="#passive" data-role="button" data-inline="true" data-mini="true">Passive Skills</a></p>
-                <p class="alignright"><a href="#active" data-role="button" data-inline="true" data-mini="true">Active Skills</a></p>
-                <div style="clear: both;"></div>
-            </div>
-           <div align="center" id="middle">
-                <p>Current Block:</p><br>
-               <p class="alignleft"> <a href="#" data-role="button" data-inline="true" data-mini="true" onClick="send(ip+"###moveLeft");">Move Left</a></p>
-                <p class="alignright"> <a href="#" data-role="button" data-inline="true" data-mini="true" onClick="send(ip+"###moveRight");">Move Right</a></p><div style="clear: both;"></div>
-                <p id="CurrBlock">Picture of Block here...</p><br>
-                <p>Move Phone to Rotate</p>
+		<div data-role="content">
+        <div class="ui-grid-b" id="textbox">
+            <div class="ui-block-a" align="left"><a href="#passive" data-role="button" data-inline="true" data-mini="true">Passive Skills</a></div>
+            <div class="ui-block-b"></div>
+            <div class="ui-block-c" align="right"><a href="#active" data-role="button" data-inline="true" data-mini="true">Active Skills</a></div>
+		    <div style="clear: both;"></div>
+	   </div><br>
+           <div class="ui-grid-b" id="middle">
+               <div class="ui-block-a" align="left"><br><br><br><a class="alignleft" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" data-inline="true" onClick="moveLeft();">Move Left</a></div>
+	           <div class="ui-block-b" align="center"><p>Current Block:</p><br>
+               <p id="CurrBlock">Picture of Block here...</p><br>
+                <p>Move Phone to Rotate</p></div>
+	           <div class="ui-block-c" align="right"><br><br><br><a class="alignright" data-icon="arrow-r" href="#" data-role="button" data-inline="true" data-iconpos="top" onClick="moveRight();">Move Right</a></div>
+        <div style="clear: both;"></div>
 		      </div>
+        
 	    </div>
 			
 		<!-- passive Skills -->

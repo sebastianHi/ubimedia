@@ -125,3 +125,11 @@ function setNickname(){
     nickname = document.getElementById('nick').value;
     console.log("Nickname set as: "+ nickname);
 };
+
+function moveLeft(){
+    send(ip+"###moveLeft");
+};
+
+function moveRight(){
+    send(ip+"###moveRight");
+};
