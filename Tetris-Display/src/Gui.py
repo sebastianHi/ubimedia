@@ -139,6 +139,7 @@ class Gui(AVGApp):
 
     def eventHandler(self,msg):
 ##parser
+        print "msg"
         ip = ""
         befehl = ""
         gotNick = False
@@ -155,7 +156,7 @@ class Gui(AVGApp):
                 befehl = "c"
             else:
                 befehl+=c
-                
+        print "befehl: ",befehl,"nick: ",gotNick   
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if(gotNick & self.zustand == 1):
