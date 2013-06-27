@@ -25,10 +25,10 @@ class IPStorage():
         for key in self._ipList:
             self._ipList[key].sendMessage(msg)
      
-    #setter fuer gui 
+#setter fuer gui 
     def initGui(self,gui):
         self._gui = gui;
-            
+#schnittstelle von gui und ipstorage           
     def eventHandler(self,msg):
         if(msg == "Test"):
             self._gui.eventHandler()
