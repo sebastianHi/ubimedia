@@ -7,28 +7,30 @@ class ZFallingBlock(FallingBlock):
 
     def __init__(self, GameMenue, Field):
         
+        self.Field = Field
+        self.GameMenue = GameMenue
+        
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (6 * GameMenue.blocksize), GameMenue.yOben), 
+                                  pos = (Field.xWertLinksOben + (6 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (7 * GameMenue.blocksize), GameMenue.yOben), 
+                                  pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (7 * GameMenue.blocksize), GameMenue.yOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (8 * GameMenue.blocksize), GameMenue.yOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben + (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
-        self.Field = Field
-        self.GameMenue = GameMenue
+
         self.currPos1 = (5,0)
         self.currPos2 = (6,0)
         self.currPos3 = (6,1)
@@ -38,7 +40,7 @@ class ZFallingBlock(FallingBlock):
         
         
     
-    def moveBlockLeft(self, node):
+    def moveBlockLeft(self):
         
         if(self.checkLeftBound()):
             self.currPos1 = self.currPos1[self.currPos1[0] - 1][self.currPos1[1]]
@@ -52,7 +54,7 @@ class ZFallingBlock(FallingBlock):
         else:
             pass  # dont move dat shit
         
-    def moveBlockRight(self, node):
+    def moveBlockRight(self):
         
         if(self.checkRightBound()):
             self.currPos1 = self.currPos1[self.currPos1[0] + 1][self.currPos1[1]]
@@ -101,30 +103,51 @@ class ZFallingBlock(FallingBlock):
             a = self.Field.Matrix[self.currPos1[0]][self.currPos1[1] + self.GameMenue.blocksize]
             b = self.Field.Matrix[self.currPos3[0]][self.currPos3[1] + self.GameMenue.blocksize]
             c = self.Field.Matrix[self.currPos4[0]][self.currPos4[1] + self.GameMenue.blocksize]
-            if (a[1] > 19) or (a[1] == True) or (b[1] > 19) or (b[1] == True) or (c[1] > 19) or (c[1] == True):
+            if (a[1] > 18) or (a[1] == True) or (b[1] > 18) or (b[1] == True) or (c[1] > 18) or (c[1] == True):
                 return True
             else:
                 return False
         else: # check part2 und part 4
             a = self.Field.Matrix[self.currPos2[0]][self.currPos2[1] + self.GameMenue.blocksize]
             b = self.Field.Matrix[self.currPos4[0]][self.currPos4[1] + self.GameMenue.blocksize]
-            if (a[1] > 19) or (a[1] == True) or (b[1] > 19) or (b[1] == True):
+            if (a[1] > 18) or (a[1] == True) or (b[1] > 18) or (b[1] == True):
                 return True
             else: return False
     
-    def checkLeftBound(self): #return true wenn bewegung moeglich, prüft nur linken oberen Block
+    def checkLeftBound(self): #return true wenn bewegung moeglich
+        if (self.rotatingPosition == 0): # prüfe part 1,3
             a = self.Field.Matrix[self.currPos1[0] - 1][self.currPos1[1]]
-            if (a[0] < 0):
+            b = self.Field.Matrix[self.currPos3[0] - 1][self.currPos3[1]]
+            if (a[0] < 0) or (a[0] == True) or (b[0] == True):
                 return False
             else:
-                return a
+                return True
+        else: # prüfe part1,3,4
+            a = self.Field.Matrix[self.currPos1[0] - 1][self.currPos1[1]]
+            b = self.Field.Matrix[self.currPos3[0] - 1][self.currPos3[1]]
+            c = self.Field.Matrix[self.currPos4[0] - 1][self.currPos4[1]]
+            if (b[0] < 0) or (a[0] == True) or (b[0] == True) or (c[0] == True):
+                return False
+            else:
+                return True
+            
     
     def checkRightBound(self, node):#return true wenn bewegung moeglich, prüft nur rechten unteren Block
-            a = self.Field.Matrix[self.currPos4[0] + 1][self.currPos1[1]]
-            if (a[0 > 13]):
+        if (self.rotatingPosition == 0): # prüfe part 2,4
+            a = self.Field.Matrix[self.currPos2[0] + 1][self.currPos2[1]]
+            b = self.Field.Matrix[self.currPos4[0] + 1][self.currPos4[1]]
+            if (b[0] > 13) or (a[0] == True) or (b[0] == True):
                 return False
             else:
-                return a
+                return True
+        else: # prüfe part1,2,4
+            a = self.Field.Matrix[self.currPos1[0] + 1][self.currPos1[1]]
+            b = self.Field.Matrix[self.currPos2[0] + 1][self.currPos2[1]]
+            c = self.Field.Matrix[self.currPos4[0] + 1][self.currPos4[1]]
+            if (b[0] > 13) or (a[0] == True) or (b[0] == True) or (c[0] == True):
+                return False
+            else:
+                return True
     
     def checkCollisionAtRotation(self, RotatingNumber): # True = Collison, False = No Collision
         
@@ -132,7 +155,7 @@ class ZFallingBlock(FallingBlock):
         if (RotatingNumber == 0):
             a = self.Field.Matrix[self.currPos1[0] + 2][self.currPos1[1] - 1]
             b = self.Field.Matrix[self.currPos4[0] - 1][self.currPos1[1] + 1]
-            if (a[1] < 0) or (b[1] > 19):
+            if (a[1] < 0) or (b[1] > 18):
                 return True
             elif (b == True):
                     return True
@@ -142,7 +165,7 @@ class ZFallingBlock(FallingBlock):
         else:
             a = self.Field.Matrix[self.currPos1[0] - 2][self.currPos1[1] + 1]
             b = self.Field.Matrix[self.currPos4[0] + 1][self.currPos1[1] - 1]
-            if (a[0] < 0) or (b[0] > 19):
+            if (a[0] < 0) or (b[0] > 18):
                 return True
             elif (b == True) or (a == True):
                     return True
