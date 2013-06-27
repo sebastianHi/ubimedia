@@ -1,4 +1,5 @@
 from FallingBlock import FallingBlock
+from FallingBlocks import *
 import random
 
 class Field(object):
@@ -13,31 +14,31 @@ class Field(object):
         self.Queue = []
         # Matrix hat die Form Matrix[0-13][0-19] und ist mit False initialisiert
         self.Matrix = [[False for i in range(20)] for j in range(14)]
-        pass
+        
         
         
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,6)
         
         if (RandomNumber == 1):
-            #return cubeFallingBlock()
-            return 1
+            return cubeFallingBlock()
+            
         elif (RandomNumber == 2):
-            # return IFallingBlock()
-            return 2
+            return IFallingBlock()
+          
         elif (RandomNumber == 3):
-            #return LFallingBlock()
-            return 3
+            return LFallingBlock()
+            
         elif (RandomNumber == 4):
-            # return reverseLFallingBlock()
-            return 4
+            return reverseLFallingBlock()
+            
         elif (RandomNumber == 5):
-            #return reverseZFallingBlock()
-            return 5
+            return reverseZFallingBlock()
+            
         else:
-            # return ZFallingBlock()
-            return 6
-        pass
+            return ZFallingBlock()
+            
+        
     
     def hitGround(self, node):#return true wenn bewegung moeglich
         pass
@@ -49,6 +50,3 @@ class Field(object):
             return self.generateRandomBlock()
         else:
             return self.Queue.pop()
-        pass
-    
-    

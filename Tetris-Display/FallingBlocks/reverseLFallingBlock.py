@@ -27,4 +27,3 @@ class reverseLFallingBlock(FallingBlock):
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        pass

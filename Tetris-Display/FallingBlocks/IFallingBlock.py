@@ -32,4 +32,3 @@ class IFallingBlock(FallingBlock):
                                   fillcolor = "FFFF00", fillopacity = 1, color = "FFFF00", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        pass

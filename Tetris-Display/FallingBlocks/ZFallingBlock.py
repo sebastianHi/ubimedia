@@ -27,4 +27,4 @@ class ZFallingBlock(FallingBlock):
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        pass
+        

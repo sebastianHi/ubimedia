@@ -27,4 +27,4 @@ class LFallingBlock(FallingBlock):
                                   fillcolor = "00FF00", fillopacity = 1, color = "00FF00", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        pass
+        

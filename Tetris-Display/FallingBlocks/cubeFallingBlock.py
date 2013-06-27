@@ -32,4 +32,4 @@ class cubeFallingBlock(FallingBlock):
                                   fillcolor = "FF0000", fillopacity = 1, color = "FF0000", 
                                   size = avg.Point2D(self.blocksize ,self.blocksize)
                                   )
-        pass
+        
