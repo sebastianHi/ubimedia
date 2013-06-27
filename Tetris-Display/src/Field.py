@@ -1,11 +1,11 @@
-from FallingBlock import FallingBlock
 from FallingBlocks import *
 from libavg import avg
 import random
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player):
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
+        self.gameMenue = gameMenue
         self.player = player
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
@@ -15,7 +15,7 @@ class Field(object):
         #queue die gefuellt wird durch phone, new falling stone danach mit dem naechsten rufen
         self.Queue = []
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
-        self.Matrix = [[False for i in range(19)] for j in range(14)]
+        self.matrix = [[False for i in range(19)] for j in range(14)]
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]
         self.initBlock();
         self.timer = self.player.setInterval(1000, self.gravity)
@@ -50,7 +50,7 @@ class Field(object):
             for i  in range(14):
                 b = True
                 for j in range(20):
-                    b = b & self.Matrix[i][j]
+                    b = b & self.matrix[i][j]
                 if(b):
                     self.dropOneRow(j)
                     amountOfRows +=1
@@ -65,7 +65,7 @@ class Field(object):
     
     def dropOneRow(self, row):
         for l in range (14):
-            self.Matrix[l][row] = False
+            self.matrix[l][row] = False
             #TODO: nicht inactive sondern loeschen
             (self.matrixSteadyRectNodes[l][row]).unlink()
             self.matrixSteadyRectNodes[l][row] = None
@@ -74,7 +74,7 @@ class Field(object):
         for i in range(14):
             for k in range(row+1,20):
                 self.matrixSteadyRectNodes[i][j]= self.matrixSteadyRectNodes[i][k]
-                self.Matrix[i][j] = self.matrix[i][k]
+                self.matrix[i][j] = self.matrix[i][k]
                 self.matrixSteadyRectNodes[i][k] = None
                 self.matrix[i][k] = False
                  
@@ -84,41 +84,41 @@ class Field(object):
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
-                return cubeFallingBlock()
+                return cubeFallingBlock(self.gameMenue, self)
             else:
                 pass # throw shit
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if (a == True):
-                return IFallingBlock()
+                return IFallingBlock(self.gameMenue, self)
             else:
                 pass
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if (a == True):
-                return LFallingBlock()
+                return LFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if (a == True):
-                return reverseLFallingBlock()
+                return reverseLFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if (a == True):
-                return reverseZFallingBlock()
+                return reverseZFallingBlock(self.gameMenue, self)
             else:
                 pass
         else:
             a = self.checkSpawn("Z")
             if (a == True):
-                return ZFallingBlock()
+                return ZFallingBlock(self.gameMenue, self)
             else:
                 pass
              
@@ -131,17 +131,17 @@ class Field(object):
             b = self.checkSpawn(a)
             if (b == True):
                 if (a == "cube"):
-                    return cubeFallingBlock()
+                    return cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
-                    return IFallingBlock()
+                    return IFallingBlock(self.gameMenue, self)
                 elif (a== "L"):
-                    return LFallingBlock()
+                    return LFallingBlock(self.gameMenue, self)
                 elif (a == "Z"):
-                    return ZFallingBlock()
+                    return ZFallingBlock(self.gameMenue, self)
                 elif (a == "reverseL"):
-                    return reverseLFallingBlock()
+                    return reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
-                    return reverseZFallingBlock()
+                    return reverseZFallingBlock(self.gameMenue, self)
                 else:
                     pass
             else: 
