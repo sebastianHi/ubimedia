@@ -1,7 +1,4 @@
-# import FallingBlocks.crossFallingBlock,     FallingBlocks.cubeFallingBlock,     FallingBlocks.IFallingBlock,    FallingBlocks.reverseLFallingBlock
-# import FallingBlocks.reverseZFallingBlock,  FallingBlocks.ZFallingBlock,        FallingBlocks.LFallingBlock
-from FallingBlocks import *
-import src.FallingBlock, src.GameMenue
+from src import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 from libavg import avg
 import random
 
@@ -87,47 +84,47 @@ class Field(object):
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
-                return FallingBlocks.cubeFallingBlock(self.gameMenue, self)
+                return cubeFallingBlock(self.gameMenue, self)
             else:
                 pass # throw shit
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if (a == True):
-                return FallingBlocks.IFallingBlock(self.gameMenue, self)
+                return IFallingBlock(self.gameMenue, self)
             else:
                 pass
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if (a == True):
-                return FallingBlocks.LFallingBlock(self.gameMenue, self)
+                return LFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if (a == True):
-                return FallingBlocks.reverseLFallingBlock(self.gameMenue, self)
+                return reverseLFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if (a == True):
-                return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
+                return reverseZFallingBlock(self.gameMenue, self)
             else:
                 pass
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if (a == True):
-                return FallingBlocks.ZFallingBlock(self.gameMenue, self)
+                return ZFallingBlock(self.gameMenue, self)
             else:
                 pass
         else:
             a = self.checkSpawn("cross")
             if (a == True):
-                return FallingBlocks.crossFallingBlock(self.gameMenue, self)
+                return crossFallingBlock(self.gameMenue, self)
             else:
                 pass
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
@@ -139,19 +136,19 @@ class Field(object):
             b = self.checkSpawn(a)
             if (b == True):
                 if (a == "cube"):
-                    return FallingBlocks.cubeFallingBlock(self.gameMenue, self)
+                    return cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
-                    return FallingBlocks.IFallingBlock(self.gameMenue, self)
+                    return IFallingBlock(self.gameMenue, self)
                 elif (a== "L"):
-                    return FallingBlocks.LFallingBlock(self.gameMenue, self)
+                    return LFallingBlock(self.gameMenue, self)
                 elif (a == "Z"):
-                    return FallingBlocks.ZFallingBlock(self.gameMenue, self)
+                    return ZFallingBlock(self.gameMenue, self)
                 elif (a == "reverseL"):
-                    return FallingBlocks.reverseLFallingBlock(self.gameMenue, self)
+                    return reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
-                    return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
+                    return reverseZFallingBlock(self.gameMenue, self)
                 elif (a == "cross"):
-                    return FallingBlocks.crossFallingBlock(self.gameMenue,self)
+                    return crossFallingBlock(self.gameMenue,self)
                 else:
                     pass
             else: 

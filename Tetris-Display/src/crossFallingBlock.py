@@ -1,5 +1,5 @@
 from libavg import avg
-import src.FallingBlock, src.GameMenue
+
 
 class crossFallingBlock(object):
 
