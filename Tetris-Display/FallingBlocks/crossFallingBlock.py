@@ -1,16 +1,9 @@
-'''
-Created on 28.06.2013
+from libavg import avg
+import src.FallingBlock, src.GameMenue
 
-@author: sebastian
-'''
+class crossFallingBlock(src.FallingBlock):
 
-class MyClass(object):
-    '''
-    classdocs
-    '''
-
-
-    def __init__(self):
+    def __init__(self, GameMenue, Field):
         '''
         Constructor
         '''

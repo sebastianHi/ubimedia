@@ -1,7 +1,7 @@
 from libavg import avg
-from src import FallingBlock,GameMenue
+import src.FallingBlock, src.GameMenue
 
-class reverseZFallingBlock(FallingBlock):
+class reverseZFallingBlock(src.FallingBlock):
 
 
 

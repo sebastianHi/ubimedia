@@ -1,29 +1,29 @@
 from libavg import avg
-from src import FallingBlock,GameMenue
+import src.FallingBlock, src.GameMenue
 
-class reverseLFallingBlock(FallingBlock):
+class reverseLFallingBlock(src.FallingBlock):
 
 
 
-    def __init__(self, GameMenue):
+    def __init__(self, GameMenue, Field):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (8 * GameMenue.blocksize), GameMenue.yOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (6 * GameMenue.blocksize), GameMenue.yOben), 
+                                  pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (7 * GameMenue.blocksize), GameMenue.yOben), 
+                                  pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (GameMenue.linksFeld1X+ (8 * GameMenue.blocksize), GameMenue.yOben), 
+                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
