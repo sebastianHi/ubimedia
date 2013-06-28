@@ -1,4 +1,6 @@
-from FallingBlocks import *
+import FallingBlocks.crossFallingBlock,     FallingBlocks.cubeFallingBlock,     FallingBlocks.IFallingBlock,    FallingBlocks.reverseLFallingBlock
+import FallingBlocks.reverseZFallingBlock,  FallingBlocks.ZFallingBlock,        FallingBlocks.LFallingBlock
+from src import FallingBlock, GameMenue
 from libavg import avg
 import random
 
@@ -84,41 +86,41 @@ class Field(object):
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
-                return cubeFallingBlock(self.gameMenue, self)
+                return FallingBlocks.cubeFallingBlock(self.gameMenue, self)
             else:
                 pass # throw shit
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if (a == True):
-                return IFallingBlock(self.gameMenue, self)
+                return FallingBlocks.IFallingBlock(self.gameMenue, self)
             else:
                 pass
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if (a == True):
-                return LFallingBlock(self.gameMenue, self)
+                return FallingBlocks.LFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if (a == True):
-                return reverseLFallingBlock(self.gameMenue, self)
+                return FallingBlocks.reverseLFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if (a == True):
-                return reverseZFallingBlock(self.gameMenue, self)
+                return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
             else:
                 pass
         else:
             a = self.checkSpawn("Z")
             if (a == True):
-                return ZFallingBlock(self.gameMenue, self)
+                return FallingBlocks.ZFallingBlock(self.gameMenue, self)
             else:
                 pass
              
@@ -131,17 +133,17 @@ class Field(object):
             b = self.checkSpawn(a)
             if (b == True):
                 if (a == "cube"):
-                    return cubeFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
-                    return IFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.IFallingBlock(self.gameMenue, self)
                 elif (a== "L"):
-                    return LFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.LFallingBlock(self.gameMenue, self)
                 elif (a == "Z"):
-                    return ZFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.ZFallingBlock(self.gameMenue, self)
                 elif (a == "reverseL"):
-                    return reverseLFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
-                    return reverseZFallingBlock(self.gameMenue, self)
+                    return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
                 else:
                     pass
             else: 
