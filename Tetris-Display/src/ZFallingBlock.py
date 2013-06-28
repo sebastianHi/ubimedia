@@ -20,12 +20,12 @@ class ZFallingBlock(object):
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben + (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben + (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "FF00FF", fillopacity = 1, color = "FF00FF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )

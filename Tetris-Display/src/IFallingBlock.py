@@ -30,6 +30,7 @@ class IFallingBlock(object):
         self.currPos2 = (6,0)
         self.currPos3 = (7,0)
         self.currPos4 = (8,0)
+        self.blockType = "I"
         
     def moveBlockLeft(self, node):
         if(self.checkLeftBound(self.fallingBlock)):

@@ -5,22 +5,22 @@ class LFallingBlock(object):
     def __init__(self, GameMenue, Field):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben.yOben), 
+                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "00FF00", fillopacity = 1, color = "00FF00", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FF00", fillopacity = 1, color = "00FF00", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FF00", fillopacity = 1, color = "00FF00", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FF00", fillopacity = 1, color = "00FF00", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
@@ -28,6 +28,7 @@ class LFallingBlock(object):
         self.currPos2 = (5,1)
         self.currPos3 = (6,1)
         self.currPos4 = (7,1)
+        self.blockType = "L"
         
     def moveBlockLeft(self, node):
         if(self.checkLeftBound(self.fallingBlock)):

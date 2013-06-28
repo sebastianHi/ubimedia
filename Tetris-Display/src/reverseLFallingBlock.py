@@ -7,7 +7,7 @@ class reverseLFallingBlock(object):
     def __init__(self, GameMenue, Field):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.Blocksize), 
+                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "00FFFF", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
@@ -30,6 +30,7 @@ class reverseLFallingBlock(object):
         self.currPos2 = (5,0)
         self.currPos3 = (6,0)
         self.currPos4 = (7,0)
+        self.blockType = "reverseL"
         
     def moveBlockLeft(self, node):
         if(self.checkLeftBound(self.fallingBlock)):

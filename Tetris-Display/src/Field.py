@@ -1,4 +1,4 @@
-from src import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
+import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 from libavg import avg
 import random
 
@@ -24,6 +24,7 @@ class Field(object):
         
         
     def initBlock(self):
+        print"initBlock"
         self.block = self.newFallingStone()
         if(not (self.checkSpawn(self.block.blockType))):
             #TODO:  Someone lost!
@@ -31,11 +32,13 @@ class Field(object):
     
     
     def blockHitGround(self):
+        print"blockHitGround"
         self.checkRows()
         self.initblock()
         self.timer = self.player.setInterval(1000, self.gravity)
         
     def steadyBlock(self):
+        print"steadyBlock"
         self.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1]] = self.block.part1
         self.matrixSteadyRectNodes[self.currPos2[0]][self.currPos2[1]] = self.block.part2
         self.matrixSteadyRectNodes[self.currPos3[0]][self.currPos3[1]] = self.block.part3
@@ -45,6 +48,7 @@ class Field(object):
         self.player.clearInterval(self.timer)
     
     def checkRows(self):
+        print"checkRows"
         breaked = False
         amountOfRows = 0
         while(breaked):
@@ -65,6 +69,7 @@ class Field(object):
     
     
     def dropOneRow(self, row):
+        print"dropOneRow"
         for l in range (14):
             self.matrix[l][row] = False
             (self.matrixSteadyRectNodes[l][row]).unlink()
@@ -79,55 +84,58 @@ class Field(object):
                 self.matrix[i][k] = False
                  
     def generateRandomBlock(self):
+        print"generateRandomBlock"
         RandomNumber = random.randint(1,7)
         
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
-                return cubeFallingBlock(self.gameMenue, self)
+                return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
                 pass # throw shit
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if (a == True):
-                return IFallingBlock(self.gameMenue, self)
+                return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
                 pass
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if (a == True):
-                return LFallingBlock(self.gameMenue, self)
+                return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if (a == True):
-                return reverseLFallingBlock(self.gameMenue, self)
+                return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
                 pass
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if (a == True):
-                return reverseZFallingBlock(self.gameMenue, self)
+                return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
                 pass
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if (a == True):
-                return ZFallingBlock(self.gameMenue, self)
+                return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
                 pass
         else:
             a = self.checkSpawn("cross")
             if (a == True):
-                return crossFallingBlock(self.gameMenue, self)
+                #TODO: crossFallingBlock.crossFallingBlock(self.gameMenue, self)
+                return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
                 pass
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
+        print"newFallingStone"
         ##if queue leer dann random sonst erstes element der queue
         if not self.Queue:
             return self.generateRandomBlock()
@@ -136,25 +144,26 @@ class Field(object):
             b = self.checkSpawn(a)
             if (b == True):
                 if (a == "cube"):
-                    return cubeFallingBlock(self.gameMenue, self)
+                    return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
-                    return IFallingBlock(self.gameMenue, self)
+                    return IFallingBlock.IFallingBlock(self.gameMenue, self)
                 elif (a== "L"):
-                    return LFallingBlock(self.gameMenue, self)
+                    return LFallingBlock.LFallingBlock(self.gameMenue, self)
                 elif (a == "Z"):
-                    return ZFallingBlock(self.gameMenue, self)
+                    return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
                 elif (a == "reverseL"):
-                    return reverseLFallingBlock(self.gameMenue, self)
+                    return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
-                    return reverseZFallingBlock(self.gameMenue, self)
+                    return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
                 elif (a == "cross"):
-                    return crossFallingBlock(self.gameMenue,self)
+                    return crossFallingBlock.crossFallingBlock(self.gameMenue,self)
                 else:
                     pass
             else: 
                 pass # throw shit
         
     def checkSpawn(self, string):
+        print"checkSpawn"
         if (string == "cube"):
             if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[6][1] == True) or (self.matrix[7][1] == True):
                 return False
@@ -194,9 +203,11 @@ class Field(object):
             return False
         
     def deleteRows(self): # soll volle Reihen loeschen und Matrix und alles umsetzen
+        print"deleteRows"
         pass
     
     def gravity(self):
+        print"gravity"
         if(self.block.hitGround()):     
             self.steadyBlock()
             self.blockHitGround()
@@ -212,24 +223,28 @@ class Field(object):
 
 
     def moveLeft(self):
+        print"moveLeft"
         if(self.block == None):
             pass
         else:
             self.block.moveBlockLeft()
     
     def moveRight(self):
+        print"moveRight"
         if(self.block == None):
             pass
         else:
             self.block.moveBlockRight()
     
     def rotateLeft(self):
+        print"rotateLeft"
         if(self.block == None):
             pass
         else:
             self.block.rotateLeft()
             
     def rotateRight(self):
+        print"rotateRight"
         if(self.block == None):
             pass
         else:
