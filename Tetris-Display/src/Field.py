@@ -2,6 +2,7 @@ from src import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock,
 from libavg import avg
 import random
 
+
 class Field(object):
 
     def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
@@ -66,7 +67,6 @@ class Field(object):
     def dropOneRow(self, row):
         for l in range (14):
             self.matrix[l][row] = False
-            #TODO: nicht inactive sondern loeschen
             (self.matrixSteadyRectNodes[l][row]).unlink()
             self.matrixSteadyRectNodes[l][row] = None
             

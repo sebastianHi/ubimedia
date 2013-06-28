@@ -1,7 +1,6 @@
 from libavg import avg
+
 class LFallingBlock(object):
-
-
 
     def __init__(self, GameMenue, Field):
         
