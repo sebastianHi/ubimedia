@@ -168,7 +168,7 @@ class LobbyMenue(object):
                                    fillopacity=1,
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
-            self.secondPlayer.addText(self.playe[1])
+            self.secondPlayer.addText(self.player[1])
             
             aktuelleHoehe += self.divNodelobbyMenue.size[1]*0.35
             

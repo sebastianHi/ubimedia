@@ -8,18 +8,18 @@ class Field(object):
     def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
         self.gameMenue = gameMenue
         self.player = player
+        self.gameMenue = gameMenue
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
         self.yWertOben = yWertOben
         self.yWertUnten = yWertUnten
-        self.gravity = 1
         #queue die gefuellt wird durch phone, new falling stone danach mit dem naechsten rufen
         self.Queue = []
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
         self.matrix = [[False for i in range(19)] for j in range(14)]
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]
         self.initBlock();
-        self.timer = self.player.setInterval(1000, self.gravity)
+        self.timer = self.player.setInterval(500, self.gravity)
         
         
         
@@ -34,17 +34,15 @@ class Field(object):
     def blockHitGround(self):
         print"blockHitGround"
         self.checkRows()
-        self.initblock()
+        self.initBlock()
         self.timer = self.player.setInterval(1000, self.gravity)
         
     def steadyBlock(self):
         print"steadyBlock"
-        self.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1]] = self.block.part1
-        self.matrixSteadyRectNodes[self.currPos2[0]][self.currPos2[1]] = self.block.part2
-        self.matrixSteadyRectNodes[self.currPos3[0]][self.currPos3[1]] = self.block.part3
-        self.matrixSteadyRectNodes[self.currPos4[0]][self.currPos4[1]] = self.block.part4
-        self.block.part1
-        self.block.part2
+        self.matrixSteadyRectNodes[self.block.currPos1[0]][self.block.currPos1[1]] = self.block.part1
+        self.matrixSteadyRectNodes[self.block.currPos2[0]][self.block.currPos2[1]] = self.block.part2
+        self.matrixSteadyRectNodes[self.block.currPos3[0]][self.block.currPos3[1]] = self.block.part3
+        self.matrixSteadyRectNodes[self.block.currPos4[0]][self.block.currPos4[1]] = self.block.part4
         self.player.clearInterval(self.timer)
     
     def checkRows(self):
@@ -86,7 +84,7 @@ class Field(object):
     def generateRandomBlock(self):
         print"generateRandomBlock"
         RandomNumber = random.randint(1,7)
-        
+        RandomNumber = 6
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
@@ -207,19 +205,18 @@ class Field(object):
         pass
     
     def gravity(self):
-        print"gravity"
         if(self.block.hitGround()):     
             self.steadyBlock()
             self.blockHitGround()
         else:
-            self.block.currPos1 = self.currPos1[self.currPos1[0]][self.currPos1[1]+1]
-            self.block.currPos2 = self.currPos2[self.currPos2[0]][self.currPos2[1]+1]
-            self.block.currPos3 = self.currPos3[self.currPos3[0]][self.currPos3[1]+1]
-            self.block.currPos4 = self.currPos4[self.currPos4[0]][self.currPos4[1]+1]
-            self.block.part1.pos = (self.part1.pos[0],self.part1.pos[1] + self.GameMenue.blocksize)
-            self.block.part2.pos = (self.part2.pos[0],self.part2.pos[1] + self.GameMenue.blocksize)
-            self.block.part3.pos = (self.part3.pos[0],self.part3.pos[1] + self.GameMenue.blocksize)
-            self.block.part4.pos = (self.part4.pos[0],self.part4.pos[1] + self.GameMenue.blocksize)
+            self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] +1 )
+            self.block.currPos2 = (self.block.currPos2[0] ,self.block.currPos2[1] +1)
+            self.block.currPos3 = (self.block.currPos3[0] ,self.block.currPos3[1] +1)
+            self.block.currPos4 = (self.block.currPos4[0] ,self.block.currPos4[1] +1)  
+            self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
+            self.block.part2.pos = (self.block.part2.pos[0],self.block.part2.pos[1] + self.gameMenue.blocksize)
+            self.block.part3.pos = (self.block.part3.pos[0],self.block.part3.pos[1] + self.gameMenue.blocksize)
+            self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
 
 
     def moveLeft(self):

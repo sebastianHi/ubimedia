@@ -60,7 +60,7 @@ class Gui(AVGApp):
         self.lobbyMenu.divNodelobbyMenue.active = False 
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
-        self.ipStorage.updateAll("gamestarts")
+        #self.ipStorage.updateAll("gamestarts")
 
    
 
