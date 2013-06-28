@@ -29,12 +29,13 @@ class Field(object):
             #TODO:  Someone lost!
             pass
     
-    
+   
     def blockHitGround(self):
         self.checkRows()
         self.initBlock()
         self.timer = self.player.setInterval(500, self.gravity)
         
+    
     def steadyBlock(self):
         self.matrixSteadyRectNodes[self.block.currPos1[0]][self.block.currPos1[1]] = self.block.part1
         self.matrixSteadyRectNodes[self.block.currPos2[0]][self.block.currPos2[1]] = self.block.part2
@@ -44,8 +45,8 @@ class Field(object):
         self.matrix[self.block.currPos2[0]][self.block.currPos2[1]] = True
         self.matrix[self.block.currPos3[0]][self.block.currPos3[1]] = True
         self.matrix[self.block.currPos4[0]][self.block.currPos4[1]] = True
-        
         self.player.clearInterval(self.timer)
+    
     
     def checkRows(self):
         breaked = False
@@ -81,6 +82,7 @@ class Field(object):
                 self.matrixSteadyRectNodes[i][k] = None
                 self.matrix[i][k] = False
                  
+    
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
         RandomNumber = 1
@@ -131,6 +133,8 @@ class Field(object):
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
                 pass
+    
+    
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         ##if queue leer dann random sonst erstes element der queue
         if not self.Queue:
@@ -158,6 +162,7 @@ class Field(object):
             else: 
                 pass # throw shit
         
+    
     def checkSpawn(self, string):
         if (string == "cube"):
             if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[6][1] == True) or (self.matrix[7][1] == True):
@@ -197,10 +202,13 @@ class Field(object):
         else:
             return False
         
+    
     def deleteRows(self): # soll volle Reihen loeschen und Matrix und alles umsetzen
         pass
     
+    
     def gravity(self):
+        #test
         if(self.block.hitGround()):     
             self.steadyBlock()
             self.blockHitGround()
@@ -213,14 +221,14 @@ class Field(object):
             self.block.part2.pos = (self.block.part2.pos[0],self.block.part2.pos[1] + self.gameMenue.blocksize)
             self.block.part3.pos = (self.block.part3.pos[0],self.block.part3.pos[1] + self.gameMenue.blocksize)
             self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
-            self.block.moveBlockRight()
-
-
+            
+        
     def moveLeft(self):
         if(self.block == None):
             pass
         else:
             self.block.moveBlockLeft()
+    
     
     def moveRight(self):
         if(self.block == None):
@@ -228,12 +236,14 @@ class Field(object):
         else:
             self.block.moveBlockRight()
     
+    
     def rotateLeft(self):
         if(self.block == None):
             pass
         else:
             self.block.rotateLeft()
             
+    
     def rotateRight(self):
         if(self.block == None):
             pass
