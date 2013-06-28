@@ -9,22 +9,22 @@ class cubeFallingBlock(object):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FF0000", fillopacity = 1, color = "FF0000", 
+                                  fillcolor = "FF0000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FF0000", fillopacity = 1, color = "FF0000", 
+                                  fillcolor = "FF0000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben+ GameMenue.blocksize), 
-                                  fillcolor = "FF0000", fillopacity = 1, color = "FF0000", 
+                                  fillcolor = "FF0000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben+ GameMenue.blocksize), 
-                                  fillcolor = "FF0000", fillopacity = 1, color = "FF0000", 
+                                  fillcolor = "FF0000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         
@@ -54,10 +54,10 @@ class cubeFallingBlock(object):
     def moveBlockRight(self):
         
         if(self.checkRightBound()):
-            self.currPos1 = self.currPos1[self.currPos1[0] + 1][self.currPos1[1]]
-            self.currPos2 = self.currPos2[self.currPos2[0] + 1][self.currPos2[1]]
-            self.currPos3 = self.currPos3[self.currPos3[0] + 1][self.currPos3[1]]
-            self.currPos4 = self.currPos4[self.currPos4[0] + 1][self.currPos4[1]]
+            self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] )
+            self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] )
+            self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1] )
+            self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] )
             self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
             self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1])
             self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1])
@@ -65,9 +65,12 @@ class cubeFallingBlock(object):
         else:
             pass  # dont move dat shit
         
-    def rotate(self):
+    def rotateLeft(self):
         pass
-
+    
+    def rotateRight(self):
+        pass
+    
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
         if((self.currPos1[1]+1 > 18) | (self.currPos2[1]+1 > 18) | (self.currPos3[1]+1 > 18) | (self.currPos4[1]+1 > 18)):
             return True
@@ -83,20 +86,26 @@ class cubeFallingBlock(object):
 
     def checkLeftBound(self): #return true wenn bewegung moeglich
         # pruefe part 1,3
-        a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
-        b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-        if (a[0] < 0) or (a == True) or (b == True):
+        if((self.currPos1[0]-1 < 0)  | (self.currPos3[0]-1 < 0)):
             return False
         else:
-            return True
+            a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
+            b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
+            if (a or b ):
+                return False
+            else:
+                return True
  
             
     
-    def checkRightBound(self, node):#return true wenn bewegung moeglich, prueft nur rechten unteren Block
+    def checkRightBound(self):#return true wenn bewegung moeglich, prueft nur rechten unteren Block
         # pruefe part 2,4
-        a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
-        b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-        if (b[0] > 13) or (a == True) or (b == True):
+        if((self.currPos2[0]+1 > 13) | (self.currPos4[0]+1 > 13) ):
             return False
         else:
-            return True
+            a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
+            b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
+            if (a or b ):
+                return False
+            else:
+                return True
