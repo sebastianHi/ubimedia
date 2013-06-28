@@ -81,7 +81,7 @@ class Field(object):
                 self.matrix[i][k] = False
                  
     def generateRandomBlock(self):
-        RandomNumber = random.randint(1,6)
+        RandomNumber = random.randint(1,7)
         
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
@@ -117,13 +117,18 @@ class Field(object):
                 return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
             else:
                 pass
-        else:
+        elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if (a == True):
                 return FallingBlocks.ZFallingBlock(self.gameMenue, self)
             else:
                 pass
-             
+        else:
+            a = self.checkSpawn("cross")
+            if (a == True):
+                return FallingBlocks.crossFallingBlock(self.gameMenue, self)
+            else:
+                pass
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         ##if queue leer dann random sonst erstes element der queue
         if not self.Queue:
@@ -144,6 +149,8 @@ class Field(object):
                     return FallingBlocks.reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
                     return FallingBlocks.reverseZFallingBlock(self.gameMenue, self)
+                elif (a == "cross"):
+                    return FallingBlocks.crossFallingBlock(self.gameMenue,self)
                 else:
                     pass
             else: 
@@ -179,6 +186,11 @@ class Field(object):
             if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True):
                 return False
             else: 
+                return True
+        elif (string == "cross"):
+            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[6][1] == True):
+                return False
+            else:
                 return True
         else:
             return False
