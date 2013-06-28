@@ -1,6 +1,7 @@
-import FallingBlocks.crossFallingBlock,     FallingBlocks.cubeFallingBlock,     FallingBlocks.IFallingBlock,    FallingBlocks.reverseLFallingBlock
-import FallingBlocks.reverseZFallingBlock,  FallingBlocks.ZFallingBlock,        FallingBlocks.LFallingBlock
-from src import FallingBlock, GameMenue
+# import FallingBlocks.crossFallingBlock,     FallingBlocks.cubeFallingBlock,     FallingBlocks.IFallingBlock,    FallingBlocks.reverseLFallingBlock
+# import FallingBlocks.reverseZFallingBlock,  FallingBlocks.ZFallingBlock,        FallingBlocks.LFallingBlock
+from FallingBlocks import *
+import src.FallingBlock, src.GameMenue
 from libavg import avg
 import random
 
