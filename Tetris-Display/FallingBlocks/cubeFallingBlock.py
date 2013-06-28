@@ -1,7 +1,7 @@
 from libavg import avg
 import src.FallingBlock, src.GameMenue
 
-class cubeFallingBlock(src.FallingBlock):
+class cubeFallingBlock(object):
 
 
 

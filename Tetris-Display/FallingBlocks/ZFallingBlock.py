@@ -1,7 +1,7 @@
 from libavg import avg
 import src.FallingBlock, src.GameMenue
 
-class ZFallingBlock(src.FallingBlock):
+class ZFallingBlock(object):
 
 
 
@@ -132,7 +132,7 @@ class ZFallingBlock(src.FallingBlock):
                 return True
             
     
-    def checkRightBound(self, node):#return true wenn bewegung moeglich, prüft nur rechten unteren Block
+    def checkRightBound(self, node):#return true wenn bewegung moeglich, prueft nur rechten unteren Block
         if (self.rotatingPosition == 0): # pruefe part 2,4
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
