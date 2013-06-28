@@ -35,7 +35,7 @@ class Field(object):
         print"blockHitGround"
         self.checkRows()
         self.initBlock()
-        self.timer = self.player.setInterval(1000, self.gravity)
+        self.timer = self.player.setInterval(500, self.gravity)
         
     def steadyBlock(self):
         print"steadyBlock"
@@ -43,6 +43,11 @@ class Field(object):
         self.matrixSteadyRectNodes[self.block.currPos2[0]][self.block.currPos2[1]] = self.block.part2
         self.matrixSteadyRectNodes[self.block.currPos3[0]][self.block.currPos3[1]] = self.block.part3
         self.matrixSteadyRectNodes[self.block.currPos4[0]][self.block.currPos4[1]] = self.block.part4
+        self.matrix[self.block.currPos1[0]][self.block.currPos1[1]] = True
+        self.matrix[self.block.currPos2[0]][self.block.currPos2[1]] = True
+        self.matrix[self.block.currPos3[0]][self.block.currPos3[1]] = True
+        self.matrix[self.block.currPos4[0]][self.block.currPos4[1]] = True
+        
         self.player.clearInterval(self.timer)
     
     def checkRows(self):
@@ -84,7 +89,7 @@ class Field(object):
     def generateRandomBlock(self):
         print"generateRandomBlock"
         RandomNumber = random.randint(1,7)
-        RandomNumber = 6
+        RandomNumber = 1
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
