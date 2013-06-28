@@ -8,22 +8,22 @@ class IFallingBlock(object):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFF00", fillopacity = 1, color = "FFFF00", 
+                                  fillcolor = "FFFF00", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFF00", fillopacity = 1, color = "FFFF00", 
+                                  fillcolor = "FFFF00", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFF00", fillopacity = 1, color = "FFFF00", 
+                                  fillcolor = "FFFF00", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (9 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFF00", fillopacity = 1, color = "FFFF00", 
+                                  fillcolor = "FFFF00", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.currPos1 = (5,0)

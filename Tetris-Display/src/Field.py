@@ -221,7 +221,7 @@ class Field(object):
             self.block.part2.pos = (self.block.part2.pos[0],self.block.part2.pos[1] + self.gameMenue.blocksize)
             self.block.part3.pos = (self.block.part3.pos[0],self.block.part3.pos[1] + self.gameMenue.blocksize)
             self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
-            
+            self.block.moveBlockLeft()
         
     def moveLeft(self):
         if(self.block == None):

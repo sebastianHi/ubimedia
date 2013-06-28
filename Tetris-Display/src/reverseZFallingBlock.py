@@ -8,22 +8,22 @@ class reverseZFallingBlock(object):
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFFFF", fillopacity = 1, color = "FFFFFF", 
+                                  fillcolor = "FFFFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part2 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben + (8 * GameMenue.blocksize), Field.yWertOben), 
-                                  fillcolor = "FFFFFF", fillopacity = 1, color = "FFFFFF", 
+                                  fillcolor = "FFFFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part3 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben + (6 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
-                                  fillcolor = "FFFFFF", fillopacity = 1, color = "FFFFFF", 
+                                  fillcolor = "FFFFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.part4 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben + (7 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
-                                  fillcolor = "FFFFFF", fillopacity = 1, color = "FFFFFF", 
+                                  fillcolor = "FFFFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
         self.Field = Field
@@ -63,8 +63,10 @@ class reverseZFallingBlock(object):
         else:
             pass  # dont move dat shit
     
+    def rotateRight(self):
+        pass
     
-    def rotate(self):
+    def rotateLeft(self):
         if (self.rotatingPosition == 0):
             if (self.checkCollisionAtRotation(0)):
                 pass
@@ -90,22 +92,24 @@ class reverseZFallingBlock(object):
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
         if (self.rotatingPosition == 0): #check part2, 3 und 4
-            a1 = (self.currPos2[0],self.currPos2[1] + 1)
-            b1 = (self.currPos3[0],self.currPos3[1] + 1)
-            c1 = (self.currPos4[0],self.currPos4[1] + 1)
+            if((self.currPos2[1] + 1 > 18)| (self.currPos3[1] + 1 > 18)| (self.currPos4[1] + 1> 18)):
+                return True
             a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
+            print self.currPos3[0], self.currPos3[1] + 1
             b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
             c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            if (a1[1] > 18) or (a == True) or (b1[1] > 18) or (b == True) or (c1[1] > 18) or (c == True):
+            
+            if (a or b or c):
                 return True
             else:
                 return False
+            
         else: # check part1 und part 3
-            a1 = (self.currPos1[0],self.currPos1[1] + 1)
-            b1 = (self.currPos3[0],self.currPos3[1] + 1)
+            if(self.currPos1[1] + 1 > 18| self.currPos3[1] + 1 > 18):
+                return True
             a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
             b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
-            if (a1[1] > 18) or (a == True) or (b1[1] > 18) or (b == True):
+            if (a or b):
                 return True
             else: 
                 return False
