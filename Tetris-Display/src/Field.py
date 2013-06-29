@@ -85,7 +85,9 @@ class Field(object):
     
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
-        RandomNumber = 1
+###########################################################################################################################################
+        RandomNumber = 1   # je nachdem was du erzeugst  1-7
+###########################################################################################################################################
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if (a == True):
@@ -221,7 +223,11 @@ class Field(object):
             self.block.part2.pos = (self.block.part2.pos[0],self.block.part2.pos[1] + self.gameMenue.blocksize)
             self.block.part3.pos = (self.block.part3.pos[0],self.block.part3.pos[1] + self.gameMenue.blocksize)
             self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
-            self.block.moveBlockLeft()
+            
+###########################################################################################################################################
+            self.block.moveBlockLeft()      # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
+###########################################################################################################################################
+
         
     def moveLeft(self):
         if(self.block == None):
