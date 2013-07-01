@@ -27,7 +27,7 @@ class AttackerSkills(object):
         
     def speedUp(self):
         self.speedy = self.player.setInterval(1000, self.speedDownAgain)
-        self.field.chanceSpeed(self.field.speed + 300)
+        self.field.chanceSpeed(self.field.speed - 300)
     
     def makeBlockInvisible(self):
         self.invisible = self.player.setInterval(2000, self.makeBlockVisible)
