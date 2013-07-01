@@ -4,7 +4,7 @@ import socket
 
 class LobbyMenue(object):
     
-    def __init__(self, parent, modus,gui):
+    def __init__(self, parent, modus,gui,kind):
         
 #####################################################################################
 #        player[0] ist immer Defender Feld 1
@@ -13,6 +13,10 @@ class LobbyMenue(object):
 #        player[3] ist immer Attacker fuer Team Feld2
 #####################################################################################
         self.gui = gui
+        self.typ = 0
+        if(kind == 1):
+            self.typ = 1
+            
         self.rootNode = parent
         self.player = ["","","",""]
         self.playerIP = ["","","",""]
@@ -44,20 +48,23 @@ class LobbyMenue(object):
         self.background = avg.RectNode(parent = self.divNodelobbyMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodelobbyMenue.size )  
         
         self.gameName = TextRectNode(parent = self.divNodelobbyMenue, 
-                                   pos = (0,0),
+                                   pos = (0,self.divNodelobbyMenue.size[1]*0.07),
                                    fillcolor ="0040FF",
                                    fillopacity=1,
                                    color = "0040FF",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.gameName.addTextForLobbyLine("IP:",socket.gethostbyname(socket.gethostname()))
         
-        self.port = TextRectNode(parent = self.divNodelobbyMenue, 
-                                   pos = (0,self.divNodelobbyMenue.size[1]*0.07),
+        self.type = TextRectNode(parent = self.divNodelobbyMenue, 
+                                   pos = (0,0),
                                    fillcolor ="0040FF",
                                    fillopacity=1,
                                    color = "0040FF",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
-        self.port.addTextForLobbyLine("Port:" , "55555")
+        if(self.typ == 0):
+            self.type.addTextForLobbyLine("Type:" , "Classic")
+        else:
+            self.type.addTextForLobbyLine("Type" , "EqualMode")
         
         self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),

@@ -6,8 +6,13 @@ import random
 class Field(object):
 
     def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
+        self.inverseSteuerung = False
+        self.freezeLeft = False
+        self.freezeRight = False
+        self.freezeRotate = False
         self.gameMenue = gameMenue
         self.player = player
+        self.speed = 500
         self.gameMenue = gameMenue
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
@@ -19,7 +24,7 @@ class Field(object):
         self.matrix = [[False for i in range(19)] for j in range(14)]
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]
         self.initBlock();
-        self.timer = self.player.setInterval(500, self.gravity)
+        self.timer = self.player.setInterval(self.speed, self.gravity)
         
         
         
@@ -230,28 +235,49 @@ class Field(object):
 
         
     def moveLeft(self):
-        if(self.block == None):
+        if(self.block == None | self.freezeLeft):
             pass
+        elif(self.inverseSteuerung):
+            self.block.moveBlockRight()
         else:
             self.block.moveBlockLeft()
     
     
     def moveRight(self):
-        if(self.block == None):
+        if(self.block == None| self.freezeRight):
             pass
+        elif(self.inverseSteuerung):
+            self.block.moveBlockLeft()
         else:
             self.block.moveBlockRight()
     
     
     def rotateLeft(self):
-        if(self.block == None):
+        if(self.block == None| self.freezeRotate):
             pass
+        elif(self.inverseSteuerung):
+            self.block.rotateRight()
         else:
             self.block.rotateLeft()
             
     
     def rotateRight(self):
-        if(self.block == None):
+        if(self.block == None| self.freezeRotate):
             pass
+        elif(self.inverseSteuerung):
+            self.block.rotateLeft()
         else:
             self.block.rotateRight()
+            
+    def chanceSpeed(self, newSpeedInMs):
+        self.player.clearInterval(self.timer)
+        self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
+        
+        
+        
+        
+        
+        
+        
+        
+        

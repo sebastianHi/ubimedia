@@ -43,17 +43,16 @@ class Gui(AVGApp):
         
     def initWhatGame(self):
         self.typeMenu = GameTypeMenue(self.rootNode)
-        self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonEqualMode, self.onClickClassic)
+        self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonEqualMode, self.onClickEqual)
         self.typeMenu.buttonNormalMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.onClickNormal)
         self.typeMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.backToMenue) 
         self.mainMenu.divNodeMainMenue.active = False 
         self.typeMenu.divNodeTypeMenue.active = True                           
         
     def initLobby(self):
-        self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self) 
+        self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToType)
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test) 
-        self.lobbyMenu.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.secondPlayer, self.gameCounter)  
+        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test)   
         
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
@@ -232,12 +231,12 @@ class Gui(AVGApp):
         self.modus = 4
         self.initWhatGame()
         
-    def onClickClassic(self,event):
-        self.gtype = 0
+    def onClickEqual(self,event):
+        self.gtype = 1
         self.initLobby()
 
     def onClickNormal(self, event):
-        self.gtype = 1
+        self.gtype = 0
         self.initLobby()
         
     def backToType(self, event):
