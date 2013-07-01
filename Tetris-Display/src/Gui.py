@@ -5,6 +5,7 @@ from MainMenue import MainMenue
 from LobbyMenue import LobbyMenue
 from GameMenue import  GameMenue
 from twisted.internet import reactor
+from GameTypeMenue import GameTypeMenue
 from twisted.python import log
 from autobahn.websocket import WebSocketServerFactory,WebSocketServerProtocol, listenWS
 import sys,thread 
@@ -20,7 +21,7 @@ class Gui(AVGApp):
 ############################################################
 
         self.zustand = 0
-         
+        self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
     
         self.keepCountingToStart = True
@@ -40,11 +41,17 @@ class Gui(AVGApp):
         self.mainMenu.divNodeMainMenue.active = True 
         
         
-                                
+    def initWhatGame(self):
+        self.typeMenu = GameTypeMenue(self.rootNode)
+        self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonEqualMode, self.onClickClassic)
+        self.typeMenu.buttonNormalMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.onClickNormal)
+        self.typeMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.backToMenue) 
+        self.mainMenu.divNodeMainMenue.active = False 
+        self.typeMenu.divNodeTypeMenue.active = True                           
         
-    def initLobby(self, modus):
-        self.lobbyMenu = LobbyMenue(self.rootNode, modus) 
-        self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToMenue)
+    def initLobby(self):
+        self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self) 
+        self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToType)
         self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test) 
         self.lobbyMenu.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.secondPlayer, self.gameCounter)  
         
@@ -62,13 +69,11 @@ class Gui(AVGApp):
         self.zustand = 2
         #self.ipStorage.updateAll("gamestarts")
 
-   
-
 
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
-    def gameCounter(self,event):
+    def gameCounter(self):
         self.count = 9
         if(self.lobbyMenu.modus == 2):
             self.lobbyMenu.firstPlayer.setInactiv()
@@ -94,6 +99,7 @@ class Gui(AVGApp):
         
         self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
         self.countNode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.countNode, self.interruptCount)
+        #TODO: touch
         self.timer = self.player.setInterval(1000, self.countCount)
         self.gameStartTimer = self.player.setInterval(10000, self.maybeStart)
         
@@ -199,6 +205,11 @@ class Gui(AVGApp):
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
+#-----------------------Rdy Signal fuer Lobby------------------------------
+        elif((befehl == "rdy")):
+            self.lobbyMenu.playerGotRdy(ip)
+
+           
     
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
 
@@ -210,20 +221,35 @@ class Gui(AVGApp):
 #----------------------------------------------------------EventHandlerButtoms----------------------------------------------------------------------------------------------------------
     
     def onClickMain1v1(self, event):
-        self.initLobby(2)
+        self.modus = 2
+        self.initWhatGame()
          
     def onClickMain1v1v1(self, event):
-        self.initLobby(3)    
-     
-    def onClickMain2v2(self, event):
-        self.initLobby(4)
+        self.modus = 3   
+        self.initWhatGame()
         
-    def backToMenue(self, event):
+    def onClickMain2v2(self, event):
+        self.modus = 4
+        self.initWhatGame()
+        
+    def onClickClassic(self,event):
+        self.gtype = 0
+        self.initLobby()
+
+    def onClickNormal(self, event):
+        self.gtype = 1
+        self.initLobby()
+        
+    def backToType(self, event):
         self.lobbyMenu.divNodelobbyMenue.active = False
-        self.mainMenu.divNodeMainMenue.active = True
-        self.ipStorage.getAllCurrentConnections()
+        self.typeMenu.divNodeTypeMenue.active = True
         for ip in self.ipStorage.getAllCurrentConnections():
             self.ipStorage.dropConnection(ip)
+        
+    def backToMenue(self, event):
+        self.typeMenu.divNodeTypeMenue.active = False
+        self.mainMenu.divNodeMainMenue.active = True
+        
         
  
 #-----------------------------------------------------------Eventuell unnuetz: Notfall fuer IP Mac Probleme-------------------------------------------------------------------------------   

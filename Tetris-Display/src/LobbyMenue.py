@@ -4,7 +4,7 @@ import socket
 
 class LobbyMenue(object):
     
-    def __init__(self, parent, modus):
+    def __init__(self, parent, modus,gui):
         
 #####################################################################################
 #        player[0] ist immer Defender Feld 1
@@ -12,10 +12,11 @@ class LobbyMenue(object):
 #        player[2] ist immer Attacker fuer Team Feld1
 #        player[3] ist immer Attacker fuer Team Feld2
 #####################################################################################
+        self.gui = gui
         self.rootNode = parent
-        self.playerAmountRdy = 0
         self.player = ["","","",""]
         self.playerIP = ["","","",""]
+        self.rdyPlayer = [False,False,False,False]
         self.connectedPlayers = 0
        
         self.playstyleModus = ""
@@ -186,11 +187,27 @@ class LobbyMenue(object):
 #         pass
 #     
 #     
-#     def playerGotRdy(self):
-#         self.playerAmountRdy+=1
-#         if(self.playerAmountRdy == self.modus):
-#             pass
-#             #self.gameCounter()
+    def playerGotRdy(self,ip):
+        i = -1
+        for k in self.playerIP:
+            i+=1
+            if(k == ip):
+                self.rdyPlayer = True
+                break
+        p = True
+        for b in range(0,self.modus):
+            p = p & self.rdyPlayer[b]
+        if p:
+            self.gui.gameCounter()
+            
+    def playerStopBeingRdy(self,ip):
+        i = 0
+        for k in self.playerIP:
+            if(k == ip):
+                break
+            i+=1
+        self.rdyPlayer[i] = False
+        
 #         
 #     def updatePlayerLeft(self):
 #         self.connectedPlayers-=1
@@ -201,7 +218,7 @@ class LobbyMenue(object):
         if(self.connectedPlayers+1>self.modus):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         else:
-            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers+1)+"/"+ str(self.modus))
             self.player[self.connectedPlayers] = name
             self.playerIP[self.connectedPlayers] = ip
             self.connectedPlayers+=1
