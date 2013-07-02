@@ -36,12 +36,11 @@ class reverseZFallingBlock(object):
         self.blockType = "reverseZ"
         
     def moveBlockLeft(self):
-        
         if(self.checkLeftBound()):
-            self.currPos1 = (self.currPos1[self.currPos1[0] - 1],self.currPos1[1])
-            self.currPos2 = (self.currPos2[self.currPos2[0] - 1],self.currPos2[1])
-            self.currPos3 = (self.currPos3[self.currPos3[0] - 1],self.currPos3[1])
-            self.currPos4 = (self.currPos4[self.currPos4[0] - 1],self.currPos4[1])
+            self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1])
+            self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1])
+            self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1])
+            self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1])
             self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1])
             self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1])
             self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1])
@@ -52,10 +51,10 @@ class reverseZFallingBlock(object):
     def moveBlockRight(self):
         
         if(self.checkRightBound()):
-            self.currPos1 = (self.currPos1[self.currPos1[0] + 1],self.currPos1[1])
-            self.currPos2 = (self.currPos2[self.currPos2[0] + 1],self.currPos2[1])
-            self.currPos3 = (self.currPos3[self.currPos3[0] + 1],self.currPos3[1])
-            self.currPos4 = (self.currPos4[self.currPos4[0] + 1],self.currPos4[1])
+            self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1])
+            self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1])
+            self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1])
+            self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1])
             self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
             self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1])
             self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1])
@@ -71,9 +70,9 @@ class reverseZFallingBlock(object):
             if (self.checkCollisionAtRotation(0)):
                 pass
             else:
-                self.currPos2 = (self.currPos2[self.currPos2[0] - 1],self.currPos2[self.currPos2[1] - 1])
-                self.currPos3 = (self.currPos3[self.currPos3[0] + 2],self.currPos3[1])
-                self.currPos4 = (self.currPos4[self.currPos4[0] + 1],self.currPos4[self.currPos4[1] - 1])
+                self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] - 1)
+                self.currPos3 = (self.currPos3[0] + 2,self.currPos3[1])
+                self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
                 self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
                 self.part3.pos = (self.part3.pos[0] + (2 * self.GameMenue.blocksize),self.part3.pos[1])
                 self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
@@ -82,9 +81,9 @@ class reverseZFallingBlock(object):
             if (self.checkCollisionAtRotation(1)):
                 pass
             else:
-                self.currPos2 = (self.currPos2[self.currPos2[0] + 1],self.currPos2[self.currPos2[1] + 1])
-                self.currPos3 = (self.currPos3[self.currPos3[0] - 2],self.currPos3[1])
-                self.currPos4 = (self.currPos4[self.currPos4[0] - 1],self.currPos4[self.currPos4[1] + 1])
+                self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] + 1)
+                self.currPos3 = (self.currPos3[0] - 2,self.currPos3[1])
+                self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
                 self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
                 self.part3.pos = (self.part3.pos[0] - (2 * self.GameMenue.blocksize),self.part3.pos[1])
                 self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
@@ -105,7 +104,7 @@ class reverseZFallingBlock(object):
                 return False
             
         else: # check part1 und part 3
-            if(self.currPos1[1] + 1 > 18| self.currPos3[1] + 1 > 18):
+            if(self.currPos1[1] + 1 > 18 | self.currPos3[1] + 1 > 18):
                 return True
             a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
             b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
@@ -117,19 +116,21 @@ class reverseZFallingBlock(object):
     def checkLeftBound(self): #return true wenn bewegung moeglich
         
         if (self.rotatingPosition == 0): # pruefe part 1,3
-            
+            if (self.currPos3[0] - 1 < 0):
+                return False
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-            if (self.currPos3[0] - 1 < 0) or (a or b):
+            if  (a or b):
                 return False
             else:
                 return True
         else: # pruefe part1,2,3
-            
+            if (self.currPos2[0] - 1 < 0):
+                return False
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1]]
             c = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-            if (self.currPos2[0] - 1 < 0) or (a or b or c):
+            if  (a or b or c):
                 return False
             else:
                 return True
@@ -137,19 +138,21 @@ class reverseZFallingBlock(object):
     def checkRightBound(self):#return true wenn bewegung moeglich
         
         if (self.rotatingPosition == 0): # pruefe part 2,4
-            
+            if (self.currPos2[0] + 1 > 13):
+                return False
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (self.currPos2[0] + 1 > 13) or (a or b):
+            if  (a or b):
                 return False
             else:
                 return True
         else: # pruefe part2,3,4
-
+            if (self.currPos3[0] + 1 > 13):
+                return False
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1]]
             c = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (self.currPos3[0] + 1 > 13) or (a or b or c):
+            if  (a or b or c):
                 return False
             else:
                 return True
@@ -157,21 +160,23 @@ class reverseZFallingBlock(object):
     def checkCollisionAtRotation(self, RotatingNumber): # True = Collison, False = No Collision
     
         if (RotatingNumber == 0):
-            
+            if (self.currPos2[1] - 1 < 0):
+                return True
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] - 1]
             c = self.Field.matrix[self.currPos3[0] + 2][self.currPos3[1]]
             d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] - 1]
-            if (self.currPos2[1] - 1 < 0) or (b or c or d):
+            if  (b or c or d):
                 return True
             else:
                 return False
                 
         else:
-            
+            if (self.currPos3[0] - 2 < 0):
+                return True
             b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1] + 1]
             c = self.Field.matrix[self.currPos3[0] - 2][self.currPos3[1]]
             d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
-            if (self.currPos3[0] - 2 < 0) or (b or c or d):
+            if  (b or c or d):
                 return True
             else:
                 return False

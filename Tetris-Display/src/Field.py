@@ -91,55 +91,55 @@ class Field(object):
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
 ###########################################################################################################################################
-        RandomNumber = 2   # je nachdem was du erzeugst  1-7
+           # je nachdem was du erzeugst  1-7
 ###########################################################################################################################################
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
-            if (a == True):
+            if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                pass # throw shit
+                pass # spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
-            if (a == True):
+            if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
-            if (a == True):
+            if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
-            if (a == True):
+            if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
-            if (a == True):
+            if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+            
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
-            if (a == True):
+            if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
         else:
             a = self.checkSpawn("cross")
-            if (a == True):
-                #TODO: crossFallingBlock.crossFallingBlock(self.gameMenue, self)
-                return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
+            if a: 
+                return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                pass
+                pass  # spawn geht nicht - Spiel beenden oder neue Runde
     
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
@@ -149,7 +149,7 @@ class Field(object):
         else:
             a = self.Queue.pop()
             b = self.checkSpawn(a)
-            if (b == True):
+            if b:
                 if (a == "cube"):
                     return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
@@ -167,7 +167,7 @@ class Field(object):
                 else:
                     pass
             else: 
-                pass # throw shit
+                pass # spawn geht nicht - Spiel beenden oder neue Runde
         
     
     def checkSpawn(self, string):
@@ -220,7 +220,7 @@ class Field(object):
             self.steadyBlock()
             self.blockHitGround()
         else:
-            self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] +1 )
+            self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] +1)
             self.block.currPos2 = (self.block.currPos2[0] ,self.block.currPos2[1] +1)
             self.block.currPos3 = (self.block.currPos3[0] ,self.block.currPos3[1] +1)
             self.block.currPos4 = (self.block.currPos4[0] ,self.block.currPos4[1] +1)  
@@ -231,7 +231,8 @@ class Field(object):
             
             
 ###########################################################################################################################################
-            self.block.rotateLeft()   # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
+            i = random.randint(0,3)
+            self.randomMove(i)  # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
 ###########################################################################################################################################
 
         
@@ -274,7 +275,16 @@ class Field(object):
         self.player.clearInterval(self.timer)
         self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
         
-        
+    def randomMove(self, integer):
+        if (integer == 1):
+            self.block.rotateLeft()
+        elif (integer == 2):
+            self.block.rotateRight()
+        elif (integer == 3):
+            self.block.moveBlockLeft()
+        else:
+            self.block.moveBlockRight()
+  
         
         
         

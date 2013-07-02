@@ -38,12 +38,11 @@ class cubeFallingBlock(object):
         
     
     def moveBlockLeft(self):
-        
         if(self.checkLeftBound()):
-            self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1] )
-            self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] )
-            self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1] )
-            self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] )        
+            self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1])
+            self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1])
+            self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1])
+            self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1])
             self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1])
             self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1])
             self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1])
@@ -54,10 +53,10 @@ class cubeFallingBlock(object):
     def moveBlockRight(self):
         
         if(self.checkRightBound()):
-            self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] )
-            self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] )
-            self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1] )
-            self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] )
+            self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1])
+            self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1])
+            self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1])
+            self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1])
             self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
             self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1])
             self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1])
