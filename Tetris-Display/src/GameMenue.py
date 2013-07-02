@@ -109,19 +109,19 @@ class GameMenue(object):
         
     def initFeld (self, startX, endX, oben):
 #linker Rahmen
-        avg.RectNode(parent = self.divNodeGameMenue, 
+        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
                                   pos = (startX -int(self.divNodeGameMenue.size[0]*0.025)  , oben), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(int(self.divNodeGameMenue.size[0]*0.025) ,self.tetrishoehe) #self.divNodeGameMenue.size[1]* 0.87
                                   )
 #rechter Rahmen
         avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (endX , oben), 
+                                  pos = (endX , oben), sensitive = False,
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(int(self.divNodeGameMenue.size[0]*0.025), self.tetrishoehe)
                                   )
 #Boden
-        avg.RectNode(parent = self.divNodeGameMenue, 
+        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
                                   pos = (startX-int(self.divNodeGameMenue.size[0]*0.025), self.tetrishoehe+oben), 
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(endX-startX+2*int(self.divNodeGameMenue.size[0]*0.025) ,self.divNodeGameMenue.size[1]*0.04))
@@ -136,34 +136,3 @@ class GameMenue(object):
     def naechsteZahlDurch14Teilbar(self,value):
         x = value % 14
         return value - x
-    
-##-------------------------------------------Nur fuer test---------------------------------------------------------------------------------------------------------------------------
-    def testFallingNode(self):
-        self.test1 = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (self.xstartFeld1, self.komischAlternativZuyObnloeschbar), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.blocksize ,self.blocksize)
-                                  )
-        self.test2 = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (self.xendFeld1- self.blocksize, self.komischAlternativZuyObnloeschbar), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.blocksize ,self.blocksize)
-                                  )
-        self.test3 = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (self.xstartFeld2, self.komischAlternativZuyObnloeschbar), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.blocksize ,self.blocksize)
-                                  )
-        self.test4 = avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (self.xendFeld2- self.blocksize, self.komischAlternativZuyObnloeschbar+ self.blocksize), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(self.blocksize ,self.blocksize)
-                                  )
-        self.player.setInterval(5, self.drop)
-    
-    def drop(self):
-        if(self.test3.pos[1]+2*self.blocksize<self.yUnten):
-            self.test1.pos = (self.test1.pos[0],self.test1.pos[1]+1)
-            self.test2.pos = (self.test2.pos[0],self.test2.pos[1]+1)
-            self.test3.pos = (self.test3.pos[0],self.test3.pos[1]+1)
-            self.test4.pos = (self.test4.pos[0],self.test4.pos[1]+1)        
