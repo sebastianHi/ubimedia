@@ -4,6 +4,9 @@ class LFallingBlock(object):
 
     def __init__(self, GameMenue, Field):
         
+        self.Field = Field
+        self.GameMenue = GameMenue
+        
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FF00", fillopacity = 1, color = "000000", 
@@ -30,6 +33,7 @@ class LFallingBlock(object):
         self.currPos4 = (5,0)
         self.blockType = "L"
         self.rotatingPosition = 0
+        
         
     def moveBlockLeft(self):
         

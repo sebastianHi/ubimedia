@@ -6,6 +6,9 @@ class IFallingBlock(object):
 
     def __init__(self, GameMenue, Field):
         
+        self.Field = Field
+        self.GameMenue = GameMenue
+        
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (6 * GameMenue.blocksize), Field.yWertOben), 
                                   fillcolor = "FFFF00", fillopacity = 1, color = "000000", 

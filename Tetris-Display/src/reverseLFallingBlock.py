@@ -6,6 +6,9 @@ class reverseLFallingBlock(object):
 
     def __init__(self, GameMenue, Field):
         
+        self.Field = Field
+        self.GameMenue = GameMenue
+        
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
                                   fillcolor = "00FFFF", fillopacity = 1, color = "000000", 
@@ -31,7 +34,7 @@ class reverseLFallingBlock(object):
         self.currPos3 = (6,0)
         self.currPos4 = (7,0)
         self.blockType = "reverseL"
-        self.rotatingNumber = 0
+        self.rotatingPosition = 0
         
     def moveBlockLeft(self):
         
