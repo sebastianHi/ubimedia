@@ -91,7 +91,7 @@ class Field(object):
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
 ###########################################################################################################################################
-        RandomNumber = 1   # je nachdem was du erzeugst  1-7
+        RandomNumber = 2   # je nachdem was du erzeugst  1-7
 ###########################################################################################################################################
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
@@ -192,12 +192,12 @@ class Field(object):
             else: 
                 return True
         elif (string == "L"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True):
+            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[5][1] == True):
                 return False
             else: 
                 return True
         elif (string == "reverseL"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True):
+            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[7][1] == True):
                 return False
             else: 
                 return True
@@ -231,7 +231,7 @@ class Field(object):
             
             
 ###########################################################################################################################################
-            self.block.moveBlockLeft()      # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
+            self.block.rotateLeft()   # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
 ###########################################################################################################################################
 
         
