@@ -133,3 +133,7 @@ function moveLeft(){
 function moveRight(){
     send(ip+"###moveRight");
 };
+
+function ready(){
+send(ip+"###nickname:"+rdy);
+};

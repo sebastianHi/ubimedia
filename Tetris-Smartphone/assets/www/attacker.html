@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
 	<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 	<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
-	<style>
+    <script src="js/attacker.js"></script>
+    <style>
 	html, body { padding: 0; margin: 0; }
 	html, .ui-mobile, .ui-mobile body {
     	height: 435px;
@@ -31,12 +32,45 @@
     		<h1>Game On!</h1>
 		</div>
 		<div data-role="content"> 
-			<div id="skillselector">
-                <p class="alignleft"> <a href="#passive" data-role="button" data-inline="true" data-mini="true">Passive Skills</a></p>
-                <p class="alignright"><a href="#active" data-role="button" data-inline="true" data-mini="true">Active Skills</a></p>
-                <div style="clear: both;"></div>
-            </div>
-           <div align="center" id="middle"><p>Queue:</p></div>
+			
+            <div class="ui-grid-d">
+	           <div class="ui-block-a">
+                   <a href="#passive" data-role="button" data-inline="true" data-mini="true">Passive Skills</a>
+                </div>
+	           
+                <div class="ui-block-b" align="left" data-inline="true">Left Stones
+                    <br>
+                    <a href="#" data-role="button" data-inline="true" onClick="addI();">I-Shape</a>
+                    <br>
+                   <a href="#" data-role="button" data-inline="true" onClick="addCircle();">Circle</a>
+                    <br>
+                    <a href="#" data-role="button" data-inline="true" onClick="addL();">L-Shape</a>
+                    <br>
+                   <a href="#" data-role="button" data-inline="true" onClick="addInvL();">Inv-L-Shape</a>
+                </div>
+	          
+                <div class="ui-block-c" align="center">
+                    <ul data-role="listview" id="DALIST">
+                    </ul>
+                <div class="ui-grid-solo">
+	               <div class="ui-block-a"><p><b>NEXT BLOCK</b></p>
+                    <div id="nextblock"></div></div>
+                </div>
+                </div>
+              
+                <div class="ui-block-d" align="right">Right Stones
+                    <br>
+                 <a href="#" data-role="button" data-inline="true">S-Shape</a>
+                    <br>
+                 <a href="#" data-role="button" data-inline="true">Z-Shape</a>
+                    <br>
+                 <a href="#" data-role="button" data-inline="true">T-Shape</a>
+                </div>
+               
+                <div class="ui-block-e" align="right">
+                    <a href="#active" data-role="button" data-inline="true" data-mini="true">Active Skills</a>
+                </div>
+            </div><!-- /grid-b -->
 			
 		</div>
 	    
