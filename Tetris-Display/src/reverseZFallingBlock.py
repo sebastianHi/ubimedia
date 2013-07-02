@@ -64,7 +64,7 @@ class reverseZFallingBlock(object):
             pass  # dont move dat shit
     
     def rotateRight(self):
-        pass
+        self.rotateLeft()
     
     def rotateLeft(self):
         if (self.rotatingPosition == 0):
@@ -92,7 +92,7 @@ class reverseZFallingBlock(object):
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
         if (self.rotatingPosition == 0): #check part2, 3 und 4
-            if((self.currPos2[1] + 1 > 18)| (self.currPos3[1] + 1 > 18)| (self.currPos4[1] + 1> 18)):
+            if((self.currPos2[1] + 1 > 18) | (self.currPos3[1] + 1 > 18) | (self.currPos4[1] + 1> 18)):
                 return True
             a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
             print self.currPos3[0], self.currPos3[1] + 1
@@ -117,19 +117,19 @@ class reverseZFallingBlock(object):
     def checkLeftBound(self): #return true wenn bewegung moeglich
         
         if (self.rotatingPosition == 0): # pruefe part 1,3
-            b1 = (self.currPos3[0] - 1,self.currPos3[1])
+            
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-            if (b1[0] < 0) or (a == True) or (b == True):
+            if (self.currPos3[0] - 1 < 0) or (a or b):
                 return False
             else:
                 return True
         else: # pruefe part1,2,3
-            b1 = (self.currPos2[0] - 1,self.currPos2[1])
+            
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1]]
             c = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-            if (b1[0] < 0) or (a == True) or (b == True) or (c == True):
+            if (self.currPos2[0] - 1 < 0) or (a or b or c):
                 return False
             else:
                 return True
@@ -137,42 +137,41 @@ class reverseZFallingBlock(object):
     def checkRightBound(self):#return true wenn bewegung moeglich
         
         if (self.rotatingPosition == 0): # pruefe part 2,4
-            a1 = (self.currPos2[0] + 1,self.currPos2[1])
+            
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (a1[0] > 13) or (a == True) or (b == True):
+            if (self.currPos2[0] + 1 > 13) or (a or b):
                 return False
             else:
                 return True
         else: # pruefe part2,3,4
-            b1 = (self.currPos3[0] + 1,self.currPos3[1])
+
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1]]
             c = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (b1[0] > 13) or (a == True) or (b == True) or (c == True):
+            if (self.currPos3[0] + 1 > 13) or (a or b or c):
                 return False
             else:
                 return True
     
     def checkCollisionAtRotation(self, RotatingNumber): # True = Collison, False = No Collision
-        
+    
         if (RotatingNumber == 0):
-            b1 = (self.currPos2[0] - 1,self.currPos2[1] - 1)
+            
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] - 1]
             c = self.Field.matrix[self.currPos3[0] + 2][self.currPos3[1]]
             d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] - 1]
-            if (b1[1] < 0) or (b == True) or (c == True) or (d == True):
+            if (self.currPos2[1] - 1 < 0) or (b or c or d):
                 return True
             else:
                 return False
                 
         else:
-            c1 = (self.currPos3[0] - 2,self.currPos3[1])
+            
             b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1] + 1]
             c = self.Field.matrix[self.currPos3[0] - 2][self.currPos3[1]]
             d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
-            if (c1[0] < 0) or (b == True) or (c == True) or (d == True):
+            if (self.currPos3[0] - 2 < 0) or (b or c or d):
                 return True
             else:
                 return False
-            

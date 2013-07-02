@@ -96,44 +96,38 @@ class ZFallingBlock(object):
                 self.rotatingPosition = 0
             
         def rotateRight(self):
-            pass
+            self.rotateLeft()
+
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
         if (self.rotatingPosition == 0): #check part1, 3 und 4
-            a1 = (self.currPos1[0],self.currPos1[1] + 1)
-            b1 = (self.currPos3[0],self.currPos3[1] + 1)
-            c1 = (self.currPos4[0],self.currPos4[1] + 1)
             a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
             b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
             c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            if (a1[1] > 18) or (a == True) or (b1[1] > 18) or (b == True) or (c1[1] > 18) or (c == True):
+            if (self.currPos3[1] + 1 > 18) or (a or b or c):
                 return True
             else:
                 return False
         else: # check part2 und part 4
-            a1 = (self.currPos2[0],self.currPos2[1] + 1)
-            b1 = (self.currPos4[0],self.currPos4[1] + 1)
             a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
             b = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            if (a1[1] > 18) or (a == True) or (b1[1] > 18) or (b == True):
+            if (self.currPos4[1] + 1 > 18) or (a or b):
                 return True
             else: return False
     
     def checkLeftBound(self): #return true wenn bewegung moeglich
         if (self.rotatingPosition == 0): # pruefe part 1,3
-            a1 = (self.currPos1[0] - 1,self.currPos1[1])
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
-            if (a1[0] < 0) or (a == True) or (b == True):
+            if (self.currPos1[0] - 1 < 0) or (a or b):
                 return False
             else:
                 return True
         else: # pruefe part1,3,4
-            b1 = (self.currPos3[0] - 1,self.currPos3[1])
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1]]
             c = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1]]
-            if (b1[0] < 0) or (a == True) or (b == True) or (c == True):
+            if (self.currPos3[0] - 1 < 0) or (a or b or c):
                 return False
             else:
                 return True
@@ -141,19 +135,17 @@ class ZFallingBlock(object):
     
     def checkRightBound(self, node):#return true wenn bewegung moeglich, prueft nur rechten unteren Block
         if (self.rotatingPosition == 0): # pruefe part 2,4
-            b1 = (self.currPos4[0] + 1, self.currPos4[1])
             a = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             b = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (b1[0] > 13) or (a == True) or (b == True):
+            if (self.currPos4[0] + 1 > 13) or (a or b):
                 return False
             else:
                 return True
         else: # pruefe part1,2,4
-            b1 = (self.currPos2[0] + 1,self.currPos2[1])
             a = self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1]]
             b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             c = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (b1[0] > 13) or (a == True) or (b == True) or (c == True):
+            if (self.currPos2[0] + 1 > 13) or (a or b or c):
                 return False
             else:
                 return True
@@ -161,23 +153,21 @@ class ZFallingBlock(object):
     def checkCollisionAtRotation(self, RotatingNumber): # True = Collison, False = No Collision
         
         if (RotatingNumber == 0):
-            a1 = (self.currPos1[0] + 2,self.currPos1[1] - 1)
             a = self.Field.matrix[self.currPos1[0] + 2][self.currPos1[1] - 1]
             b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1]]
             c = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1] - 1]
             d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1]]
-            if (a1[1] < 0) or (a == True) or (b == True) or (c == True) or (d == True):
+            if (self.currPos1[1] - 1 < 0) or (a or b or c or d):
                 return True
             else:
                 return False
                 
         else:
-            a1 = (self.currPos1[0] - 2,self.currPos1[1] + 1)
             a = self.Field.matrix[self.currPos1[0] - 2][self.currPos1[1] + 1]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1]]
             c = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1] + 1]
             d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
-            if (a1[0] < 0) or (a == True) or (b == True) or (c == True) or (d == True):
+            if (self.currPos1[0] - 2 < 0) or (a or b or c or d):
                 return True
             else:
                 return False
