@@ -285,4 +285,4 @@ class EchoServerProtocol(WebSocketServerProtocol):
 
 if __name__ == '__main__':
     ipStorage = IPStorage()
-    Gui.start(resolution = (800,800))
+    Gui.start(resolution = (900,600))

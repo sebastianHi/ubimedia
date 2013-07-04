@@ -94,7 +94,6 @@ class reverseZFallingBlock(object):
             if((self.currPos2[1] + 1 > 18) | (self.currPos3[1] + 1 > 18) | (self.currPos4[1] + 1> 18)):
                 return True
             a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
-            print self.currPos3[0], self.currPos3[1] + 1
             b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
             c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
             

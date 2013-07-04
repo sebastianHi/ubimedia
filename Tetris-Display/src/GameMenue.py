@@ -124,10 +124,32 @@ class GameMenue(object):
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-        
-        
-        
-        
+    # Ueberpruefung der FeldPunkte
+#         avg.RectNode(pos=(self.xstartFeld1, self.yOben)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xendFeld1, self.yOben)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xstartFeld1, self.yUnten)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xendFeld1, self.yUnten)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xstartFeld2, self.yOben)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xendFeld2, self.yOben)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xstartFeld2, self.yUnten)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         avg.RectNode(pos=(self.xendFeld2, self.yUnten)
+#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
+#                      parent = self.divNodeGameMenue)
+#         
         
         
         
