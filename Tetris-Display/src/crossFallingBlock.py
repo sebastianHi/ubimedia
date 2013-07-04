@@ -28,10 +28,10 @@ class crossFallingBlock(object):
                                   fillcolor = "FE9A2E", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
-        self.currPos1 = (5,0)
-        self.currPos2 = (6,0)
-        self.currPos3 = (7,0)
-        self.currPos4 = (6,1)
+        self.currPos1 = (6,0)
+        self.currPos2 = (7,0)
+        self.currPos3 = (8,0)
+        self.currPos4 = (7,1)
         self.blockType = "cross"
         self.rotatingPosition = 0
 

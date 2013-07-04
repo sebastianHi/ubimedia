@@ -29,10 +29,10 @@ class reverseLFallingBlock(object):
                                   fillcolor = "00FFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
-        self.currPos1 = (7,1)
-        self.currPos2 = (5,0)
-        self.currPos3 = (6,0)
-        self.currPos4 = (7,0)
+        self.currPos1 = (8,1)
+        self.currPos2 = (6,0)
+        self.currPos3 = (7,0)
+        self.currPos4 = (8,0)
         self.blockType = "reverseL"
         self.rotatingPosition = 0
         

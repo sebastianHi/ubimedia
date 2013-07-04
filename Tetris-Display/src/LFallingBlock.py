@@ -27,10 +27,10 @@ class LFallingBlock(object):
                                   fillcolor = "00FF00", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize)
                                   )
-        self.currPos1 = (5,1)
-        self.currPos2 = (7,0)
-        self.currPos3 = (6,0)
-        self.currPos4 = (5,0)
+        self.currPos1 = (6,1)
+        self.currPos2 = (8,0)
+        self.currPos3 = (7,0)
+        self.currPos4 = (6,0)
         self.blockType = "L"
         self.rotatingPosition = 0
         
@@ -246,7 +246,7 @@ class LFallingBlock(object):
     def checkCollisionAtRotation(self, RotatingNumber): # True = Collison, False = No Collision
         
         if (RotatingNumber == 0):
-            if (self.currPos4[1] - 1 < 0):
+            if (self.currPos4[1] - 1 < 0 ):
                 return True
             a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] - 2]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] + 1]
@@ -271,7 +271,7 @@ class LFallingBlock(object):
                 return True
             a = self.Field.matrix[self.currPos1[0] - 2][self.currPos1[1] + 1]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1]]
-            d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1]]
+            d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
             if  (a or b or d):
                 return True
             else:

@@ -28,10 +28,10 @@ class reverseZFallingBlock(object):
                                   )
         self.Field = Field
         self.GameMenue = GameMenue
-        self.currPos1 = (6,0)
-        self.currPos2 = (7,0)
-        self.currPos3 = (5,1)
-        self.currPos4 = (6,1)
+        self.currPos1 = (7,0)
+        self.currPos2 = (8,0)
+        self.currPos3 = (6,1)
+        self.currPos4 = (7,1)
         self.rotatingPosition = 0
         self.blockType = "reverseZ"
         
