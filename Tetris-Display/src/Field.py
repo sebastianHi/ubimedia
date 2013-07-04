@@ -10,6 +10,7 @@ class Field(object):
         self.freezeLeft = False
         self.freezeRight = False
         self.freezeRotate = False
+        self.speedToGround = False
         self.gameMenue = gameMenue
         self.player = player
         self.speed = 400
@@ -288,6 +289,9 @@ class Field(object):
             self.block.rotateLeft()
         else:
             self.block.rotateRight()
+            
+    def speedDown(self):
+        self.chanceSpeed(50)
             
     def chanceSpeed(self, newSpeedInMs):
         self.player.clearInterval(self.timer)

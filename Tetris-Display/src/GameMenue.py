@@ -127,6 +127,12 @@ class GameMenue(object):
                                       sensitive = False)
         
 #-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.buttonMoveL = TextRectNode(parent = self.divNodeGameMenue, 
                                        pos = (self.divNodeGameMenue.size[0]*0.05,self.divNodeGameMenue.size[1] * 0.9),
                                        fillcolor ="000000",
@@ -144,7 +150,7 @@ class GameMenue(object):
         self.buttonRotateL.addTextGameTypeAndMain("RL","FFFFFF")
         
         self.buttonRotateR = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.5,self.divNodeGameMenue.size[1] * 0.9),
+                                   pos = (self.divNodeGameMenue.size[0]*0.6,self.divNodeGameMenue.size[1] * 0.9),
                                    fillcolor ="000000",
                                    fillopacity=1,
                                    color = "000000",
@@ -159,10 +165,19 @@ class GameMenue(object):
                                    size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
         self.buttonMoveR.addTextGameTypeAndMain("R","FFFFFF")
         
+        self.buttonSpeed = TextRectNode(parent = self.divNodeGameMenue, 
+                                   pos = (self.divNodeGameMenue.size[0]*0.45,self.divNodeGameMenue.size[1] * 0.9),
+                                   fillcolor ="000000",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
+        self.buttonSpeed.addTextGameTypeAndMain("SD","FFFFFF")
+        
         self.buttonMoveL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveL, self.eventMoveLinks) 
         self.buttonRotateL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateL, self.eventRotateLinks) 
         self.buttonRotateR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateR, self.eventRotateRechts) 
-        self.buttonMoveR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveR, self.eventMoveRechts) 
+        self.buttonMoveR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveR, self.eventMoveRechts)
+        self.buttonSpeed.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonSpeed, self.eventSpeedDown )
 
     def eventMoveLinks(self,event):
         self.field1.moveLeft()
@@ -175,10 +190,16 @@ class GameMenue(object):
 
     def eventMoveRechts(self,event):
         self.field1.moveRight()
+        
+    def eventSpeedDown(self,event):
+        self.field1.speedDown()
 
 
-
-
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
