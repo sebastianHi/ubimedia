@@ -71,17 +71,17 @@ class cubeFallingBlock(object):
         pass
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
-        if((self.currPos1[1]+1 > 18) | (self.currPos2[1]+1 > 18) | (self.currPos3[1]+1 > 18) | (self.currPos4[1]+1 > 18)):
+        if((self.currPos2[1] + 1 > 18) | (self.currPos3[1] + 1 > 18) | (self.currPos4[1] + 1> 18) |(self.currPos1[1] + 1> 18) ):
+            return True
+        a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
+        b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
+        c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
+        d = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
+        
+        if (a or b or c or d):
             return True
         else:
-            a1 = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]   
-            a2 = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
-            a3 = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            a4 = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
-            if (a1 | a2 | a3 | a4):
-                return True
-            else:
-                return False
+            return False
 
     def checkLeftBound(self): #return true wenn bewegung moeglich
         # pruefe part 1,3
