@@ -183,37 +183,37 @@ class Field(object):
     
     def checkSpawn(self, string):
         if (string == "cube"):
-            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[6][1] == True) or (self.matrix[7][1] == True):
+            if (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[7][1] == True) or (self.matrix[8][1] == True):
                 return False
             else: 
                 return True
         elif (string == "I"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True):
+            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[9][0] == True):
                 return False
             else: 
                 return True
         elif (string == "Z"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[6][1] == True) or (self.matrix[7][1] == True):
+            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[7][1] == True) or (self.matrix[8][1] == True):
                 return False
             else: 
                 return True
         elif (string == "reverseZ"):
-            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[5][1] == True) or (self.matrix[6][1] == True):
+            if (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[6][1] == True) or (self.matrix[7][1] == True):
                 return False
             else: 
                 return True
         elif (string == "L"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[5][1] == True):
+            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[6][1] == True):
                 return False
             else: 
                 return True
         elif (string == "reverseL"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[7][1] == True):
+            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[8][1] == True):
                 return False
             else: 
                 return True
         elif (string == "cross"):
-            if (self.matrix[5][0] == True) or (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[6][1] == True):
+            if (self.matrix[6][0] == True) or (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[7][1] == True):
                 return False
             else:
                 return True
