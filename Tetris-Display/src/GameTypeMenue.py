@@ -26,7 +26,7 @@ class GameTypeMenue(object):
             self.buttonCreateGame.addTextGameTypeAndMain("Choose Gametype:")
 
             self.buttonEqualMode = TextRectNode(parent = self.divNodeTypeMenue, 
-                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.40),
+                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.45),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
@@ -34,7 +34,7 @@ class GameTypeMenue(object):
             self.buttonEqualMode.addTextGameTypeAndMain("Equal-Mode")
              
             self.buttonNormalMode = TextRectNode(parent = self.divNodeTypeMenue, 
-                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.55),
+                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.60),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
@@ -42,7 +42,7 @@ class GameTypeMenue(object):
             self.buttonNormalMode.addTextGameTypeAndMain("Classic-Mode")
             
             self.backButton = TextRectNode(parent = self.divNodeTypeMenue, 
-                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.70),
+                                       pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.75),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",

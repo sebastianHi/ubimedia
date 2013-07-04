@@ -8,18 +8,17 @@ class GameMenue(object):
         self.rootNode = parent
         self.divNodeGameMenue= avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
         self.background = avg.RectNode(parent = self.divNodeGameMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeGameMenue.size )
-        self.yOben  = int(self.divNodeGameMenue.size[1] * 0.03)
-#feld1 berechnungen
-        self.xstartFeld1 = self.divNodeGameMenue.size[0] * 0.045
-        self.xendFeld1   = int(self.divNodeGameMenue.size[0] * 0.45) - int(self.divNodeGameMenue.size[0]*0.025)
-        sizeField = self.xendFeld1 - self.xstartFeld1
-        resizedField = self.naechsteZahlDurch14Teilbar(sizeField)
-        self.xstartFeld1 = self.xendFeld1 - resizedField
-
-#feld2 berechnungen
-        self.xendFeld2 = self.divNodeGameMenue.size[0] -self.xstartFeld1
-        self.xstartFeld2 = self.xendFeld2 - resizedField
-
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        self.menueLinkerXwert  = int(self.divNodeGameMenue.size[0]/2- self.divNodeGameMenue.size[0]*0.04)
+        self.menueRechterXwert = int(self.divNodeGameMenue.size[0]/2+ self.divNodeGameMenue.size[0]*0.04)
+        self.rahmenbreite = int(self.divNodeGameMenue.size[0]*0.025)
+        self.yOben  = int(self.divNodeGameMenue.size[1] * 0.05) 
+        self.untereBeschraenkung = self.divNodeGameMenue.size[1] * 0.92 - self.rahmenbreite
+        self.xendFeld1 = self.menueLinkerXwert -self.rahmenbreite - self.divNodeGameMenue.size[1] * 0.03
+        self.xstartFeld1, self.yUnten = self.berechneLinkesXUntenYFeld1(self.xendFeld1, self.untereBeschraenkung,self.yOben)
+        sizefield = self.xendFeld1 - self.xstartFeld1
+        self.xstartFeld2 = self.menueRechterXwert +self.rahmenbreite + self.divNodeGameMenue.size[1] * 0.03
+        self.xendFeld2   = self.xstartFeld2 + sizefield
         self.blocksize = (self.xendFeld1 - self.xstartFeld1 )/14
         self.tetrishoehe = self.blocksize * 19
         
@@ -28,7 +27,6 @@ class GameMenue(object):
         self.initFeld(self.xstartFeld2, self.xendFeld2, self.yOben )
 
 #fuer Matrix feld initialisierung 
-        self.komischAlternativZuyObnloeschbar = self.yOben
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
@@ -37,55 +35,79 @@ class GameMenue(object):
         print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
 #buttoms werden initialisiert
 
-        positionMittlereButtons = self.divNodeGameMenue.size[0]*0.5
-        self.timelimit =  avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.20),
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      
+
+        self.hoeheMitlererBalken =  self.divNodeGameMenue.size[1] * 0.20
+        mittlererBalken = self.divNodeGameMenue.size[0]/2
+        
+        self.timelimit =  avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
                                       text ="TimeLimit", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-        self.timerLimit = avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.23),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        
+        while(self.timelimit.size[0]>= (self.menueRechterXwert- self.menueLinkerXwert) | (self.timelimit.size[1]>= self.divNodeGameMenue.size[1]* 0.1 )):
+            self.timelimit.fontsize-=1
+            if(self.timelimit.fontsize<=0):
+                self.timelimit.fontsize= 1
+                break
+        fontS = self.timelimit.fontsize  
+        self.hoeheMitlererBalken +=  fontS + fontS*0.5
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------                 
+        self.timerLimit = avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
+                                      fontsize = fontS, 
                                       text ="500", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         
-        self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
+        self.hoeheMitlererBalken +=  4*fontS
         
-        self.roundText = avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.33),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
+#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
+        
+        self.roundText = avg.WordsNode(pos = (mittlererBalken, self.hoeheMitlererBalken),
+                                      fontsize = fontS, 
                                       text ="Round", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
+        self.hoeheMitlererBalken +=  fontS + fontS*0.5
+#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
         
-        self.roundNumber = avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.36),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.roundNumber = avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
+                                      fontsize = fontS, 
                                       text ="1", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
+        self.hoeheMitlererBalken +=  4*fontS
+#---------------------------------------------------------------------------------------------------------------------------------------------------------- 
         
-        self.speedText = avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.46),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.speedText = avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
+                                      fontsize = fontS, 
                                       text ="Speed", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-        
-        self.speedNumber = avg.WordsNode(pos = (positionMittlereButtons , self.divNodeGameMenue.size[1] * 0.49),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.hoeheMitlererBalken +=  fontS + fontS*0.5
+#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
+      
+        self.speedNumber = avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
+                                      fontsize = fontS, 
                                       text ="1", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
+        self.hoeheMitlererBalken += 4*fontS
         
         self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
@@ -94,7 +116,7 @@ class GameMenue(object):
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-        
+         
         self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
                                       text ="Score:  000000",  
@@ -102,32 +124,30 @@ class GameMenue(object):
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-##loeschbar
-        ##TODO:self.testFallingNode()
-
-    
         
-    def initFeld (self, startX, endX, oben):
-#linker Rahmen
-        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
-                                  pos = (startX -int(self.divNodeGameMenue.size[0]*0.025)  , oben), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(int(self.divNodeGameMenue.size[0]*0.025) ,self.tetrishoehe) #self.divNodeGameMenue.size[1]* 0.87
-                                  )
-#rechter Rahmen
-        avg.RectNode(parent = self.divNodeGameMenue, 
-                                  pos = (endX , oben), sensitive = False,
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(int(self.divNodeGameMenue.size[0]*0.025), self.tetrishoehe)
-                                  )
-#Boden
-        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
-                                  pos = (startX-int(self.divNodeGameMenue.size[0]*0.025), self.tetrishoehe+oben), 
-                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(endX-startX+2*int(self.divNodeGameMenue.size[0]*0.025) ,self.divNodeGameMenue.size[1]*0.04))
-            
-                              
-                                  
+        
+        
+        
+        
+        
+        
+        
+    def berechneLinkesXUntenYFeld1(self,rechteKante, untereSchranke, obereSchranke):
+        linkesX = int(self.divNodeGameMenue.size[0] * 0.03) 
+        size = rechteKante - linkesX
+        size = self.naechsteZahlDurch14Teilbar(size)
+        while(True):
+            print "links ",linkesX, " rechts ",rechteKante," maxHoehe ", (untereSchranke - obereSchranke)
+            blocksize = size / 14
+            tetrishoehe = blocksize *19
+            if((untereSchranke - obereSchranke) >= tetrishoehe):
+                return ((rechteKante- size), obereSchranke-tetrishoehe)
+            else:
+                size-=14
+                
+        
+        
+        
     def timerLCountDown (self):
         count = int (self.timerLimit.text)
         count -= 1
@@ -136,3 +156,23 @@ class GameMenue(object):
     def naechsteZahlDurch14Teilbar(self,value):
         x = value % 14
         return value - x
+    
+    def initFeld (self, startX, endX, oben):
+#linker Rahmen
+        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
+                                  pos = (startX -self.rahmenbreite  , oben), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.rahmenbreite ,self.tetrishoehe) #self.divNodeGameMenue.size[1]* 0.87
+                                  )
+#rechter Rahmen
+        avg.RectNode(parent = self.divNodeGameMenue, 
+                                  pos = (endX , oben), sensitive = False,
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(self.rahmenbreite, self.tetrishoehe)
+                                  )
+#Boden
+        avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
+                                  pos = (startX-self.rahmenbreite, self.tetrishoehe+oben), 
+                                  fillcolor = "000000", fillopacity = 1, color = "000000", 
+                                  size = avg.Point2D(endX-startX+2*int(self.divNodeGameMenue.size[0]*0.025) ,self.rahmenbreite)
+                                  )

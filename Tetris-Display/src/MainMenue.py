@@ -27,7 +27,7 @@ class MainMenue(object):
             self.buttonCreateGame.addTextGameTypeAndMain("  Create Game:  ")
             
             self.button1vs1 = TextRectNode(parent = self.divNodeMainMenue, 
-                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.40),
+                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.45),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
@@ -35,7 +35,7 @@ class MainMenue(object):
             self.button1vs1.addTextGameTypeAndMain("1vs1")
             
             self.button2vs2 = TextRectNode(parent = self.divNodeMainMenue, 
-                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.70),
+                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.75),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
@@ -43,7 +43,7 @@ class MainMenue(object):
             self.button2vs2.addTextGameTypeAndMain("2vs2")
             
             self.button1vs1vs1 = TextRectNode(parent = self.divNodeMainMenue, 
-                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.55),
+                                       pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.60),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
