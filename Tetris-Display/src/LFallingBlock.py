@@ -269,8 +269,8 @@ class LFallingBlock(object):
         elif (RotatingNumber == 2):
             if (self.currPos4[1] + 1 > 18):
                 return True
-            a = self.Field.matrix[self.currPos1[0] - 2][self.currPos1[1] + 1]
-            b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1]]
+            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 2]
+            b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1] - 1]
             d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
             if  (a or b or d):
                 return True
