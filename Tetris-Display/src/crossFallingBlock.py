@@ -86,7 +86,7 @@ class crossFallingBlock(object):
                 self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1] + self.GameMenue.blocksize)
                 self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1] - self.GameMenue.blocksize)
                 self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
-                self.rotatingPosition = 2
+                self.rotatingPosition = 0
                 
         elif (self.rotatingPosition == 2):
             if (self.checkCollisionAtRotationLeft(2)):
@@ -95,9 +95,9 @@ class crossFallingBlock(object):
                 self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1] - 1)
                 self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1] + 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
-                self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1] + self.GameMenue.blocksize)
-                self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1] - self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1] - self.GameMenue.blocksize)
+                self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1] + self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
                 self.rotatingPosition = 1
         else:
             if (self.checkCollisionAtRotationLeft(3)):
@@ -109,7 +109,7 @@ class crossFallingBlock(object):
                 self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1] - self.GameMenue.blocksize)
                 self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1] + self.GameMenue.blocksize)
                 self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
-                self.rotatingPosition = 0
+                self.rotatingPosition = 2
                       
     def rotateRight(self):
         
