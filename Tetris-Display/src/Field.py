@@ -76,14 +76,12 @@ class Field(object):
                 for i in range(0,14):
                     b = b & (self.matrix[i][j])
                 if(b):
-                    print "I want to delete"
                     self.dropOneRow(j)
                     amountOfRows +=1
                     breaked = True
                     break
                 else:
                     breaked = False
-        print amountOfRows
         if(amountOfRows>0):
             pass
         #TODO: update Money
