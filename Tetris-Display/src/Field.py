@@ -51,6 +51,17 @@ class Field(object):
         self.matrix[self.block.currPos3[0]][self.block.currPos3[1]] = True
         self.matrix[self.block.currPos4[0]][self.block.currPos4[1]] = True
         self.player.clearInterval(self.timer)
+        for y in range(0,19):
+            s = ""
+            for x in range(0,14):
+                if(self.matrix[x][y]):
+                    s +=( "  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
+                else:
+                    s +=( "  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
+            print s
+            print ""
+            print ""
+                 
     
     
     def checkRows(self):

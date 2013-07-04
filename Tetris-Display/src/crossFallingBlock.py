@@ -64,14 +64,22 @@ class crossFallingBlock(object):
         
     def rotateLeft(self):
 
-            self.rotateRight()
-            self.rotateRight()
+            self.rotateRight(True)
+            self.rotateRight(True)
             self.rotateRight()
                       
-    def rotateRight(self):
+    def rotateRight(self, shallIcheck = False):
         
         if (self.rotatingPosition == 0):
-            if (self.checkCollisionAtRotation(0)):
+            if(shallIcheck):
+                self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] - 1)
+                self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1] + 1)
+                self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] - 1)
+                self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1] - self.GameMenue.blocksize)
+                self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1] + self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.rotatingPosition = 1
+            elif (self.checkCollisionAtRotation(0)):
                 pass
             else:
                 self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] - 1)
