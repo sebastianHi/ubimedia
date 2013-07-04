@@ -31,10 +31,6 @@ class Gui(AVGApp):
         
         
         self.mainMenu = MainMenue(self.rootNode)
- 
-        self.mainMenu.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.mainMenu.button1vs1, self.onClickMain1v1)
-        self.mainMenu.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.mainMenu.button2vs2, self.onClickMain2v2)
-        self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
         self.mainMenu.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1, self.onClickMain1v1)
         self.mainMenu.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button2vs2, self.onClickMain2v2)
         self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
@@ -43,17 +39,19 @@ class Gui(AVGApp):
         
     def initWhatGame(self):
         self.typeMenu = GameTypeMenue(self.rootNode)
-        self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonEqualMode, self.onClickEqual)
-        self.typeMenu.buttonNormalMode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.onClickNormal)
-        self.typeMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.typeMenu.buttonNormalMode, self.backToMenue) 
+        self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.typeMenu.buttonEqualMode, self.onClickEqual)
+        self.typeMenu.buttonNormalMode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.typeMenu.buttonNormalMode, self.onClickNormal)
+        self.typeMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.typeMenu.buttonNormalMode, self.backToMenue) 
         self.mainMenu.divNodeMainMenue.active = False 
         self.typeMenu.divNodeTypeMenue.active = True                           
         
     def initLobby(self):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
-        self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.backButton, self.backToType)
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test)   
+        self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
+#-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
+        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test)   
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
         self.zustand = 1

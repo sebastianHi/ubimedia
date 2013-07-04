@@ -12,7 +12,7 @@ class Field(object):
         self.freezeRotate = False
         self.gameMenue = gameMenue
         self.player = player
-        self.speed = 500
+        self.speed = 800
         self.gameMenue = gameMenue
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
@@ -51,16 +51,19 @@ class Field(object):
         self.matrix[self.block.currPos3[0]][self.block.currPos3[1]] = True
         self.matrix[self.block.currPos4[0]][self.block.currPos4[1]] = True
         self.player.clearInterval(self.timer)
-        for y in range(0,19):
-            s = ""
-            for x in range(0,14):
-                if(self.matrix[x][y]):
-                    s +=( "  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
-                else:
-                    s +=( "  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
-            print s
-            print ""
-            print ""
+        
+        
+#prints fuer felder
+#         for y in range(0,19):
+#             s = ""
+#             for x in range(0,14):
+#                 if(self.matrix[x][y]):
+#                     s +=( "  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
+#                 else:
+#                     s +=( "  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
+#             print s
+#             print ""
+#             print ""
                  
     
     
@@ -242,13 +245,13 @@ class Field(object):
             
             
 ###########################################################################################################################################
-            i = random.randint(0,3)
-            self.randomMove(i)  # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
+            #i = random.randint(0,3)
+            #self.randomMove(i)  # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
 ###########################################################################################################################################
 
         
     def moveLeft(self):
-        if(self.block == None | self.freezeLeft):
+        if((self.block == None) | self.freezeLeft):
             pass
         elif(self.inverseSteuerung):
             self.block.moveBlockRight()
@@ -257,7 +260,7 @@ class Field(object):
     
     
     def moveRight(self):
-        if(self.block == None| self.freezeRight):
+        if((self.block == None)| self.freezeRight):
             pass
         elif(self.inverseSteuerung):
             self.block.moveBlockLeft()
@@ -266,7 +269,7 @@ class Field(object):
     
     
     def rotateLeft(self):
-        if(self.block == None| self.freezeRotate):
+        if((self.block == None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
             self.block.rotateRight()
@@ -275,7 +278,7 @@ class Field(object):
             
     
     def rotateRight(self):
-        if(self.block == None| self.freezeRotate):
+        if((self.block == None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
             self.block.rotateLeft()

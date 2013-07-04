@@ -1,5 +1,6 @@
 from libavg import avg
 from Field import Field
+from TextRectNode import TextRectNode
 
 class GameMenue(object):
     
@@ -29,7 +30,7 @@ class GameMenue(object):
 #fuer Matrix feld initialisierung 
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
-        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        #self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
         
         print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
@@ -98,7 +99,6 @@ class GameMenue(object):
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken +=  fontS + fontS*0.5
-#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
       
         self.speedNumber = avg.WordsNode(pos = (mittlererBalken , self.hoeheMitlererBalken),
                                       fontsize = fontS, 
@@ -108,22 +108,85 @@ class GameMenue(object):
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken += 4*fontS
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+#         
+#         self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
+#                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
+#                                       text ="Score:  000000", 
+#                                       parent = self.divNodeGameMenue, 
+#                                       color = "000000", font = "arial", 
+#                                       alignment = "center",
+#                                       sensitive = False)
+#          
+#         self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
+#                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
+#                                       text ="Score:  000000",  
+#                                       parent = self.divNodeGameMenue, 
+#                                       color = "000000", font = "arial", 
+#                                       alignment = "center",
+#                                       sensitive = False)
         
-        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
-                                      text ="Score:  000000", 
-                                      parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
-                                      alignment = "center",
-                                      sensitive = False)
-         
-        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
-                                      text ="Score:  000000",  
-                                      parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
-                                      alignment = "center",
-                                      sensitive = False)
+#-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
+        self.buttonMoveL = TextRectNode(parent = self.divNodeGameMenue, 
+                                       pos = (self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1] * 0.9),
+                                       fillcolor ="000000",
+                                       fillopacity=1,
+                                       color = "000000",
+                                       size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
+        self.buttonMoveL.addTextGameTypeAndMain("L","FFFFFF")
+        
+        self.buttonRotateL = TextRectNode(parent = self.divNodeGameMenue, 
+                                   pos = (self.divNodeGameMenue.size[0]*0.3,self.divNodeGameMenue.size[1] * 0.9),
+                                   fillcolor ="000000",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
+        self.buttonRotateL.addTextGameTypeAndMain("RL","FFFFFF")
+        
+        self.buttonRotateR = TextRectNode(parent = self.divNodeGameMenue, 
+                                   pos = (self.divNodeGameMenue.size[0]*0.5,self.divNodeGameMenue.size[1] * 0.9),
+                                   fillcolor ="000000",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
+        self.buttonRotateR.addTextGameTypeAndMain("RR","FFFFFF")
+        
+        self.buttonMoveR = TextRectNode(parent = self.divNodeGameMenue, 
+                                   pos = (self.divNodeGameMenue.size[0]*0.7,self.divNodeGameMenue.size[1] * 0.9),
+                                   fillcolor ="000000",
+                                   fillopacity=1,
+                                   color = "000000",
+                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
+        self.buttonMoveR.addTextGameTypeAndMain("R","FFFFFF")
+        
+        self.buttonMoveL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveL, self.eventMoveLinks) 
+        self.buttonRotateL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateL, self.eventRotateLinks) 
+        self.buttonRotateR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateR, self.eventRotateRechts) 
+        self.buttonMoveR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveR, self.eventMoveRechts) 
+
+    def eventMoveLinks(self,event):
+        self.field1.moveLeft()
+    
+    def eventRotateLinks(self,event):
+        self.field1.rotateLeft()
+
+    def eventRotateRechts(self,event):
+        self.field1.rotateRight()
+
+    def eventMoveRechts(self,event):
+        self.field1.moveRight()
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
     # Ueberpruefung der FeldPunkte
 #         avg.RectNode(pos=(self.xstartFeld1, self.yOben)
 #                      ,size =avg.Point2D(self.blocksize,self.blocksize),
