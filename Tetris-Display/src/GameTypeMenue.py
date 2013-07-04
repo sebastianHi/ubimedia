@@ -23,15 +23,15 @@ class GameTypeMenue(object):
                                        fillopacity=1,
                                        color = "0040FF",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.25,self.divNodeTypeMenue.size[1]*0.15))
-            self.buttonCreateGame.addText("Choose Gametype:")
-            
+            self.buttonCreateGame.addTextGameTypeAndMain("Choose Gametype:")
+
             self.buttonEqualMode = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.40),
                                        fillcolor ="0404B4",
                                        fillopacity=1,
                                        color = "0404B4",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
-            self.buttonEqualMode.addText("Equal-Mode")
+            self.buttonEqualMode.addTextGameTypeAndMain("Equal-Mode")
              
             self.buttonNormalMode = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.55),
@@ -39,7 +39,7 @@ class GameTypeMenue(object):
                                        fillopacity=1,
                                        color = "0404B4",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
-            self.buttonNormalMode.addText("Classic-Mode")
+            self.buttonNormalMode.addTextGameTypeAndMain("Classic-Mode")
             
             self.backButton = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.70),
@@ -47,8 +47,8 @@ class GameTypeMenue(object):
                                        fillopacity=1,
                                        color = "0404B4",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
-            self.backButton.addText("Back")
+            self.backButton.addTextGameTypeAndMain("Back")
             
-            
+
         
         

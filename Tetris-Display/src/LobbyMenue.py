@@ -64,7 +64,7 @@ class LobbyMenue(object):
         if(self.typ == 0):
             self.type.addTextForLobbyLine("Type:" , "Classic")
         else:
-            self.type.addTextForLobbyLine("Type" , "EqualMode")
+            self.type.addTextForLobbyLine("Type:" , "EqualMode")
         
         self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),
@@ -109,6 +109,7 @@ class LobbyMenue(object):
         
         aktuelleHoehe = self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07 + self.divNodelobbyMenue.size[1]*0.15
         
+#----------------------------------------------Player Felder------------------------------------------------------------------------------------------------------------------------- 
         if(self.modus == 4):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),

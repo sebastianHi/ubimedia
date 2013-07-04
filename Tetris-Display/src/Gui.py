@@ -23,6 +23,7 @@ class Gui(AVGApp):
         self.zustand = 0
         self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
+        self.alreadyServerRunning = False
     
         self.keepCountingToStart = True
         self.player= avg.Player.get()
@@ -56,8 +57,10 @@ class Gui(AVGApp):
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
         self.zustand = 1
-        #ZumUebergangZumGame      
-        thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
+        #ZumUebergangZumGame
+        if(not(self.alreadyServerRunning)) : 
+            self.alreadyServerRunning = True
+            thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
         
     def initGame(self):
         self.gameMenu = GameMenue(self.rootNode, self.player)
@@ -281,4 +284,4 @@ class EchoServerProtocol(WebSocketServerProtocol):
 
 if __name__ == '__main__':
     ipStorage = IPStorage()
-    Gui.start(resolution = (900,1100))
+    Gui.start(resolution = (800,800))

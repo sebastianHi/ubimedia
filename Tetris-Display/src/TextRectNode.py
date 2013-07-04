@@ -7,16 +7,35 @@ from libavg import avg
 
 class TextRectNode(avg.RectNode):
     
-    def addText(self, text , color = "000000" ):
+    def addText(self, text , color = "000000"):
         self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]/2, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
-                                      fontsize = 0.28*self.size[1], 
-                                      text =text, 
+                                      fontsize = 0.5*self.size[1], 
+                                      text ="Classic-Mode", 
                                       parent = self.getParent(), 
                                       color = color, 
                                       font = "arial", 
                                       alignment = "center",
-                                      sensitive = False)
-    
+                                      sensitive = False
+                                      )
+        while((self.textNode.size[0] >= self.size[0])):
+            self.textNode.fontsize -=1
+        self.textNode.text = text
+            
+        
+    def addTextGameTypeAndMain(self, text , color = "000000"):
+        self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]/2, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
+                                      fontsize = 0.5*self.size[1], 
+                                      text ="Classic-Mode", 
+                                      parent = self.getParent(), 
+                                      color = color, 
+                                      font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False
+                                      )
+        while((self.textNode.size[0] >= self.size[0])):
+            self.textNode.fontsize -=1
+        self.textNode.text = text
+        
     def getTextNode(self):
         return self.textNode
     
@@ -39,21 +58,29 @@ class TextRectNode(avg.RectNode):
                                       color = color, font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
+        while((self.textNode.size[0] >= self.size[0])):
+            self.textNode.fontsize -=1
+        self.textNode.text = text
+        
         
     def addTextForLobbyLine(self, textA, textB , color = "000000" ):
-        self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]*0.3, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
+        self.textNodeA = avg.WordsNode(pos = (self.pos[0]+ self.size[0]*0.1, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.45*self.size[1], 
-                                      text =textA, 
+                                      text ="Players connected:", 
                                       parent = self.getParent(), 
                                       color = color, font = "arial", 
-                                      alignment = "center",
+                                      alignment = "left",
                                       sensitive = False)
         
-        self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]*0.7, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
+        self.textNodeB = avg.WordsNode(pos = (self.pos[0]+self.size[0]-self.size[0]*0.1, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.45*self.size[1], 
                                       text =textB, 
                                       parent = self.getParent(), 
                                       color = color, font = "arial", 
-                                      alignment = "center",
+                                      alignment = "right",
                                       sensitive = False)
-    
+        
+        while(self.textNodeA.size[0] >= self.size[0]*0.7):
+            self.textNodeA.fontsize-=1
+        self.textNodeA.text = textA
+        self.textNodeB.fontsize = self.textNodeA.fontsize
