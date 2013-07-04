@@ -64,22 +64,57 @@ class crossFallingBlock(object):
         
     def rotateLeft(self):
 
-            self.rotateRight(True)
-            self.rotateRight(True)
-            self.rotateRight()
-                      
-    def rotateRight(self, shallIcheck = False):
-        
         if (self.rotatingPosition == 0):
-            if(shallIcheck):
+            if (self.checkCollisionAtRotationLeft(0)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] + 1)
+                self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1] - 1)
+                self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
+                self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1] + self.GameMenue.blocksize)
+                self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1] - self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.rotatingPosition = 3
+                
+        elif (self.rotatingPosition == 1):
+            if (self.checkCollisionAtRotationLeft(1)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1] + 1)
+                self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1] - 1)
+                self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] + 1)
+                self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1] + self.GameMenue.blocksize)
+                self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1] - self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.rotatingPosition = 2
+                
+        elif (self.rotatingPosition == 2):
+            if (self.checkCollisionAtRotationLeft(2)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1] - 1)
+                self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1] + 1)
+                self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
+                self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1] + self.GameMenue.blocksize)
+                self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1] - self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.rotatingPosition = 1
+        else:
+            if (self.checkCollisionAtRotationLeft(3)):
+                pass
+            else:
                 self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] - 1)
                 self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1] + 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] - 1)
                 self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1] - self.GameMenue.blocksize)
                 self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1] + self.GameMenue.blocksize)
                 self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
-                self.rotatingPosition = 1
-            elif (self.checkCollisionAtRotation(0)):
+                self.rotatingPosition = 0
+                      
+    def rotateRight(self):
+        
+        if (self.rotatingPosition == 0):
+            if (self.checkCollisionAtRotation(0)):
                 pass
             else:
                 self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1] - 1)
@@ -263,6 +298,51 @@ class crossFallingBlock(object):
             a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] - 1]
             b = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1] + 1]
             d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+    
+    def checkCollisionAtRotationLeft(self, RotatingNumber): # True = Collison, False = No Collision
+        
+        if (RotatingNumber == 0):
+            if (self.currPos3[1] - 1 < 0):
+                return True
+            a = self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] + 1]
+            b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1] - 1]
+            d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] - 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+                
+        elif (RotatingNumber == 1):
+            if (self.currPos3[0] + 1 > 13):
+                return True
+            a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] + 1]
+            b = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1] - 1]
+            d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] + 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+        elif (RotatingNumber == 2):
+            if (self.currPos3[1] + 1 > 18):
+                return True
+            a = self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] - 1]
+            b = self.Field.matrix[self.currPos3[0] + 1][self.currPos3[1] + 1]
+            d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+
+        else:
+            if (self.currPos1[0] - 1 < 0):
+                return True
+            a = self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] - 1]
+            b = self.Field.matrix[self.currPos3[0] - 1][self.currPos3[1] + 1]
+            d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] - 1]
             if  (a or b or d):
                 return True
             else:

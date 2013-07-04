@@ -65,9 +65,52 @@ class reverseLFallingBlock(object):
     
     def rotateLeft(self):
         
-            self.rotateRight()
-            self.rotateRight()
-            self.rotateRight()
+        if (self.rotatingPosition == 0):
+            if (self.checkCollisionAtRotationLeft(0)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0],self.currPos1[1] - 2)
+                self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] + 1)
+                self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] - 1)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] - (2 * self.GameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.rotatingPosition = 3
+                
+        elif (self.rotatingPosition == 1):
+            if (self.checkCollisionAtRotationLeft(1)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0] + 2,self.currPos1[1])
+                self.currPos2 = (self.currPos2[0] - 1,self.currPos1[1] + 1)
+                self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
+                self.part1.pos = ((self.part1.pos[0] + (2 * self.GameMenue.blocksize)),self.part1.pos[1] )
+                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.rotatingPosition = 0
+                
+        elif (self.rotatingPosition == 2):
+            if (self.checkCollisionAtRotationLeft(2)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0],self.currPos1[1] + 2)
+                self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] - 1)
+                self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] + 1)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] + (2 * self.GameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.rotatingPosition = 1
+        else:
+            if (self.checkCollisionAtRotationLeft(3)):
+                pass
+            else:
+                self.currPos1 = (self.currPos1[0] - 2,self.currPos1[1])
+                self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] - 1)
+                self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
+                self.part1.pos = ((self.part1.pos[0] - (2 * self.GameMenue.blocksize)),self.part1.pos[1] )
+                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.rotatingPosition = 2
                       
     def rotateRight(self):
         
@@ -256,6 +299,51 @@ class reverseLFallingBlock(object):
             a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 2]
             b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] - 1]
             d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] + 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+            
+    def checkCollisionAtRotationLeft(self, RotatingNumber): # True = Collison, False = No Collision
+        
+        if (RotatingNumber == 0):
+            if (self.currPos4[1] - 1 < 0):
+                return True
+            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] - 2]
+            b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1] + 1]
+            d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] - 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+                
+        elif (RotatingNumber == 1):
+            if (self.currPos4[0] + 1 > 13):
+                return True
+            a = self.Field.matrix[self.currPos1[0] + 2][self.currPos1[1]]
+            b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] + 1]
+            d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] - 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+        elif (RotatingNumber == 2):
+            if (self.currPos4[1] + 1 > 18):
+                return True
+            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 2]
+            b = self.Field.matrix[self.currPos2[0] - 1][self.currPos2[1] - 1]
+            d = self.Field.matrix[self.currPos4[0] + 1][self.currPos4[1] + 1]
+            if  (a or b or d):
+                return True
+            else:
+                return False
+
+        else:
+            if (self.currPos4[0] - 1 < 0):
+                return True
+            a = self.Field.matrix[self.currPos1[0] - 2][self.currPos1[1]]
+            b = self.Field.matrix[self.currPos2[0] + 1][self.currPos2[1] - 1]
+            d = self.Field.matrix[self.currPos4[0] - 1][self.currPos4[1] + 1]
             if  (a or b or d):
                 return True
             else:
