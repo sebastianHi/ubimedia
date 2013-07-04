@@ -1,5 +1,4 @@
 import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
-from libavg import avg
 import random
 
 
@@ -22,8 +21,8 @@ class Field(object):
         #queue die gefuellt wird durch phone, new falling stone danach mit dem naechsten rufen
         self.Queue = []
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
-        self.matrix = [[False for i in range(19)] for j in range(14)]
-        self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]
+        self.matrix = [[False for i in range(19)] for j in range(14)] #@UnusedVariable
+        self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
         self.initBlock();
         self.timer = self.player.setInterval(self.speed, self.gravity)
         
@@ -110,7 +109,7 @@ class Field(object):
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
 ###########################################################################################################################################
-           # je nachdem was du erzeugst  1-7
+# je nachdem was du erzeugst  1-7
 ###########################################################################################################################################
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
