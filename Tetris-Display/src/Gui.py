@@ -12,7 +12,7 @@ import sys,thread
 
 class Gui(AVGApp):
     
-    def __init__(self,ipStorage):
+    def init(self):
 
 ############################################################
 #        zustand = 0    :    Gui ist im MainMenu
@@ -25,9 +25,8 @@ class Gui(AVGApp):
         self.ipStorage = ipStorage
     
         self.keepCountingToStart = True
-        self.player=avg.Player.get()
-        self.canvas=self.player.createMainCanvas(size=(1440,900))
-        self.rootNode=self.canvas.getRootNode()
+        self.player= avg.Player.get()
+        self.rootNode= self._parentNode
         
         
         self.mainMenu = MainMenue(self.rootNode)
@@ -278,10 +277,8 @@ class EchoServerProtocol(WebSocketServerProtocol):
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message
         #self.sendMessage("Received: "+msg, binary)##send back message to initiating client
-        gui.eventHandler(msg)
+        Gui.eventHandler(msg)
 
 if __name__ == '__main__':
     ipStorage = IPStorage()
-    gui = Gui(ipStorage)
-    ipStorage.initGui(gui)
-    gui.player.play()
+    Gui.start(resolution = (900,1100))
