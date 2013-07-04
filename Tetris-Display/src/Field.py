@@ -12,7 +12,7 @@ class Field(object):
         self.freezeRotate = False
         self.gameMenue = gameMenue
         self.player = player
-        self.speed = 800
+        self.speed = 400
         self.gameMenue = gameMenue
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
@@ -68,13 +68,14 @@ class Field(object):
     
     
     def checkRows(self):
-        breaked = False
+        breaked = True
         amountOfRows = 0
         while(breaked):
-            for j  in range(20):
+            for j  in range(0,19):
                 b = True
-                for i in range(14):
-                    b = b & self.matrix[i][j]
+                for i in range(0,14):
+                    print i,j
+                    b = b & (self.matrix[i][j])
                 if(b):
                     print "I want to delete"
                     self.dropOneRow(j)
@@ -83,6 +84,7 @@ class Field(object):
                     break
                 else:
                     breaked = False
+        print amountOfRows
         if(amountOfRows>0):
             pass
         #TODO: update Money
@@ -96,8 +98,10 @@ class Field(object):
             
         j = row
         for i in range(14):
-            for k in range(row+1,20):
+            for k in range(0,row):
                 self.matrixSteadyRectNodes[i][j]= self.matrixSteadyRectNodes[i][k]
+                if(self.matrixSteadyRectNodes[i][j] != None):
+                    (self.matrixSteadyRectNodes[i][j]).pos = (self.matrixSteadyRectNodes[i][j].pos[0],self.matrixSteadyRectNodes[i][j].pos[1] + self.gameMenue.blocksize)
                 self.matrix[i][j] = self.matrix[i][k]
                 self.matrixSteadyRectNodes[i][k] = None
                 self.matrix[i][k] = False

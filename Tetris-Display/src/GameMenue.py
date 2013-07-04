@@ -128,7 +128,7 @@ class GameMenue(object):
         
 #-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
         self.buttonMoveL = TextRectNode(parent = self.divNodeGameMenue, 
-                                       pos = (self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1] * 0.9),
+                                       pos = (self.divNodeGameMenue.size[0]*0.05,self.divNodeGameMenue.size[1] * 0.9),
                                        fillcolor ="000000",
                                        fillopacity=1,
                                        color = "000000",
@@ -152,7 +152,7 @@ class GameMenue(object):
         self.buttonRotateR.addTextGameTypeAndMain("RR","FFFFFF")
         
         self.buttonMoveR = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.7,self.divNodeGameMenue.size[1] * 0.9),
+                                   pos = (self.divNodeGameMenue.size[0]*0.9,self.divNodeGameMenue.size[1] * 0.9),
                                    fillcolor ="000000",
                                    fillopacity=1,
                                    color = "000000",
