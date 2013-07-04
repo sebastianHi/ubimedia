@@ -109,24 +109,22 @@ class GameMenue(object):
                                       sensitive = False)
         self.hoeheMitlererBalken += 4*fontS
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------------- 
-
-#         
-#         self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
-#                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
-#                                       text ="Score:  000000", 
-#                                       parent = self.divNodeGameMenue, 
-#                                       color = "000000", font = "arial", 
-#                                       alignment = "center",
-#                                       sensitive = False)
-#          
-#         self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
-#                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
-#                                       text ="Score:  000000",  
-#                                       parent = self.divNodeGameMenue, 
-#                                       color = "000000", font = "arial", 
-#                                       alignment = "center",
-#                                       sensitive = False)
+         
+        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Score:  000000", 
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
+          
+        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
+                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+                                      text ="Score:  000000",  
+                                      parent = self.divNodeGameMenue, 
+                                      color = "000000", font = "arial", 
+                                      alignment = "center",
+                                      sensitive = False)
         
 #-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
         self.buttonMoveL = TextRectNode(parent = self.divNodeGameMenue, 

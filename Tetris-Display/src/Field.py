@@ -71,11 +71,12 @@ class Field(object):
         breaked = False
         amountOfRows = 0
         while(breaked):
-            for i  in range(14):
+            for j  in range(20):
                 b = True
-                for j in range(20):
+                for i in range(14):
                     b = b & self.matrix[i][j]
                 if(b):
+                    print "I want to delete"
                     self.dropOneRow(j)
                     amountOfRows +=1
                     breaked = True
@@ -297,12 +298,4 @@ class Field(object):
         elif (integer == 3):
             self.block.moveBlockLeft()
         else:
-            self.block.moveBlockRight()
-  
-        
-        
-        
-        
-        
-        
-        
+            self.block.moveBlockRight()    
