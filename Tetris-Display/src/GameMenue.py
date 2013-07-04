@@ -220,7 +220,6 @@ class GameMenue(object):
         size = rechteKante - linkesX
         size = self.naechsteZahlDurch14Teilbar(size)
         while(True):
-            print "links ",linkesX, " rechts ",rechteKante," maxHoehe ", (untereSchranke - obereSchranke)
             blocksize = size / 14
             tetrishoehe = blocksize *19
             if((untereSchranke - obereSchranke) >= tetrishoehe):

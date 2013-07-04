@@ -74,7 +74,6 @@ class Field(object):
             for j  in range(0,19):
                 b = True
                 for i in range(0,14):
-                    print i,j
                     b = b & (self.matrix[i][j])
                 if(b):
                     print "I want to delete"
