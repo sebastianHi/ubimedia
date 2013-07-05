@@ -99,6 +99,8 @@ class Field(object):
                 self.matrixSteadyRectNodes[spalte][reihe] = self.matrixSteadyRectNodes[spalte][reihe-1]
                 if(self.matrix[spalte][reihe-1]):
                     (self.matrixSteadyRectNodes[spalte][reihe]).pos = (self.matrixSteadyRectNodes[spalte][reihe].pos[0],self.matrixSteadyRectNodes[spalte][reihe].pos[1] + self.gameMenue.blocksize)
+                    self.matrix[spalte][reihe-1] = False
+                    self.matrixSteadyRectNodes[spalte][reihe-1] = None
                      
          
         for spalte in range (14):
