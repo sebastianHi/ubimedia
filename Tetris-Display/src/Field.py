@@ -92,16 +92,22 @@ class Field(object):
             self.matrix[l][row] = False
             (self.matrixSteadyRectNodes[l][row]).unlink()
             self.matrixSteadyRectNodes[l][row] = None
-            
-        j = row
-        for i in range(14):
-            for k in range(0,row):
-                self.matrixSteadyRectNodes[i][j]= self.matrixSteadyRectNodes[i][k]
-                if(self.matrixSteadyRectNodes[i][j] != None):
-                    (self.matrixSteadyRectNodes[i][j]).pos = (self.matrixSteadyRectNodes[i][j].pos[0],self.matrixSteadyRectNodes[i][j].pos[1] + self.gameMenue.blocksize)
-                self.matrix[i][j] = self.matrix[i][k]
-                self.matrixSteadyRectNodes[i][k] = None
-                self.matrix[i][k] = False
+         
+        for spalte in range (14):
+            for reihe in range(row,0,-1):
+                self.matrix[spalte][reihe] = self.matrix[spalte][reihe-1]
+                self.matrixSteadyRectNodes[spalte][reihe] = self.matrixSteadyRectNodes[spalte][reihe-1]
+                if(self.matrix[spalte][reihe-1]):
+                    (self.matrixSteadyRectNodes[spalte][reihe]).pos = (self.matrixSteadyRectNodes[spalte][reihe].pos[0],self.matrixSteadyRectNodes[spalte][reihe].pos[1] + self.gameMenue.blocksize)
+                     
+         
+        for spalte in range (14):
+            self.matrix[l][0] = False
+            if(self.matrixSteadyRectNodes[l][0]!= None):
+                (self.matrixSteadyRectNodes[l][0]).unlink()
+            self.matrixSteadyRectNodes[l][0] = None
+
+                
                  
     
     def generateRandomBlock(self):
