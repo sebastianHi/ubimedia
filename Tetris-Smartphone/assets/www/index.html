@@ -32,6 +32,7 @@
         <script type="text/javascript" src="js/index.js"></script>
          <script type="text/javascript" src="js/connect.js"></script>
         <script type="text/javascript" src="js/defender.js"></script>
+         <script src="js/attacker.js"></script>
         <script type="text/javascript">
             app.initialize();
             $.mobile.buttonMarkup.hoverDelay = 0;
@@ -48,12 +49,13 @@
  
         <div data-role="content">
             <div class="ui-grid-solo">
-	           <div class="ui-block-a" align="center"><img src="MT.png"><br><b>It's not Lupus!</b></div>
+	           <div class="ui-block-a" align="center"><img src="MT.png"><br><b>Now with working $.mobile.changePage!</b></div>
             </div>
         
             <div class="ui-grid-a">
 	           <div class="ui-block-a"><a href="connect.html"  data-role="button">Play</a></div>
-	           <div class="ui-block-b"><a href="about.html"  data-role="button">About</a></div>	   
+	           <div class="ui-block-b"><a href="about.html"  data-role="button">About</a>
+                <div class="ui-block-b"><a href="#"  data-role="button" onClick="testRedirect();">Attacker View (Redirect Test)</a></div>	   
             </div>
             
             <div class="ui-grid-solo">

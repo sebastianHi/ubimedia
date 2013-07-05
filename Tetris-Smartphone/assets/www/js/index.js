@@ -47,3 +47,7 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+function testRedirect(){
+    $.mobile.changePage("attacker.html");
+}

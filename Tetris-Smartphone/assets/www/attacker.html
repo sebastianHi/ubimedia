@@ -4,11 +4,6 @@
 	<title>Attacker!</title> 
 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
-	<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-	<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
-    <script src="js/attacker.js"></script>
     <style>
 	html, body { padding: 0; margin: 0; }
 	html, .ui-mobile, .ui-mobile body {
@@ -27,7 +22,7 @@
 </head> 
 
 <body> 
-	<div data-role="page" style="max-height:440px; min-height:440px;" class="type-home" class="ui-responsive-panel">
+	<div id="attacker" data-role="page" style="max-height:440px; min-height:440px;" class="type-home" class="ui-responsive-panel">
 		<div data-role="header">
     		<h1>Game On!</h1>
 		</div>
@@ -60,11 +55,11 @@
               
                 <div class="ui-block-d" align="right">Right Stones
                     <br>
-                 <a href="#" data-role="button" data-inline="true">S-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addS();">S-Shape</a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true">Z-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addZ();">Z-Shape</a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true">T-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addT();">T-Shape</a>
                 </div>
                
                 <div class="ui-block-e" align="right">
