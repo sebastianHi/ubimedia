@@ -54,16 +54,16 @@ class Field(object):
         
         
 #prints fuer felder
-#         for y in range(0,19):
-#             s = ""
-#             for x in range(0,14):
-#                 if(self.matrix[x][y]):
-#                     s +=( "  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
-#                 else:
-#                     s +=( "  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
-#             print s
-#             print ""
-#             print ""
+        for y in range(0,19):
+            s = ""
+            for x in range(0,14):
+                if(self.matrix[x][y]):
+                    s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
+                else:
+                    s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
+            print s
+            print ""
+            print ""
                  
     
     
@@ -96,18 +96,18 @@ class Field(object):
         for spalte in range (14):
             for reihe in range(row,0,-1):
                 self.matrix[spalte][reihe] = self.matrix[spalte][reihe-1]
+                self.matrix[spalte][reihe-1] = False
                 self.matrixSteadyRectNodes[spalte][reihe] = self.matrixSteadyRectNodes[spalte][reihe-1]
-                if(self.matrix[spalte][reihe-1]):
+                self.matrixSteadyRectNodes[spalte][reihe-1] = None
+                if(self.matrix[spalte][reihe]):
                     (self.matrixSteadyRectNodes[spalte][reihe]).pos = (self.matrixSteadyRectNodes[spalte][reihe].pos[0],self.matrixSteadyRectNodes[spalte][reihe].pos[1] + self.gameMenue.blocksize)
-                    self.matrix[spalte][reihe-1] = False
-                    self.matrixSteadyRectNodes[spalte][reihe-1] = None
+                    
+                    
                      
          
-        for spalte in range (14):
-            self.matrix[l][0] = False
-            if(self.matrixSteadyRectNodes[l][0]!= None):
-                (self.matrixSteadyRectNodes[l][0]).unlink()
-            self.matrixSteadyRectNodes[l][0] = None
+        for s in range (14):
+            self.matrix[s][0] = False
+            self.matrixSteadyRectNodes[s][0] = None
 
                 
                  

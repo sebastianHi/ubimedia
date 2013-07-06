@@ -162,43 +162,17 @@ class LFallingBlock(object):
                 
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
-        if (self.rotatingPosition == 0): #check part1, 2 und 3
-            if (self.currPos1[1] + 1 > 18):
-                return True
-            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
-            b = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
-            c = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
-            if  (a or b or c):
-                return True
-            else:
-                return False
-        elif (self.rotatingPosition == 1): # check part1 und 2
-            if (self.currPos2[1] + 1 > 18):
-                return True
-            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
-            b = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
-            if  (a or b):
-                return True
-            else: return False
-            
-        elif (self.rotatingPosition == 2): # check part2, 3 und 4
-            if (self.currPos2[1] + 1 > 18):
-                return True
-            a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
-            b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
-            c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            if  (a or b or c):
-                return True
-            else: return False
-            
-        else: # check part1 und 4
-            if (self.currPos1[1] + 1 > 18):
-                return True
-            a = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
-            b = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
-            if  (a or b):
-                return True
-            else: return False
+        if((self.currPos2[1] + 1 > 18) | (self.currPos3[1] + 1 > 18) | (self.currPos4[1] + 1> 18) |(self.currPos1[1] + 1> 18) ):
+            return True
+        a = self.Field.matrix[self.currPos2[0]][self.currPos2[1] + 1]
+        b = self.Field.matrix[self.currPos3[0]][self.currPos3[1] + 1]
+        c = self.Field.matrix[self.currPos4[0]][self.currPos4[1] + 1]
+        d = self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1]
+        
+        if (a or b or c or d):
+            return True
+        else:
+            return False
             
     def checkLeftBound(self): #return true wenn bewegung moeglich
         if (self.rotatingPosition == 0): # pruefe part 1,4
