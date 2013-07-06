@@ -100,15 +100,22 @@ class Field(object):
                 self.matrixSteadyRectNodes[spalte][reihe] = self.matrixSteadyRectNodes[spalte][reihe-1]
                 self.matrixSteadyRectNodes[spalte][reihe-1] = None
                 if(self.matrix[spalte][reihe]):
-                    (self.matrixSteadyRectNodes[spalte][reihe]).pos = (self.matrixSteadyRectNodes[spalte][reihe].pos[0],self.matrixSteadyRectNodes[spalte][reihe].pos[1] + self.gameMenue.blocksize)
-                    
-                    
-                     
+                    (self.matrixSteadyRectNodes[spalte][reihe]).pos = (self.matrixSteadyRectNodes[spalte][reihe].pos[0],self.matrixSteadyRectNodes[spalte][reihe].pos[1] + self.gameMenue.blocksize)           
          
         for s in range (14):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
 
+        for y in range(0,19):
+            s = ""
+            for x in range(0,14):
+                if(self.matrix[x][y]):
+                    s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
+                else:
+                    s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
+            print s
+            print ""
+            print ""
                 
                  
     
