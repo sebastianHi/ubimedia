@@ -4,6 +4,8 @@ var ip = null;
 var currIP = null;
 var currCmd = null;
 var nickname = null;
+var role = 0;
+var ready = false;
 
 function buildHost() {
     sock = new WebSocket(wsuri);
@@ -36,10 +38,13 @@ function buildHost() {
                     console.log("Got Test Signal. Parser seems to work.");
                 break;
             case "SWP_POS":
-                    //change team-role
+                    if(role == 0){
+                        role = 1;
+                    } else { role = 0; }
+                    updateRole();
                 break;
             case "CHK_RDY":
-                    //Ready-Check
+                    if(ready){  send(ip+"###rdy"); } else { send(ip+"###not_rdy"); }
                 break;
             case "SWP_TEAM":
                     //swap team
@@ -56,6 +61,13 @@ function buildHost() {
             case "GAME_RESUME":
                     //resumes the game
                 break;
+            case "NXT_BLOCK":
+                    tickList();
+                    break;
+            case "gamestart":
+                    if(role == 0){ $.mobile.changePage("defender.html"); }
+                    else { $.mobile.changePage("attacker.html"); }
+                break;
             }
         }
         }
@@ -66,6 +78,7 @@ function buildHost() {
 
     function prepareSocket(){
         buildHost();
+        updateRole();
         
     }
 
@@ -137,3 +150,9 @@ function moveRight(){
 function ready(){
 send(ip+"###nickname:"+rdy);
 };
+
+function updateRole(){
+    if(role == 0){
+    document.getElementbyId("role").innerHTML = "Defender";
+    } else { document.getElementbyId("role").innerHTML = "Attacker"; }
+}

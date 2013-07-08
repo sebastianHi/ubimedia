@@ -47,6 +47,28 @@ function updateQueueList(){
 
 function tickList(){
     var next = queue.shift();
+    switch(next){
+        case "I-Shape":
+            send(ip+"###I");
+            break;
+        case "Circle":
+            send(ip+"###Circle");
+            break;
+        case "L-Shape":
+            send(ip+"###L");
+            break;
+        case "Inv-L-Shape":
+            send(ip+"###InvL");
+            break;
+        case "S-Shape":
+            send(ip+"###S");
+            break;
+        case "Z-Shape":
+            send(ip+"###Z");
+            break;
+        case "T-Shape":
+            send(ip+"###T");
+    }
     updateQueueList();
     document.getElementById('nextblock').innerHTML = next;
 };
