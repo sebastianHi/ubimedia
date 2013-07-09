@@ -68,20 +68,16 @@ class Field(object):
     
     
     def checkRows(self):
-        breaked = True
         amountOfRows = 0
-        while(breaked):
-            for j  in range(0,19):
-                b = True
-                for i in range(0,14):
-                    b = b & (self.matrix[i][j])
-                if(b):
-                    self.dropOneRow(j)
-                    amountOfRows +=1
-                    breaked = True
-                    break
-                else:
-                    breaked = False
+        for j  in range(0,19):
+            b = True
+            for i in range(0,14):
+                b = b & (self.matrix[i][j])
+            if(b):
+                self.dropOneRow(j)
+                amountOfRows +=1
+                j-=1
+
         if(amountOfRows>0):
             pass
         #TODO: update Money
