@@ -112,7 +112,7 @@ class GameMenue(object):
          
         self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
-                                      text ="Score:  000000", 
+                                      text ="0", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",

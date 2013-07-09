@@ -77,9 +77,9 @@ class Field(object):
                 self.dropOneRow(j)
                 amountOfRows +=1
                 j-=1
-
+                
         if(amountOfRows>0):
-            pass
+            self.gameMenue.scoreTeam1.text = str(int(self.gameMenue.scoreTeam1.text)+amountOfRows)
         #TODO: update Money
     
     
