@@ -36,6 +36,14 @@ class Gui(AVGApp):
         self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
         self.mainMenu.divNodeMainMenue.active = True 
         
+    def backToMain(self, event):
+        print "All Clients left"
+        print "Nachfragen, wie man den Server neustarten muss"
+        self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
+        self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
+        self.typeMenu.divNodeTypeMenue.active = True 
+        self.gameMenu.speed =1 
+        self.gameMenu.round =1
         
     def initWhatGame(self):
         self.typeMenu = GameTypeMenue(self.rootNode)
@@ -61,14 +69,13 @@ class Gui(AVGApp):
             thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
         
     def initGame(self):
-        self.gameMenu = GameMenue(self.rootNode, self.player)
-        
+        self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype)
         self.lobbyMenu.divNodelobbyMenue.active = False 
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
+        self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMain)
         #TODO:  + rollenzuweisung
         #self.ipStorage.updateAll("gamestarts")
-
 
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
@@ -98,8 +105,7 @@ class Gui(AVGApp):
                                    size = avg.Point2D(self.lobbyMenu.divNodelobbyMenue.size[0]/2,self.lobbyMenu.divNodelobbyMenue.size[1]*0.35))
         
         self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
-        self.countNode.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.countNode, self.interruptCount)
-        #TODO: touch
+        self.countNode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.countNode, self.interruptCount)
         self.timer = self.player.setInterval(1000, self.countCount)
         self.gameStartTimer = self.player.setInterval(10000, self.maybeStart)
         
