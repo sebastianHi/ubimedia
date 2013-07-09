@@ -129,8 +129,10 @@ class BombBlock(object):
             self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] + 1] = False
             
         self.Field.player.clearInterval(self.Field.timer)
+        self.Field.bombActivated = False
         self.Field.initBlock()
         self.Field.timer = self.Field.player.setInterval(500, self.Field.gravity)
+        
         # eventuell hier noch sound abspielen einer explosion oder so
 
     def rotateLeft(self):
