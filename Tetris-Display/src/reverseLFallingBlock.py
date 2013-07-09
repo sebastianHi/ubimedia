@@ -82,7 +82,7 @@ class reverseLFallingBlock(object):
                 pass
             else:
                 self.currPos1 = (self.currPos1[0] + 2,self.currPos1[1])
-                self.currPos2 = (self.currPos2[0] - 1,self.currPos1[1] + 1)
+                self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] + 1)
                 self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
                 self.part1.pos = ((self.part1.pos[0] + (2 * self.GameMenue.blocksize)),self.part1.pos[1] )
                 self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
