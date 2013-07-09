@@ -270,8 +270,6 @@ class Field(object):
             return False
 
     def gravity(self):
-<<<<<<< HEAD
-        
         if (self.block.blockType == "bomb"):
             if (self.block.hitGround()):
                 self.block.explode()
@@ -281,9 +279,6 @@ class Field(object):
         
         #test
         elif(self.block.hitGround()):     
-=======
-        if(self.block.hitGround()):     
->>>>>>> commit, WinLooseMenue
             self.steadyBlock()
             self.blockHitGround()
         else:
@@ -339,9 +334,8 @@ class Field(object):
     def chanceSpeed(self, newSpeedInMs):
         self.player.clearInterval(self.timer)
         self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
-<<<<<<< HEAD
-           
-=======
+
+
     
     def equalModus(self):
         for reihe in range(0,10):
@@ -369,4 +363,3 @@ class Field(object):
             self.block.moveBlockLeft()
         else:
             self.block.moveBlockRight()    
->>>>>>> commit, WinLooseMenue

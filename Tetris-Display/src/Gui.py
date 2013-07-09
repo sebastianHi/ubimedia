@@ -35,15 +35,7 @@ class Gui(AVGApp):
         self.mainMenu.button2vs2.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button2vs2, self.onClickMain2v2)
         self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
         self.mainMenu.divNodeMainMenue.active = True 
-        
-    def backToMain(self, event):
-        print "All Clients left"
-        print "Nachfragen, wie man den Server neustarten muss"
-        self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
-        self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
-        self.typeMenu.divNodeTypeMenue.active = True 
-        self.gameMenu.speed =1 
-        self.gameMenu.round =1
+
         
     def initWhatGame(self):
         self.typeMenu = GameTypeMenue(self.rootNode)
@@ -256,7 +248,15 @@ class Gui(AVGApp):
         self.typeMenu.divNodeTypeMenue.active = False
         self.mainMenu.divNodeMainMenue.active = True
         
-        
+             
+    def backToMain(self, event):
+        print "All Clients left"
+        print "Nachfragen, wie man den Server neustarten muss"
+        self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
+        self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
+        self.typeMenu.divNodeTypeMenue.active = True 
+        self.gameMenu.speed =1 
+        self.gameMenu.round =1   
  
 #-----------------------------------------------------------Eventuell unnuetz: Notfall fuer IP Mac Probleme-------------------------------------------------------------------------------   
 
