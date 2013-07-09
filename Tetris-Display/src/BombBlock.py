@@ -1,6 +1,6 @@
 from libavg import avg
 
-class BomBBlock(object):
+class BombBlock(object):
 
 
 
@@ -14,6 +14,7 @@ class BomBBlock(object):
                                   fillcolor = "00FFFF", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize), href="bomb.png"
                                   )
+        self.blockType = "bomb"
         self.currPos1 = (7,0)
         
     def moveBlockLeft(self):
@@ -55,3 +56,85 @@ class BomBBlock(object):
             a = self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1]]
             
             return not a
+
+    def explode(self): # deletes any active RectNodes surrounding the bomb
+        
+        #remove upper left block
+        if ((self.currPos1[0] - 1 < 0) or (self.currPos1[1] - 1 < 0) or
+            (self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] - 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1] - 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1] - 1] = None
+            self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] - 1] = False
+        
+        #remove upper block    
+        if ((self.currPos1[1] - 1 < 0) or
+            (self.Field.matrix[self.currPos1[0]][self.currPos1[1] - 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1] - 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1] - 1] = None
+            self.Field.matrix[self.currPos1[0]][self.currPos1[1] - 1] = False
+            
+        #remove upper right block
+        if ((self.currPos1[0] + 1 > 13) or (self.currPos1[1] - 1 < 0) or
+            (self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] - 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1] - 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1] - 1] = None
+            self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] - 1] = False
+        
+        #remove left block
+        if ((self.currPos1[0] - 1 < 0) or (self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1]]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1]] = None
+            self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1]] = False
+            
+        #remove right block
+        if ((self.currPos1[0] + 1 > 13) or (self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1]] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1]]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1]] = None
+            self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1]] = False
+
+        #remove lower left block
+        if ((self.currPos1[0] - 1 < 0) or (self.currPos1[1] + 1 > 18) or
+            (self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] + 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1] + 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] - 1][self.currPos1[1] + 1] = None
+            self.Field.matrix[self.currPos1[0] - 1][self.currPos1[1] + 1] = False
+
+        #remove lower block
+        if ((self.currPos1[1] + 1 > 18) or (self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1] + 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0]][self.currPos1[1] + 1] = None
+            self.Field.matrix[self.currPos1[0]][self.currPos1[1] + 1] = False
+            
+        #remove lower right block
+        if ((self.currPos1[0] + 1 > 13) or (self.currPos1[1] + 1 > 18) or
+            (self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] + 1] == False)):
+            pass
+        else:
+            (self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1] + 1]).unlink()
+            self.Field.matrixSteadyRectNodes[self.currPos1[0] + 1][self.currPos1[1] + 1] = None
+            self.Field.matrix[self.currPos1[0] + 1][self.currPos1[1] + 1] = False
+            
+        self.Field.player.clearInterval(self.Field.timer)
+        self.Field.initBlock()
+        self.Field.timer = self.Field.player.setInterval(500, self.Field.gravity)
+        # eventuell hier noch sound abspielen einer explosion oder so
+
+    def rotateLeft(self):
+        pass
+    
+    def rotateRight(self):
+        pass

@@ -1,4 +1,4 @@
-import crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
+import BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
 
 
@@ -10,6 +10,7 @@ class Field(object):
         self.freezeRight = False
         self.freezeRotate = False
         self.speedToGround = False
+        self.bombActivated = False
         self.gameMenue = gameMenue
         self.player = player
         self.speed = 400
@@ -30,9 +31,7 @@ class Field(object):
         
     def initBlock(self):
         self.block = self.newFallingStone()
-        if(not (self.checkSpawn(self.block.blockType))):
-            #TODO:  Someone lost!
-            pass
+
     
    
     def blockHitGround(self):
@@ -170,8 +169,18 @@ class Field(object):
     
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
+        
+        if (self.bombActivated):
+            
+            bomb = BombBlock.BombBlock(self.gameMenue,self)
+            a = self.checkSpawn("bomb")
+            if (a):
+                bomb.explode()
+            else:
+                return bomb
+        
         ##if queue leer dann random sonst erstes element der queue
-        if not self.Queue:
+        elif not self.Queue:
             return self.generateRandomBlock()
         else:
             a = self.Queue.pop()
@@ -233,6 +242,11 @@ class Field(object):
                 return False
             else:
                 return True
+        elif (string == "bomb"):
+            if (self.matrix[8][0] == True):
+                return False
+            else:
+                return True
         else:
             return False
         
@@ -242,8 +256,16 @@ class Field(object):
     
     
     def gravity(self):
+        
+        if (self.block.blockType == "bomb"):
+            if (self.block.hitGround()):
+                self.block.explode()
+            else:
+                self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] + 1)
+                self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
+        
         #test
-        if(self.block.hitGround()):     
+        elif(self.block.hitGround()):     
             self.steadyBlock()
             self.blockHitGround()
         else:
@@ -256,11 +278,6 @@ class Field(object):
             self.block.part3.pos = (self.block.part3.pos[0],self.block.part3.pos[1] + self.gameMenue.blocksize)
             self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
             
-            
-###########################################################################################################################################
-            #i = random.randint(0,3)
-            #self.randomMove(i)  # methode hinschreiben die nach jeder gravity ausgefuehrt werden soll
-###########################################################################################################################################
 
         
     def moveLeft(self):
@@ -304,13 +321,4 @@ class Field(object):
     def chanceSpeed(self, newSpeedInMs):
         self.player.clearInterval(self.timer)
         self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
-        
-    def randomMove(self, integer):
-        if (integer == 1):
-            self.block.rotateLeft()
-        elif (integer == 2):
-            self.block.rotateRight()
-        elif (integer == 3):
-            self.block.moveBlockLeft()
-        else:
-            self.block.moveBlockRight()    
+           
