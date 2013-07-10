@@ -59,7 +59,7 @@ class superBlock(object):
                                   )
 
         
-        self.GameMenue = GameMenue
+        self.gameMenue = GameMenue
         self.Field = Field
         self.currPos1 = (6,0)
         self.currPos2 = (5,1)
@@ -88,16 +88,16 @@ class superBlock(object):
             self.currPos9 = (self.currPos9[0] - 1,self.currPos9[1])
             self.currPos10 = (self.currPos10[0] - 1,self.currPos10[1])
 
-            self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1])
-            self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1])
-            self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1])
-            self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1])
-            self.part5.pos = ((self.part5.pos[0] - self.GameMenue.blocksize),self.part5.pos[1])
-            self.part6.pos = ((self.part6.pos[0] - self.GameMenue.blocksize),self.part6.pos[1])
-            self.part7.pos = ((self.part7.pos[0] - self.GameMenue.blocksize),self.part7.pos[1])
-            self.part8.pos = ((self.part8.pos[0] - self.GameMenue.blocksize),self.part8.pos[1])
-            self.part9.pos = ((self.part9.pos[0] - self.GameMenue.blocksize),self.part9.pos[1])
-            self.part10.pos = ((self.part10.pos[0] - self.GameMenue.blocksize),self.part10.pos[1])
+            self.part1.pos = ((self.part1.pos[0] - self.gameMenue.blocksize),self.part1.pos[1])
+            self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1])
+            self.part3.pos = ((self.part3.pos[0] - self.gameMenue.blocksize),self.part3.pos[1])
+            self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1])
+            self.part5.pos = ((self.part5.pos[0] - self.gameMenue.blocksize),self.part5.pos[1])
+            self.part6.pos = ((self.part6.pos[0] - self.gameMenue.blocksize),self.part6.pos[1])
+            self.part7.pos = ((self.part7.pos[0] - self.gameMenue.blocksize),self.part7.pos[1])
+            self.part8.pos = ((self.part8.pos[0] - self.gameMenue.blocksize),self.part8.pos[1])
+            self.part9.pos = ((self.part9.pos[0] - self.gameMenue.blocksize),self.part9.pos[1])
+            self.part10.pos = ((self.part10.pos[0] - self.gameMenue.blocksize),self.part10.pos[1])
 
         else:
             pass  # dont move dat shit
@@ -116,16 +116,16 @@ class superBlock(object):
             self.currPos9 = (self.currPos9[0] + 1,self.currPos9[1])
             self.currPos10 = (self.currPos10[0] + 1,self.currPos10[1])
 
-            self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
-            self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1])
-            self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1])
-            self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1])
-            self.part5.pos = ((self.part5.pos[0] + self.GameMenue.blocksize),self.part5.pos[1])
-            self.part6.pos = ((self.part6.pos[0] + self.GameMenue.blocksize),self.part6.pos[1])
-            self.part7.pos = ((self.part7.pos[0] + self.GameMenue.blocksize),self.part7.pos[1])
-            self.part8.pos = ((self.part8.pos[0] + self.GameMenue.blocksize),self.part8.pos[1])
-            self.part9.pos = ((self.part9.pos[0] + self.GameMenue.blocksize),self.part9.pos[1])
-            self.part10.pos = ((self.part10.pos[0] + self.GameMenue.blocksize),self.part10.pos[1])
+            self.part1.pos = ((self.part1.pos[0] + self.gameMenue.blocksize),self.part1.pos[1])
+            self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1])
+            self.part3.pos = ((self.part3.pos[0] + self.gameMenue.blocksize),self.part3.pos[1])
+            self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1])
+            self.part5.pos = ((self.part5.pos[0] + self.gameMenue.blocksize),self.part5.pos[1])
+            self.part6.pos = ((self.part6.pos[0] + self.gameMenue.blocksize),self.part6.pos[1])
+            self.part7.pos = ((self.part7.pos[0] + self.gameMenue.blocksize),self.part7.pos[1])
+            self.part8.pos = ((self.part8.pos[0] + self.gameMenue.blocksize),self.part8.pos[1])
+            self.part9.pos = ((self.part9.pos[0] + self.gameMenue.blocksize),self.part9.pos[1])
+            self.part10.pos = ((self.part10.pos[0] + self.gameMenue.blocksize),self.part10.pos[1])
         else:
             pass  # dont move dat shit
         
@@ -139,8 +139,8 @@ class superBlock(object):
             else:
                 self.currPos2 = (self.currPos2[0] + 2,self.currPos2[1])
                 self.currPos9 = (self.currPos9[0] - 2,self.currPos9[1])
-                self.part2.pos = ((self.part2.pos[0] + (2 * self.GameMenue.blocksize)),self.part2.pos[1])
-                self.part9.pos = ((self.part9.pos[0] - (2 * self.GameMenue.blocksize)),self.part9.pos[1])
+                self.part2.pos = ((self.part2.pos[0] + (2 * self.gameMenue.blocksize)),self.part2.pos[1])
+                self.part9.pos = ((self.part9.pos[0] - (2 * self.gameMenue.blocksize)),self.part9.pos[1])
                 self.rotatingPosition = 1
         else:
             if (self.checkCollisionAtRotation(1)):
@@ -148,8 +148,8 @@ class superBlock(object):
             else:
                 self.currPos2 = (self.currPos2[0] - 2,self.currPos2[1])
                 self.currPos9 = (self.currPos9[0] + 2,self.currPos9[1])
-                self.part2.pos = ((self.part2.pos[0] - (2 * self.GameMenue.blocksize)),self.part2.pos[1])
-                self.part9.pos = ((self.part9.pos[0] + (2 * self.GameMenue.blocksize)),self.part9.pos[1])
+                self.part2.pos = ((self.part2.pos[0] - (2 * self.gameMenue.blocksize)),self.part2.pos[1])
+                self.part9.pos = ((self.part9.pos[0] + (2 * self.gameMenue.blocksize)),self.part9.pos[1])
                 self.rotatingPosition = 0
                 
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False

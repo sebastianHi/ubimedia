@@ -7,7 +7,7 @@ class BombBlock(object):
     def __init__(self, GameMenue, Field):
         
         self.Field = Field
-        self.GameMenue = GameMenue
+        self.gameMenue = GameMenue
         
         self.part1 = avg.ImageNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
@@ -20,7 +20,7 @@ class BombBlock(object):
     def moveBlockLeft(self):
         if(self.checkLeftBound()):
             self.currPos1 = (self.currPos1[0] - 1,self.currPos1[1])
-            self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1])
+            self.part1.pos = ((self.part1.pos[0] - self.gameMenue.blocksize),self.part1.pos[1])
 
         else:
             pass  # dont move dat shit
@@ -29,7 +29,7 @@ class BombBlock(object):
         
         if(self.checkRightBound()):
             self.currPos1 = (self.currPos1[0] + 1,self.currPos1[1])
-            self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
+            self.part1.pos = ((self.part1.pos[0] + self.gameMenue.blocksize),self.part1.pos[1])
 
         else:
             pass  # dont move dat shit

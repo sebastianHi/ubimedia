@@ -7,7 +7,7 @@ class reverseLFallingBlock(object):
     def __init__(self, GameMenue, Field):
         
         self.Field = Field
-        self.GameMenue = GameMenue
+        self.gameMenue = GameMenue
         
         self.part1 = avg.RectNode(parent = GameMenue.divNodeGameMenue, 
                                   pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
@@ -42,10 +42,10 @@ class reverseLFallingBlock(object):
             self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1])
             self.currPos3 = (self.currPos3[0] - 1,self.currPos3[1])
             self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1])
-            self.part1.pos = ((self.part1.pos[0] - self.GameMenue.blocksize),self.part1.pos[1])
-            self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1])
-            self.part3.pos = ((self.part3.pos[0] - self.GameMenue.blocksize),self.part3.pos[1])
-            self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1])
+            self.part1.pos = ((self.part1.pos[0] - self.gameMenue.blocksize),self.part1.pos[1])
+            self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1])
+            self.part3.pos = ((self.part3.pos[0] - self.gameMenue.blocksize),self.part3.pos[1])
+            self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1])
         else:
             pass  # dont move dat shit
         
@@ -56,10 +56,10 @@ class reverseLFallingBlock(object):
             self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1])
             self.currPos3 = (self.currPos3[0] + 1,self.currPos3[1])
             self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1])
-            self.part1.pos = ((self.part1.pos[0] + self.GameMenue.blocksize),self.part1.pos[1])
-            self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1])
-            self.part3.pos = ((self.part3.pos[0] + self.GameMenue.blocksize),self.part3.pos[1])
-            self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1])
+            self.part1.pos = ((self.part1.pos[0] + self.gameMenue.blocksize),self.part1.pos[1])
+            self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1])
+            self.part3.pos = ((self.part3.pos[0] + self.gameMenue.blocksize),self.part3.pos[1])
+            self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1])
         else:
             pass  # dont move dat shit
     
@@ -72,9 +72,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0],self.currPos1[1] - 2)
                 self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] + 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] - 1)
-                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] - (2 * self.GameMenue.blocksize))
-                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] - (2 * self.gameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1] + self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1] - self.gameMenue.blocksize)
                 self.rotatingPosition = 3
                 
         elif (self.rotatingPosition == 1):
@@ -84,9 +84,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0] + 2,self.currPos1[1])
                 self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] + 1)
                 self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
-                self.part1.pos = ((self.part1.pos[0] + (2 * self.GameMenue.blocksize)),self.part1.pos[1] )
-                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0] + (2 * self.gameMenue.blocksize)),self.part1.pos[1] )
+                self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1] + self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1] - self.gameMenue.blocksize)
                 self.rotatingPosition = 0
                 
         elif (self.rotatingPosition == 2):
@@ -96,9 +96,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0],self.currPos1[1] + 2)
                 self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] - 1)
                 self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] + 1)
-                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] + (2 * self.GameMenue.blocksize))
-                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] + (2 * self.gameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1] - self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1] + self.gameMenue.blocksize)
                 self.rotatingPosition = 1
         else:
             if (self.checkCollisionAtRotationLeft(3)):
@@ -107,9 +107,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0] - 2,self.currPos1[1])
                 self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] - 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
-                self.part1.pos = ((self.part1.pos[0] - (2 * self.GameMenue.blocksize)),self.part1.pos[1] )
-                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0] - (2 * self.gameMenue.blocksize)),self.part1.pos[1] )
+                self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1] - self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1] + self.gameMenue.blocksize)
                 self.rotatingPosition = 2
                       
     def rotateRight(self):
@@ -121,9 +121,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0] - 2,self.currPos1[1])
                 self.currPos2 = (self.currPos2[0] + 1,self.currPos2[1] - 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] + 1)
-                self.part1.pos = ((self.part1.pos[0] - (2 * self.GameMenue.blocksize)),self.part1.pos[1])
-                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0] - (2 * self.gameMenue.blocksize)),self.part1.pos[1])
+                self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1] - self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1] + self.gameMenue.blocksize)
                 self.rotatingPosition = 1
                 
         elif (self.rotatingPosition == 1):
@@ -133,9 +133,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0],self.currPos1[1] - 2)
                 self.currPos2 = (self.currPos2[0] + 1,self.currPos1[1] + 1)
                 self.currPos4 = (self.currPos4[0] - 1,self.currPos4[1] - 1)
-                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] - (2 * self.GameMenue.blocksize))
-                self.part2.pos = ((self.part2.pos[0] + self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] - self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] - (2 * self.gameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] + self.gameMenue.blocksize),self.part2.pos[1] + self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] - self.gameMenue.blocksize),self.part4.pos[1] - self.gameMenue.blocksize)
                 self.rotatingPosition = 2
                 
         elif (self.rotatingPosition == 2):
@@ -145,9 +145,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0] + 2,self.currPos1[1])
                 self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] + 1)
                 self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] - 1)
-                self.part1.pos = ((self.part1.pos[0] + (2 * self.GameMenue.blocksize)),self.part1.pos[1])
-                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] + self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] - self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0] + (2 * self.gameMenue.blocksize)),self.part1.pos[1])
+                self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1] + self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1] - self.gameMenue.blocksize)
                 self.rotatingPosition = 3
         else:
             if (self.checkCollisionAtRotation(3)):
@@ -156,9 +156,9 @@ class reverseLFallingBlock(object):
                 self.currPos1 = (self.currPos1[0],self.currPos1[1] + 2)
                 self.currPos2 = (self.currPos2[0] - 1,self.currPos2[1] - 1)
                 self.currPos4 = (self.currPos4[0] + 1,self.currPos4[1] + 1)
-                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] + (2 * self.GameMenue.blocksize))
-                self.part2.pos = ((self.part2.pos[0] - self.GameMenue.blocksize),self.part2.pos[1] - self.GameMenue.blocksize)
-                self.part4.pos = ((self.part4.pos[0] + self.GameMenue.blocksize),self.part4.pos[1] + self.GameMenue.blocksize)
+                self.part1.pos = ((self.part1.pos[0]),self.part1.pos[1] + (2 * self.gameMenue.blocksize))
+                self.part2.pos = ((self.part2.pos[0] - self.gameMenue.blocksize),self.part2.pos[1] - self.gameMenue.blocksize)
+                self.part4.pos = ((self.part4.pos[0] + self.gameMenue.blocksize),self.part4.pos[1] + self.gameMenue.blocksize)
                 self.rotatingPosition = 0
     
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
