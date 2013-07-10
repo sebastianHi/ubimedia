@@ -9,10 +9,9 @@ class BombBlock(object):
         self.Field = Field
         self.gameMenue = GameMenue
         
-        self.part1 = avg.ImageNode(parent = GameMenue.divNodeGameMenue, 
-                                  pos = (Field.xWertLinksOben+ (8 * GameMenue.blocksize), Field.yWertOben + GameMenue.blocksize), 
-                                  fillcolor = "00FFFF", fillopacity = 1, color = "000000", 
-                                  size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize), href="bomb.png"
+        self.part1 = avg.ImageNode(href="bomb.png", parent = GameMenue.divNodeGameMenue, 
+                                  pos = (Field.xWertLinksOben+ (7 * GameMenue.blocksize), Field.yWertOben),  
+                                  size = avg.Point2D(GameMenue.blocksize ,GameMenue.blocksize), 
                                   )
         self.blockType = "bomb"
         self.currPos1 = (7,0)
@@ -57,7 +56,7 @@ class BombBlock(object):
             
             return not a
 
-    def explode(self): # deletes any active RectNodes surrounding the bomb
+    def explode(self): # deletes any active RectNodes surrounding the bomb in a radius of 2
         
         #remove upper left block
         if ((self.currPos1[0] - 1 < 0) or (self.currPos1[1] - 1 < 0) or
@@ -270,10 +269,9 @@ class BombBlock(object):
             self.Field.matrix[self.currPos1[0] + 2][self.currPos1[1] + 2] = False
             
         self.Field.player.clearInterval(self.Field.timer)
+        self.part1.unlink()
         self.Field.bombActivated = False
-        self.Field.initBlock()
-        self.Field.timer = self.Field.player.setInterval(500, self.Field.gravity)
-        
+        self.Field.blockHitGround()
         # eventuell hier noch sound abspielen einer explosion oder so
 
     def rotateLeft(self):

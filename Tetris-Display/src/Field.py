@@ -1,4 +1,4 @@
-import BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
+import superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
 
 
@@ -16,7 +16,7 @@ class Field(object):
         self.freezeRight = False
         self.freezeRotate = False
         self.speedToGround = False
-
+        self.superBlock = False
         self.bombActivated = False
         self.gameMenue = gameMenue
 
@@ -34,13 +34,9 @@ class Field(object):
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
         self.initBlock();
         self.timer = self.player.setInterval(self.speed, self.gravity)
-        
-        
-        
+             
     def initBlock(self):
-        self.block = self.newFallingStone()
-
-    
+        self.block = self.newFallingStone()  
    
     def blockHitGround(self):
         self.checkRows()
@@ -71,9 +67,7 @@ class Field(object):
 #             print s
 #             print ""
 #             print ""
-                 
-    
-    
+                  
     def checkRows(self):
         amountOfRows = 0
         for j  in range(0,19):
@@ -87,8 +81,7 @@ class Field(object):
                 
         if(amountOfRows>0):
             self.updateScore(amountOfRows)
-    
-    
+        
     def updateScore(self, points):
         self.score += points
         s = ""
@@ -130,61 +123,57 @@ class Field(object):
 #             print s
 #             print ""
 #             print ""
-                
-                 
-    
+                   
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
-###########################################################################################################################################
-# je nachdem was du erzeugst  1-7
-###########################################################################################################################################
+
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                pass # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
         else:
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                pass  # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
     
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
@@ -194,10 +183,16 @@ class Field(object):
             bomb = BombBlock.BombBlock(self.gameMenue,self)
             a = self.checkSpawn("bomb")
             if (a):
-                bomb.explode()
-            else:
                 return bomb
-        
+            else:
+                bomb.explode()
+        elif (self.superBlock):
+            a = self.checkSpawn("super")
+            if (a):
+                return superBlock.superBlock(self.gameMenue, self)
+            else:
+                pass #TODO: spawn geht nicht, Spiel beenden oder neue Runde
+
         ##if queue leer dann random sonst erstes element der queue
         elif not self.Queue:
             return self.generateRandomBlock()
@@ -225,7 +220,7 @@ class Field(object):
                 pass # spawn geht nicht - Spiel beenden oder neue Runde
         
     
-    def checkSpawn(self, string):
+    def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
         if (string == "cube"):
             if (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[7][1] == True) or (self.matrix[8][1] == True):
                 return False
@@ -262,7 +257,15 @@ class Field(object):
             else:
                 return True
         elif (string == "bomb"):
-            if (self.matrix[8][0] == True):
+            if (self.matrix[7][0] == True):
+                return False
+            else:
+                return True
+        elif (string == "super"):
+            if ((self.matrix[6][0] == True) or (self.matrix[5][1] == True) or (self.matrix[6][1] == True) 
+                or (self.matrix[4][2] == True) or (self.matrix[5][2] == True) or (self.matrix[7][2] == True) 
+                or (self.matrix[8][2] == True) or (self.matrix[6][3] == True) or (self.matrix[7][3] == True) 
+                or (self.matrix[6][4] == True)):
                 return False
             else:
                 return True
@@ -276,7 +279,15 @@ class Field(object):
             else:
                 self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] + 1)
                 self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
-        
+        elif (self.block.blockType == "super"):
+            if (self.block.hitGround()):
+                self.block.steadyBlockSuper()
+                self.superBlock = False
+                self.blockHitGround()
+               
+            else:
+                self.block.setBlock()
+       
         #test
         elif(self.block.hitGround()):     
             self.steadyBlock()
@@ -294,7 +305,7 @@ class Field(object):
 
         
     def moveLeft(self):
-        if((self.block == None) | self.freezeLeft):
+        if((self.block is None) | self.freezeLeft):
             pass
         elif(self.inverseSteuerung):
             self.block.moveBlockRight()
@@ -303,7 +314,7 @@ class Field(object):
     
     
     def moveRight(self):
-        if((self.block == None)| self.freezeRight):
+        if((self.block is None)| self.freezeRight):
             pass
         elif(self.inverseSteuerung):
             self.block.moveBlockLeft()
@@ -312,7 +323,7 @@ class Field(object):
     
     
     def rotateLeft(self):
-        if((self.block == None)| self.freezeRotate):
+        if((self.block is None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
             self.block.rotateRight()
@@ -321,7 +332,7 @@ class Field(object):
             
     
     def rotateRight(self):
-        if((self.block == None)| self.freezeRotate):
+        if((self.block is None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
             self.block.rotateLeft()
@@ -334,8 +345,6 @@ class Field(object):
     def chanceSpeed(self, newSpeedInMs):
         self.player.clearInterval(self.timer)
         self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
-
-
     
     def equalModus(self):
         for reihe in range(0,10):
@@ -352,14 +361,4 @@ class Field(object):
         self.block.part3.unlink()
         self.block.part4.unlink()
         self.block = None
-        self.equalModus()
-      
-    def randomMove(self, integer):
-        if (integer == 1):
-            self.block.rotateLeft()
-        elif (integer == 2):
-            self.block.rotateRight()
-        elif (integer == 3):
-            self.block.moveBlockLeft()
-        else:
-            self.block.moveBlockRight()    
+        self.equalModus()  
