@@ -265,7 +265,7 @@ class GameMenue(object):
         count = int (self.timerLimit.text)
         if(self.modus == 1):#EqualModus, dh reihen loeschen bei der mitte und fallender stein wird geloescht
             if(count >=0):
-                if(count == 0):
+                if(count <= 0):
                     self.timerLimit.text = str(-3)
                     self.rundenWechsel()
                     if(self.round >= 4):
@@ -277,11 +277,11 @@ class GameMenue(object):
             else:
                 count+=1
                 self.timerLimit.text = str(count)
-                if(count == 0):
+                if(count <= 0):
                     self.fieldChanceRundenWechsel()
                     self.timerLimit.text = str(self.rundenDauer)
         else:
-            if(count == 0):#ClassicModus
+            if(count <= 0):#ClassicModus
                 self.timerLimit.text = str(self.rundenDauer)
         
                 self.field1.chanceSpeed(self.speed[self.round-1])
@@ -319,7 +319,11 @@ class GameMenue(object):
 #TODO:         self.field2.initBlock()
 
         
-
+    def defenseSkillReduceCounter(self,amount):
+        count = int (self.timerLimit.text)
+        count -= amount
+        self.timerLimit.text = count
+        
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
     def endeSpiel(self):
         self.divNodeGameMenue.active = False
