@@ -46,10 +46,10 @@ class AttackerSkills(object):
     
     def makeBlockVisible(self):
         self.player.clearInterval(self.invisible)
-        self.field.block.part1.active = False
-        self.field.block.part2.active = False
-        self.field.block.part3.active = False
-        self.field.block.part4.active = False
+        self.field.block.part1.active = True
+        self.field.block.part2.active = True
+        self.field.block.part3.active = True
+        self.field.block.part4.active = True
     
     def remoteInverseControl(self):
         self.player.clearInterval(self.inverseTimer)
