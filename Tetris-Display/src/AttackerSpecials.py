@@ -4,17 +4,23 @@ Created on 10.07.2013
 @author: Niko
 '''
 class AttackerSpecials(object):
+
+#TODO: Es werden 2 Felder benötigt, das Feld vom Gegner wo die Specials benutzt werden und das Field wo das eigene
+# score gesenkt werden muss ?!
     
-    def __init__(self, Field, Player):
+    def __init__(self, Field, Player): 
         self.player = Player
         self.field = Field
 
         
     def orderSuperBlock(self):
         self.field.superBlock = True
+        self.field.updateScore(-10)
         
     def orderRainOfBlocks(self):
-        pass #TODO: have fun
+        self.field.tetrisRainActivated = True
+        self.field.updateScore(-10)
     
     def orderThunder(self):
-        pass #TODO: muss unbedingt nen sound mit abspielen, sonst wird das recht unspektakulaer und nicht mal bemerkbar
+        self.field.thunderActivated = True
+        self.field.updateScore(-10)

@@ -18,11 +18,9 @@ class Field(object):
         self.speedToGround = False
         self.superBlock = False
         self.bombActivated = False
-        self.gameMenue = gameMenue
-
+        self.thunderActivated = False
         self.player = player
         self.speed = self.gameMenue.speed[0]
-        self.gameMenue = gameMenue
         self.xWertLinksOben = xWertLinksOben
         self.xWertRechtsOben = xWertRechtsOben
         self.yWertOben = yWertOben
@@ -178,7 +176,46 @@ class Field(object):
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         
-        if (self.bombActivated):
+        if(self.thunderActivated):
+            #TODO: hier noch am besten sound einfügen
+            randomNumber = random.randint(0,13)
+            for i in range(19):
+                randomInc = random.randint(-1,1)
+                if ((self.matrix[randomNumber][i] < 0) or (self.matrix[randomNumber][i] > 13)):
+                    randomNumber += randomInc
+                    if (randomNumber < 0):
+                        randomNumber = 0
+                    elif (randomNumber > 13):
+                        randomNumber = 13
+                    else:
+                        pass
+                else:
+                    self.matrix[randomNumber][i] = False
+                    if (self.matrixSteadyRectNodes[randomNumber][i] is not None):
+                        (self.matrixSteadyRectNodes[randomNumber][i]).unlink()
+                        self.matrixSteadyRectNodes[randomNumber][i] = None
+                        randomNumber += randomInc
+                        if (randomNumber < 0):
+                            randomNumber = 0
+                        elif (randomNumber > 13):
+                            randomNumber = 13
+                        else:
+                            pass
+                    else:
+                        randomNumber += randomInc
+                        if (randomNumber < 0):
+                            randomNumber = 0
+                        elif (randomNumber > 13):
+                            randomNumber = 13
+                        else:
+                            pass
+            self.thunderActivated = False
+            return self.initBlock()
+            
+                    
+            
+        
+        elif (self.bombActivated):
             
             bomb = BombBlock.BombBlock(self.gameMenue,self)
             a = self.checkSpawn("bomb")
@@ -186,6 +223,7 @@ class Field(object):
                 return bomb
             else:
                 bomb.explode()
+                #TODO: sound hier einfügen
         elif (self.superBlock):
             a = self.checkSpawn("super")
             if (a):
@@ -217,7 +255,7 @@ class Field(object):
                 else:
                     pass
             else: 
-                pass # spawn geht nicht - Spiel beenden oder neue Runde
+                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
         
     
     def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
@@ -356,9 +394,24 @@ class Field(object):
     
     def clearForNextRound(self):
         self.player.clearInterval(self.timer)
-        self.block.part1.unlink()
-        self.block.part2.unlink()
-        self.block.part3.unlink()
-        self.block.part4.unlink()
+        
+        if(self.block.blockType == "super"):
+            self.block.part1.unlink()
+            self.block.part2.unlink()
+            self.block.part3.unlink()
+            self.block.part4.unlink()
+            self.block.part5.unlink()
+            self.block.part6.unlink()
+            self.block.part7.unlink()
+            self.block.part8.unlink()
+            self.block.part9.unlink()
+            self.block.part10.unlink()
+        elif (self.block.blockType == "bomb"):
+            self.block.part1.unlink()
+        else:        
+            self.block.part1.unlink()
+            self.block.part2.unlink()
+            self.block.part3.unlink()
+            self.block.part4.unlink()
         self.block = None
         self.equalModus()  
