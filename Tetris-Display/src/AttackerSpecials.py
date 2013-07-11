@@ -5,7 +5,7 @@ Created on 10.07.2013
 '''
 class AttackerSpecials(object):
 
-#TODO: Es werden 2 Felder benötigt, das Feld vom Gegner wo die Specials benutzt werden und das Field wo das eigene
+#TODO: Es werden 2 Felder benoetigt, das Feld vom Gegner wo die Specials benutzt werden und das Field wo das eigene
 # score gesenkt werden muss ?!
     
     def __init__(self, Field, Player): 

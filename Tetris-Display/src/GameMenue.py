@@ -319,11 +319,6 @@ class GameMenue(object):
 #TODO:         self.field2.initBlock()
 
         
-    def defenseSkillReduceCounter(self,amount):
-        count = int (self.timerLimit.text)
-        count -= amount
-        self.timerLimit.text = count
-        
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
     def endeSpiel(self):
         self.divNodeGameMenue.active = False

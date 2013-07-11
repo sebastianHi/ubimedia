@@ -177,7 +177,7 @@ class Field(object):
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         
         if(self.thunderActivated):
-            #TODO: hier noch am besten sound einfügen
+            #TODO: hier noch am besten sound einfuegen
             randomNumber = random.randint(0,13)
             for i in range(19):
                 randomInc = random.randint(-1,1)
@@ -223,7 +223,7 @@ class Field(object):
                 return bomb
             else:
                 bomb.explode()
-                #TODO: sound hier einfügen
+                #TODO: sound hier einfuegen
         elif (self.superBlock):
             a = self.checkSpawn("super")
             if (a):
