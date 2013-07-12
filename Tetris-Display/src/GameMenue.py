@@ -39,7 +39,8 @@ class GameMenue(object):
         self.rotateFreezeActive = False
         self.speedUpActive = False
         self.makeBlockInvisibleActive = False
-        self.noPointsActive = False        
+        self.noPointsActive = False
+        self.skillsOnCooldown = False        
         
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
