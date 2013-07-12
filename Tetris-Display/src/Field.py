@@ -1,4 +1,4 @@
-import superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
+import rainDropBlock, superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
 from libavg import avg
 
@@ -19,8 +19,9 @@ class Field(object):
         self.superBlock = False
         self.bombActivated = False
         self.thunderActivated = False
-        self.tetrisRainActivated = False
+        self.tetrisRainActivated = True
         self.noMoneyForYou = False
+        self.rainDropCount = 0
         self.player = player
         self.speed = self.gameMenue.speed[0]
         self.xWertLinksOben = xWertLinksOben
@@ -32,8 +33,9 @@ class Field(object):
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
         self.matrix = [[False for i in range(19)] for j in range(14)] #@UnusedVariable
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
-        self.initBlock();
         self.timer = self.player.setInterval(self.speed, self.gravity)
+        self.initBlock();
+
              
     def initBlock(self):
         self.block = self.newFallingStone()  
@@ -183,12 +185,28 @@ class Field(object):
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         
-        if (self.tetrisRainActivated):
-            this = avg.SoundNode(href="rain.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+        if (self.tetrisRainActivated and self.rainDropCount == 0):
+            this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
-            self.letItRain()
-            self.tetrisRainActivated = False
-            block = self.newFallingStone()
+            block = self.letItRain()
+            self.rainDropCount += 1
+            if (self.rainDropCount > 29):
+                
+                self.tetrisRainActivated = False
+                self.rainDropCount = 0
+                self.gravityPausieren()
+                self.gravityWiederStarten()
+            return block
+        
+        elif (self.tetrisRainActivated):
+            block = self.letItRain()
+            self.rainDropCount += 1
+            if (self.rainDropCount > 30):
+                
+                self.tetrisRainActivated = False
+                self.rainDropCount = 0
+                self.gravityPausieren()
+                self.gravityWiederStarten()
             return block
         
         elif(self.thunderActivated):
@@ -341,7 +359,15 @@ class Field(object):
                
             else:
                 self.block.setBlock()
-       
+        elif (self.block.blockType == "rain"):
+            if (self.block.hitGround()):
+                self.matrixSteadyRectNodes[self.block.currPos1[0]][self.block.currPos1[1]] = self.block.part1
+                self.matrix[self.block.currPos1[0]][self.block.currPos1[1]] = True
+                self.checkRows()
+                self.initBlock()
+            else:
+                self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] + 1)
+                self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
         #test
         elif(self.block.hitGround()):     
             self.steadyBlock()
@@ -448,7 +474,16 @@ class Field(object):
         self.player.clearInterval(self.timer)
         
     def gravityWiederStarten(self):
-        self.player.setInterval(self.speed, self.gravity)
+        self.timer = self.player.setInterval(self.speed, self.gravity)
 
     def letItRain(self):
-        pass
+
+        self.randomNumber = random.randint(0,13)
+        if (self.matrix[self.randomNumber][0]):
+            self.gameMenue.endeSpiel()
+        else:
+            
+            block = rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
+            self.gravityPausieren()
+            self.timer = self.player.setInterval(20, self.gravity)
+            return block
