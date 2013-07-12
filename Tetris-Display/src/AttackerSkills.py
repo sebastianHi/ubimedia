@@ -31,10 +31,25 @@ class AttackerSkills(object):
     
     def makeBlockInvisible(self):
         self.invisible = self.player.setInterval(2000, self.makeBlockVisible)
-        self.field.block.part1.active = False
-        self.field.block.part2.active = False
-        self.field.block.part3.active = False
-        self.field.block.part4.active = False
+        if (self.field.block.blockType == "super"):
+            self.field.block.part1.active = False
+            self.field.block.part2.active = False
+            self.field.block.part3.active = False
+            self.field.block.part4.active = False
+            self.field.block.part5.active = False
+            self.field.block.part6.active = False
+            self.field.block.part7.active = False
+            self.field.block.part8.active = False
+            self.field.block.part9.active = False
+            self.field.block.part10.active = False
+        elif (self.field.block.blockType == "bomb"):
+            
+            self.field.block.part1.active = False
+        else:
+            self.field.block.part1.active = False
+            self.field.block.part2.active = False
+            self.field.block.part3.active = False
+            self.field.block.part4.active = False
     
     def noPoints(self):
         #TODO:
@@ -46,10 +61,25 @@ class AttackerSkills(object):
     
     def makeBlockVisible(self):
         self.player.clearInterval(self.invisible)
-        self.field.block.part1.active = True
-        self.field.block.part2.active = True
-        self.field.block.part3.active = True
-        self.field.block.part4.active = True
+        if (self.field.block.blockType == "super"):
+            self.field.block.part1.active = True
+            self.field.block.part2.active = True
+            self.field.block.part3.active = True
+            self.field.block.part4.active = True
+            self.field.block.part5.active = True
+            self.field.block.part6.active = True
+            self.field.block.part7.active = True
+            self.field.block.part8.active = True
+            self.field.block.part9.active = True
+            self.field.block.part10.active = True
+        elif (self.field.block.blockType == "bomb"):
+            
+            self.field.block.part1.active = True
+        else:
+            self.field.block.part1.active = True
+            self.field.block.part2.active = True
+            self.field.block.part3.active = True
+            self.field.block.part4.active = True
     
     def remoteInverseControl(self):
         self.player.clearInterval(self.inverseTimer)

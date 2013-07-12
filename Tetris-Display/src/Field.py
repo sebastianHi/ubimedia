@@ -131,48 +131,48 @@ class Field(object):
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() 
             
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
         else:
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() 
     
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
@@ -232,7 +232,7 @@ class Field(object):
             if (a):
                 return superBlock.superBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht, Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
 
         ##if queue leer dann random sonst erstes element der queue
         elif not self.Queue:
@@ -258,7 +258,7 @@ class Field(object):
                 else:
                     pass
             else: 
-                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel()
         
     
     def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
