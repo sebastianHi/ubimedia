@@ -28,14 +28,15 @@ class GameMenue(object):
         self.blocksize = (self.xendFeld1 - self.xstartFeld1 )/14
         self.tetrishoehe = self.blocksize * 19
         self.round = 1
-        self.rundenDauer = 10
-        self.speed = [500,200,200,300,250]
+        self.rundenDauer = 100
+        self.speed = [500,420,340,260,200]
  
         
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
         self.initFeld(self.xstartFeld2, self.xendFeld2, self.yOben )
-
+        this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        this.play()
 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -339,7 +340,8 @@ class GameMenue(object):
         self.winLooseMenu.buttonNextGame.sensitive = True
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
-        
+        this = avg.SoundNode(href="victory.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        this.play()
     
     def naechsteZahlDurch14Teilbar(self,value):
         x = value % 14

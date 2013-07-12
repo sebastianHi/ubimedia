@@ -1,6 +1,6 @@
 import superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
-
+from libavg import avg
 
 class Field(object):
 
@@ -110,7 +110,8 @@ class Field(object):
         for s in range (14):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
-
+        this = avg.SoundNode(href="rows.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+        this.play()
 #         for y in range(0,19):
 #             s = ""
 #             for x in range(0,14):
@@ -130,54 +131,55 @@ class Field(object):
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
             
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
         else:
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
     
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         
         if(self.thunderActivated):
-            #TODO: hier noch am besten sound einfuegen
+            this = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
             randomNumber = random.randint(0,13)
             for i in range(19):
                 randomInc = random.randint(-1,1)
@@ -210,7 +212,8 @@ class Field(object):
                         else:
                             pass
             self.thunderActivated = False
-            return self.initBlock()
+            block = self.newFallingStone()
+            return block
             
                     
             
@@ -223,13 +226,13 @@ class Field(object):
                 return bomb
             else:
                 bomb.explode()
-                #TODO: sound hier einfuegen
+                
         elif (self.superBlock):
             a = self.checkSpawn("super")
             if (a):
                 return superBlock.superBlock(self.gameMenue, self)
             else:
-                pass #TODO: spawn geht nicht, Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht, Spiel beenden oder neue Runde
 
         ##if queue leer dann random sonst erstes element der queue
         elif not self.Queue:
@@ -255,7 +258,7 @@ class Field(object):
                 else:
                     pass
             else: 
-                pass #TODO: spawn geht nicht - Spiel beenden oder neue Runde
+                self.gameMenue.endeSpiel() #TODO: spawn geht nicht - Spiel beenden oder neue Runde
         
     
     def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
@@ -311,7 +314,9 @@ class Field(object):
             return False
 
     def gravity(self):
-        if (self.block.blockType == "bomb"):
+        if (self.block is None):
+            pass
+        elif (self.block.blockType == "bomb"):
             if (self.block.hitGround()):
                 self.block.explode()
             else:
@@ -364,8 +369,12 @@ class Field(object):
         if((self.block is None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
+            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
             self.block.rotateRight()
         else:
+            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
             self.block.rotateLeft()
             
     
@@ -373,8 +382,12 @@ class Field(object):
         if((self.block is None)| self.freezeRotate):
             pass
         elif(self.inverseSteuerung):
+            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
             self.block.rotateLeft()
         else:
+            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
             self.block.rotateRight()
             
     def speedDown(self):

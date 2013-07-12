@@ -267,7 +267,8 @@ class BombBlock(object):
             (self.Field.matrixSteadyRectNodes[self.currPos1[0] + 2][self.currPos1[1] + 2]).unlink()
             self.Field.matrixSteadyRectNodes[self.currPos1[0] + 2][self.currPos1[1] + 2] = None
             self.Field.matrix[self.currPos1[0] + 2][self.currPos1[1] + 2] = False
-            
+        this = avg.SoundNode(href="bomb.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+        this.play()    
         self.Field.player.clearInterval(self.Field.timer)
         self.part1.unlink()
         self.Field.bombActivated = False
