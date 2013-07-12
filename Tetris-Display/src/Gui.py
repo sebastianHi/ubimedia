@@ -24,6 +24,7 @@ class Gui(AVGApp):
         self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
         self.alreadyServerRunning = False
+        self.dreiSpielerSkillSwitch = False
     
         self.keepCountingToStart = True
         self.player= avg.Player.get()
@@ -50,7 +51,7 @@ class Gui(AVGApp):
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
 #-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.lobbyMenu.firstPlayer, self.test)   
+        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
@@ -65,10 +66,20 @@ class Gui(AVGApp):
         self.lobbyMenu.divNodelobbyMenue.active = False 
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
-        self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMain)
+        self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMainAfterGameFinished)
         #TODO:  + rollenzuweisung
-        #self.ipStorage.updateAll("gamestarts")
-
+        if(self.lobbyMenu.modus == 4 ):
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], "attacker")
+        if(self.lobbyMenu.modus == 3 ):
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
+        if(self.lobbyMenu.modus == 2 ):
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
@@ -166,12 +177,16 @@ class Gui(AVGApp):
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
             print "GotNickForIP : ",ip," Nick: ", befehl[9:befehl.__len__()]
             self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
+            
+        elif(befehl == "disconnect" & (self.zustand ==1)):
+            ipStorage.dropConnection(ip)
+            self.lobbyMenu.updatePlayerLeft(ip)
 #----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
         elif(  (befehl == "moveLeft" )   & (self.zustand == 2)):
             print "GotMoveLeft"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveLeft()
-            elif(ip == self.lobbyMenu.player[2]):
+            elif(ip == self.lobbyMenu.player[1]):
                 self.gameMenu.field2.moveLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -180,7 +195,7 @@ class Gui(AVGApp):
             print "GotMoveRight"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveRight()
-            elif(ip == self.lobbyMenu.player[2]):
+            elif(ip == self.lobbyMenu.player[1]):
                 self.gameMenu.field2.moveRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -189,7 +204,7 @@ class Gui(AVGApp):
             print "GotMoveRotateR"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateRight()
-            elif(ip == self.lobbyMenu.player[2]):
+            elif(ip == self.lobbyMenu.player[1]):
                 self.gameMenu.field2.rotateRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -198,16 +213,50 @@ class Gui(AVGApp):
             print "GotRotateL"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateLeft()
-            elif(ip == self.lobbyMenu.player[2]):
+            elif(ip == self.lobbyMenu.player[1]):
                 self.gameMenu.field2.rotateLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
+        elif((befehl == "spezialBeispiel") & (self.zustand == 2)):
+            print "Spezialfaehigkeit"
+            
+            if(self.lobbyMenu.modus == 3):
+                if(self.dreiSpielerSkillSwitch):
+                    print "fuehre hier den aufruf fuer feld 1 auf"
+                    self.dreiSpielerSkillSwitch = False
+                else:
+                    print "fuehre hier den aufruf fuer feld 2 auf"
+                    self.dreiSpielerSkillSwitch = True
+            
+            
+            if(ip == self.lobbyMenu.playerIP[2]):
+                print "fuehre hier den aufruf fuer feld 2 auf"
+            elif((ip == self.lobbyMenu.playerIP[3])& (self.zustand ==2)):
+                print "fuehre hier den aufruf fuer feld 1 auf"
+            else:
+                raise SyntaxError("Falscher Spieler wollte Spezial ausfuehren!")
 #-----------------------Rdy Signal fuer Lobby------------------------------
-        elif((befehl == "rdy")):
+        elif((befehl == "rdy") & (self.zustand == 1)):
             self.lobbyMenu.playerGotRdy(ip)
-
+            
+        elif((befehl == "rdy") & (self.zustand == 1)):
+            self.lobbyMenu.playerNotRdyAnylonge(ip)
            
+        elif((befehl == "L") & (self.zustand == 2)):
+            if(self.lobbyMenu.modus == 3 ):
+                #TODO: fuege block in beide Queues ein
+                pass
+            else:
+                if(self.lobbyMenu.playerIP[2]):
+                    #TODO: fuege block in feld 2 queue hinzu
+                    pass
+                elif(self.lobbyMenu.playerIP[3]):
+                    #TODO:fuege block in feld1 queue hinzu
+                    pass
+                else:
+                    raise SyntaxError("Falscher spieler wollte block hinzufuegen")
+                 
     
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
 
@@ -249,12 +298,12 @@ class Gui(AVGApp):
         self.mainMenu.divNodeMainMenue.active = True
         
              
-    def backToMain(self, event):
+    def backToMainAfterGameFinished(self, event):
         print "All Clients left"
         print "Nachfragen, wie man den Server neustarten muss"
         self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
         self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
-        self.typeMenu.divNodeTypeMenue.active = True 
+        self.mainMenu.divNodeMainMenue.active = True 
         self.gameMenu.speed =1 
         self.gameMenu.round =1   
  

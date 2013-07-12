@@ -24,4 +24,7 @@ class IPStorage():
     def updateAll(self,msg): #sends Message to all connected Clients
         for key in self._ipList:
             self._ipList[key].sendMessage(msg)
-
+        
+    def sendMessageToOneIP(self,ip,msg):
+        #self._ipList[ip].sendMessage(msg)
+        pass

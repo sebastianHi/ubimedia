@@ -415,3 +415,9 @@ class Field(object):
             self.block.part4.unlink()
         self.block = None
         self.equalModus()  
+        
+    def gravityPausieren(self):
+        self.player.clearInterval(self.timer)
+        
+    def gravityWiederStarten(self):
+        self.player.setInterval(self.speed, self.gravity)

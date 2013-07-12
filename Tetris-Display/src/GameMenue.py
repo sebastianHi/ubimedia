@@ -2,6 +2,7 @@ from libavg import avg
 from Field import Field
 from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
+from OptionMenue import OptionMenue
 
 class GameMenue(object):
     
@@ -13,7 +14,7 @@ class GameMenue(object):
         self.background = avg.RectNode(parent = self.divNodeGameMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeGameMenue.size )
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.winLooseMenu = WinLooseMenue(self.rootNode)
-        
+        self.optionMenu = OptionMenue(self.rootNode)
         self.menueLinkerXwert  = int(self.divNodeGameMenue.size[0]/2- self.divNodeGameMenue.size[0]*0.04)
         self.menueRechterXwert = int(self.divNodeGameMenue.size[0]/2+ self.divNodeGameMenue.size[0]*0.04)
         self.rahmenbreite = int(self.divNodeGameMenue.size[0]*0.025)
@@ -126,11 +127,15 @@ class GameMenue(object):
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
-        
+        #Optionevents
+        self.background.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.background, self.startOptionMenu)
+        self.optionMenu.buttonResume.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonResume, self.stopOptionMenue)
 #fuer Matrix feld initialisierung 
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
-        #self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        #TODO: loeschbarmacen:
+        self.field2.chanceSpeed(2000);
         
         print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
@@ -277,7 +282,7 @@ class GameMenue(object):
             else:
                 count+=1
                 self.timerLimit.text = str(count)
-                if(count <= 0):
+                if(count >= 0):
                     self.fieldChanceRundenWechsel()
                     self.timerLimit.text = str(self.rundenDauer)
         else:
@@ -320,9 +325,19 @@ class GameMenue(object):
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    def endeSpiel(self):
+    def endeSpiel(self, winner = "check"):
+        if(winner == "check"):
+            scoreTeam1 = self.field1.score
+            scoreTeam2 = self.field2.score
+            if(scoreTeam1 == scoreTeam2):
+                winner = "Unentschieden"
+            elif(scoreTeam1 > scoreTeam2):
+                winner = "Team 1"
+            elif(scoreTeam1 < scoreTeam2):
+                winner = "Team 2"
         self.divNodeGameMenue.active = False
         self.winLooseMenu.buttonNextGame.sensitive = True
+        self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
         
     
@@ -349,3 +364,16 @@ class GameMenue(object):
                                   fillcolor = "000000", fillopacity = 1, color = "000000", 
                                   size = avg.Point2D(endX-startX+2*int(self.divNodeGameMenue.size[0]*0.025) ,self.rahmenbreite)
                                   )
+                                  
+                                  
+    def startOptionMenu(self, event):
+        self.divNodeGameMenue.active = False
+        self.optionMenu.divNodeOptionMenue.active = True
+        self.field1.gravityPausieren()
+        self.player.clearInterval(self.timeLimitCounter)
+        
+    def stopOptionMenue(self, event):
+        self.divNodeGameMenue.active = True
+        self.optionMenu.divNodeOptionMenue.active = False
+        self.field1.gravityWiederStarten()
+        self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)

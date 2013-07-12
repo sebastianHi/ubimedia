@@ -21,6 +21,7 @@ class LobbyMenue(object):
         self.player = ["","","",""]
         self.playerIP = ["","","",""]
         self.rdyPlayer = [False,False,False,False]
+        self.rectNodPlayerArr = [None,None,None,None]
         self.connectedPlayers = 0
        
         self.playstyleModus = ""
@@ -144,7 +145,8 @@ class LobbyMenue(object):
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.forthPlayer.addText(self.player[3])
-        
+            
+            self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer,self.forthPlayer]
         elif(self.modus == 2):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
@@ -161,6 +163,8 @@ class LobbyMenue(object):
                                    color = "000000",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
+            
+            self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer]
             
         else:
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
@@ -189,12 +193,21 @@ class LobbyMenue(object):
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.thirdPlayer.addText(self.player[2])
             
+            self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer]
+            
 #         
 #     def updatePlayerName(self):
 #         #self.player[1-4] om startlobby text updaten der rectnodes
 #         pass
 #     
-#     
+#    
+    def playerNotRdyAnylonge(self,ip):
+        i = 0
+        for i in range(self.modus):
+            if(ip == self.playerIP[i]):
+                self.rdyPlayer[i] = False
+                break
+ 
     def playerGotRdy(self,ip):
         i = -1
         for k in self.playerIP:
@@ -216,18 +229,45 @@ class LobbyMenue(object):
             i+=1
         self.rdyPlayer[i] = False
         
-#         
-#     def updatePlayerLeft(self):
-#         self.connectedPlayers-=1
-#         self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
-#     
-       
+         
+    def updatePlayerLeft(self, ip):
+        self.connectedPlayers-=1
+        self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+        i = 0
+        b = False
+        for i in range(self.modus):
+            if(b):
+                if(i < self.modus):
+                    self.player[i-1] = self.player[i] 
+                    self.playerIP[i-1]  =self.playerIP[i] 
+                    self.rdyPlayer[i-1] = self.rdyPlayer[i]
+                    self.rectNodPlayerArr[i-1].updateTextNode(self.player[i-1])
+                else:
+                    self.player[i] = ""
+                    self.playerIP[i] = ""
+                    self.rdyPlayer[i] = False 
+                    (self.rectNodPlayerArr[i]).updateTextNode("") 
+            if(self.playerIP[i] == ip):
+                self.player[i] = ""
+                self.playerIP[i] = ""
+                self.rdyPlayer[i] = False 
+                (self.rectNodPlayerArr[i]).updateTextNode("") 
+                b = True
+    
+            
+     
+    def swapPlayer(self,event):
+#TODO: hier muss man drag und drop implementieren mit deren hilfe man rectnode tauschen kann
+        pass
+        
     def updateJoinedPlayerNumber(self, ip, name):
         if(self.connectedPlayers+1>self.modus):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         else:
-            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers+1)+"/"+ str(self.modus))
+            self.connectedPlayers += 1
+            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
             self.player[self.connectedPlayers] = name
+            (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
             self.playerIP[self.connectedPlayers] = ip
             self.connectedPlayers+=1
             
