@@ -143,10 +143,10 @@ class GameMenue(object):
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
         this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
         this.play()
-        self.SkillActivator = avg.Player.setInterval(120000, self.activateOneSkill)
+        self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
         #TODO: loeschbarmacen:
-        self.field2.chanceSpeed(2000);
+        self.field2.chanceSpeed(8000);
         
         print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
@@ -322,7 +322,8 @@ class GameMenue(object):
         self.round += 1
         self.roundNumber.text = str(self.round)
         self.speedNumber.text = str(self.round)
-        
+        this = avg.SoundNode(href="round.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        this.play()
 
         
     def fieldChanceRundenWechsel(self):
@@ -391,7 +392,7 @@ class GameMenue(object):
         self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
         
         
-    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown für den Angreifer frei
+    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
 
         randomNumber = random.randint(1,7)
         if (randomNumber == 1):
