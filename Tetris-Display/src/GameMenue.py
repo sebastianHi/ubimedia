@@ -3,6 +3,7 @@ from Field import Field
 from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
 from OptionMenue import OptionMenue
+import random
 
 class GameMenue(object):
     
@@ -28,16 +29,21 @@ class GameMenue(object):
         self.blocksize = (self.xendFeld1 - self.xstartFeld1 )/14
         self.tetrishoehe = self.blocksize * 19
         self.round = 1
-        self.rundenDauer = 100
-        self.speed = [500,420,340,260,200]
- 
+        self.rundenDauer = 180
+        self.speed = [750,650,600,500,400]
+        
+        self.countOfSkillsActivated = 0
+        self.inverseControlActive = False
+        self.leftFreezeActive = False
+        self.rightFreezeActive = False
+        self.rotateFreezeActive = False
+        self.speedUpActive = False
+        self.makeBlockInvisibleActive = False
+        self.noPointsActive = False        
         
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
         self.initFeld(self.xstartFeld2, self.xendFeld2, self.yOben )
-        this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
-        this.play()
-
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       
@@ -135,6 +141,10 @@ class GameMenue(object):
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        this.play()
+        self.SkillActivator = avg.Player.setInterval(120000, self.activateOneSkill)
+        
         #TODO: loeschbarmacen:
         self.field2.chanceSpeed(2000);
         
@@ -379,3 +389,66 @@ class GameMenue(object):
         self.optionMenu.divNodeOptionMenue.active = False
         self.field1.gravityWiederStarten()
         self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
+        
+        
+    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown für den Angreifer frei
+
+        randomNumber = random.randint(1,7)
+        if (randomNumber == 1):
+            if (self.rightFreezeActive == True):
+                self.activateOneSkill()
+            else:
+                self.rightFreezeActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        elif (randomNumber == 2):
+            if (self.leftFreezeActive == True):
+                self.activateOneSkill()
+            else:
+                self.leftFreezeActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        elif (randomNumber == 3):
+            if (self.rotateFreezeActive == True):
+                self.activateOneSkill()
+            else:
+                self.rotateFreezeActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        elif (randomNumber == 4):
+            if (self.noPointsActive == True):
+                self.activateOneSkill()
+            else:
+                self.noPointsActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        elif (randomNumber == 5):
+            if (self.inverseControlActive == True):
+                self.activateOneSkill()
+            else:
+                self.inverseControlActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        elif (randomNumber == 6):
+            if (self.makeBlockInvisibleActive == True):
+                self.activateOneSkill()
+            else:
+                self.makeBlockInvisibleActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        else:
+            if (self.speedUpActive == True):
+                self.activateOneSkill()
+            else:
+                self.speedUpActive = True
+                self.countOfSkillsActivated += 1
+                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+                this.play()
+        if (self.countOfSkillsActivated == 7):
+            avg.Player.clearInterval(self.SkillActivator)

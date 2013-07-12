@@ -19,6 +19,7 @@ class Field(object):
         self.superBlock = False
         self.bombActivated = False
         self.thunderActivated = False
+        self.noMoneyForYou = False
         self.player = player
         self.speed = self.gameMenue.speed[0]
         self.xWertLinksOben = xWertLinksOben
@@ -78,7 +79,11 @@ class Field(object):
                 j-=1
                 
         if(amountOfRows>0):
-            self.updateScore(amountOfRows)
+            if (self.noMoneyForYou):
+                this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+                this.play()
+            else:
+                self.updateScore(amountOfRows)
         
     def updateScore(self, points):
         self.score += points
@@ -110,7 +115,7 @@ class Field(object):
         for s in range (14):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
-        this = avg.SoundNode(href="rows.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+        this = avg.SoundNode(href="cash.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
         this.play()
 #         for y in range(0,19):
 #             s = ""
@@ -349,7 +354,8 @@ class Field(object):
         
     def moveLeft(self):
         if((self.block is None) | self.freezeLeft):
-            pass
+            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
         elif(self.inverseSteuerung):
             self.block.moveBlockRight()
         else:
@@ -358,7 +364,8 @@ class Field(object):
     
     def moveRight(self):
         if((self.block is None)| self.freezeRight):
-            pass
+            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
         elif(self.inverseSteuerung):
             self.block.moveBlockLeft()
         else:
@@ -367,7 +374,8 @@ class Field(object):
     
     def rotateLeft(self):
         if((self.block is None)| self.freezeRotate):
-            pass
+            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
         elif(self.inverseSteuerung):
             this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
@@ -380,7 +388,8 @@ class Field(object):
     
     def rotateRight(self):
         if((self.block is None)| self.freezeRotate):
-            pass
+            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
         elif(self.inverseSteuerung):
             this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()

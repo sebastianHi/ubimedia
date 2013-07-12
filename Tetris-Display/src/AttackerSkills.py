@@ -27,7 +27,7 @@ class AttackerSkills(object):
         
     def speedUp(self):
         self.speedy = self.player.setInterval(1000, self.speedDownAgain)
-        self.field.chanceSpeed(self.field.speed - 300)
+        self.field.chanceSpeed(self.field.speed - 200)
     
     def makeBlockInvisible(self):
         self.invisible = self.player.setInterval(2000, self.makeBlockVisible)
@@ -52,8 +52,9 @@ class AttackerSkills(object):
             self.field.block.part4.active = False
     
     def noPoints(self):
-        #TODO:
-        pass
+        self.duration = self.player.setInterval(10000, self.activateMoney)
+        self.field.noMoneyForYou = True
+        
     
     def speedDownAgain(self):
         self.player.clearInterval(self.speedy)
