@@ -19,6 +19,7 @@ class Field(object):
         self.superBlock = False
         self.bombActivated = False
         self.thunderActivated = False
+        self.tetrisRainActivated = False
         self.noMoneyForYou = False
         self.player = player
         self.speed = self.gameMenue.speed[0]
@@ -182,7 +183,15 @@ class Field(object):
     
     def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
         
-        if(self.thunderActivated):
+        if (self.tetrisRainActivated):
+            this = avg.SoundNode(href="rain.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
+            self.letItRain()
+            self.tetrisRainActivated = False
+            block = self.newFallingStone()
+            return block
+        
+        elif(self.thunderActivated):
             this = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
             randomNumber = random.randint(0,13)
@@ -219,10 +228,7 @@ class Field(object):
             self.thunderActivated = False
             block = self.newFallingStone()
             return block
-            
-                    
-            
-        
+             
         elif (self.bombActivated):
             
             bomb = BombBlock.BombBlock(self.gameMenue,self)
@@ -443,3 +449,6 @@ class Field(object):
         
     def gravityWiederStarten(self):
         self.player.setInterval(self.speed, self.gravity)
+
+    def letItRain(self):
+        pass

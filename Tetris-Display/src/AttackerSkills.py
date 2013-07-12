@@ -97,3 +97,7 @@ class AttackerSkills(object):
     def remoteRotateFreezeControl(self):
         self.player.clearInterval(self.rotateFreezeTimer)
         self.field.freezeRotate = False 
+        
+    def activateMoney(self):
+        self.player.clearInterval(self.duration)
+        self.field.noMoneyForYou = False
