@@ -51,7 +51,7 @@ class Gui(AVGApp):
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
 #-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
+        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCHt, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
@@ -242,22 +242,132 @@ class Gui(AVGApp):
             
         elif((befehl == "rdy") & (self.zustand == 1)):
             self.lobbyMenu.playerNotRdyAnylonge(ip)
-           
-        elif((befehl == "L") & (self.zustand == 2)):
+#----------------------------------------------------Block erzeugen----------------------------------------------------------------------           
+        elif(((befehl == "L")|
+              (befehl == "cube") |
+              (befehl == "I")|
+              (befehl == "Z")|
+              (befehl == "reverseL")|
+              (befehl == "reverseZ")|
+              (befehl == "cross") )& (self.zustand == 2)):
             if(self.lobbyMenu.modus == 3 ):
-                #TODO: fuege block in beide Queues ein
-                pass
+                # fuege block in beide Queues ein
+                self.gameMenu.field1.Queue.append(befehl)
+                self.gameMenu.field2.Queue.append(befehl)
             else:
-                if(self.lobbyMenu.playerIP[2]):
-                    #TODO: fuege block in feld 2 queue hinzu
-                    pass
-                elif(self.lobbyMenu.playerIP[3]):
-                    #TODO:fuege block in feld1 queue hinzu
-                    pass
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    # fuege block in feld 2 queue hinzu
+                    self.gameMenu.field2.Queue.append(befehl)
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    # fuege block in feld1 queue hinzu
+                    self.gameMenu.field1.Queue.append(befehl)
                 else:
-                    raise SyntaxError("Falscher spieler wollte block hinzufuegen")
-                 
-    
+                    raise SyntaxError("Falscher spieler wollte ",befehl," block hinzufuegen")
+                
+#-----------------------------------------------------Skills aktivieren-------------------------------------------------------------------
+    #attacker normal
+        elif((befehl == "inverseControl") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.inverseControl()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.inverseControl()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+                
+        elif((befehl == "leftFreeze") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.leftFreeze()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.leftFreeze()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+        elif((befehl == "rightFreeze") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.rightFreeze()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.rightFreeze()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+        elif((befehl == "rotateFreeze") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.rotateFreeze()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.rotateFreeze()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+        elif((befehl == "speedUp") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.speedUp()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.speedUp()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+        elif((befehl == "makeBlockInvisible") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.makeBlockInvisible()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.makeBlockInvisible()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+        elif((befehl == "noPoints") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerNormalField2.noPoints()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerNormalField1.noPoints()
+            else:
+                raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+    #attacker spezial
+        elif((befehl == "orderSuperBlock") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerSpezialonField2.orderSuperBlock()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerSpezialonField1.orderSuperBlock()
+            else:
+                raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
+        elif((befehl == "orderRainOfBlocks") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerSpezialonField2.orderRainOfBlocks()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerSpezialonField1.orderRainOfBlocks()
+            else:
+                raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
+        elif((befehl == "orderThunder") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[2]):
+                self.gameMenu.attackerSpezialonField2.orderThunder()
+            elif(ip == self.lobbyMenu.playerIP[3]):
+                self.gameMenu.attackerSpezialonField1.orderThunder()
+            else:
+                raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
+    #defender
+        elif((befehl == "skipBlock") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.defenderSkillsField1.skipBlock()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.defenderSkillsField2.skipBlock()
+            else:
+                raise SyntaxError(" Falscher spieler wollte defender skill ausfuehren")
+        elif((befehl == "slowPace") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.defenderSkillsField1.slowPace()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.defenderSkillsField2.slowPace()
+            else:
+                raise SyntaxError(" Falscher spieler wollte defender skill ausfuehren")
+        elif((befehl == "orderBomb") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.defenderSkillsField1.orderBomb()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.defenderSkillsField2.orderBomb()
+            else:
+                raise SyntaxError(" Falscher spieler wollte defender skill ausfuehren")
+        elif((befehl == "reduceTime") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.defenderSkillsField1.reduceTime()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.defenderSkillsField2.reduceTime()
+            else:
+                raise SyntaxError(" Falscher spieler wollte defender skill ausfuehren")     
+            
 #-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
 
     
