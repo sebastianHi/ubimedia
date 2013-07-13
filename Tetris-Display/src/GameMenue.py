@@ -156,7 +156,7 @@ class GameMenue(object):
         self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
         #TODO: loeschbarmacen:
-        self.field2.chanceSpeed(8000);
+        self.field2.chanceSpeed(200000);
         
         print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
@@ -294,7 +294,7 @@ class GameMenue(object):
                 if(count <= 0):
                     self.timerLimit.text = str(-3)
                     self.rundenWechsel()
-                    if(self.round >= 4):
+                    if(self.round > 5):
                         self.player.clearInterval(self.timeLimitCounter)
                         self.endeSpiel()
                 else:
@@ -313,7 +313,7 @@ class GameMenue(object):
                 self.field1.chanceSpeed(self.speed[self.round-1])
                 #self.field2.chanceSpeed(self.speed[self.round-1])
                 self.round += 1
-                if(self.round >= 4):
+                if(self.round > 5):
                     self.field1.clearForNextRound()
                     self.player.clearInterval(self.timeLimitCounter)
                     

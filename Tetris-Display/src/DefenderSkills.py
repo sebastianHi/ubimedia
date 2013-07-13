@@ -32,7 +32,7 @@ class DefenderSkills(object):
             pass
         else:
             self.field.updateScore(-8)
-            self.field.bombActivated = True
+            self.field.specialsQueue.append("bomb")
             
     def reduceTime(self): #lowers the time of the active round by 30 seconds
         

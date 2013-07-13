@@ -17,20 +17,20 @@ class AttackerSpecials(object):
             pass
         else:
             self.field1.updateScore(-10)
-            self.field2.superBlock = True
+            self.field2.specialsQueue.append("super")
     
     def orderRainOfBlocks(self):
         
         if (self.field1.score - 10 < 0):
             pass
         else:
-            self.field1.updateScore(-10)
-            self.field2.tetrisRainActivated = True
+            self.field1.updateScore(-20)
+            self.field2.specialsQueue.append("rain")
     
     def orderThunder(self):
         
         if (self.field1.score - 10 < 0):
             pass
         else:
-            self.field1.updateScore(-10)
-            self.field2.thunderActivated = True
+            self.field1.updateScore(-15)
+            self.field2.specialsQueue.append("thunder")

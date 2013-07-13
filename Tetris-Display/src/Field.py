@@ -1,5 +1,6 @@
 import rainDropBlock, superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
+from collections import deque
 from libavg import avg
 
 class Field(object):
@@ -19,7 +20,7 @@ class Field(object):
         self.superBlock = False
         self.bombActivated = False
         self.thunderActivated = False
-        self.tetrisRainActivated = True
+        self.tetrisRainActivated = False
         self.noMoneyForYou = False
         self.rainDropCount = 0
         self.player = player
@@ -29,7 +30,8 @@ class Field(object):
         self.yWertOben = yWertOben
         self.yWertUnten = yWertUnten
         #queue die gefuellt wird durch phone, new falling stone danach mit dem naechsten rufen
-        self.Queue = []
+        self.specialsQueue = deque()
+        self.Queue = deque()
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
         self.matrix = [[False for i in range(19)] for j in range(14)] #@UnusedVariable
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
@@ -38,7 +40,18 @@ class Field(object):
 
              
     def initBlock(self):
-        self.block = self.newFallingStone()  
+    
+        if (self.thunderActivated or self.tetrisRainActivated or self.superBlock or self.bombActivated):
+            self.block = self.newFallingStone()
+        else: 
+            if (not self.specialsQueue):
+                self.block = self.newFallingStone()
+                self.tetrisRainActivated = True
+            else:
+                string = self.specialsQueue.popleft()
+                self.processSpecialsQueue(string)
+                self.block = self.newFallingStone()
+  
    
     def blockHitGround(self):
         self.checkRows()
@@ -132,7 +145,7 @@ class Field(object):
 #             print ""
                    
     def generateRandomBlock(self):
-        RandomNumber = random.randint(1,7)
+        RandomNumber = random.randint(1,11)
 
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
@@ -175,20 +188,40 @@ class Field(object):
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
                 self.gameMenue.endeSpiel()
-        else:
+        elif(RandomNumber == 7):
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
                 self.gameMenue.endeSpiel() 
-    
+        elif (RandomNumber == 8):
+            self.bombActivated = True
+            return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
+        
+        elif (RandomNumber == 9):
+            self.tetrisRainActivated = True
+            return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
+        
+        elif (RandomNumber == 10):
+            self.thunderActivated = True
+            return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
+        
+        else:
+            self.superBlock = True
+            return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
     
     def newFallingStone(self):
         
         if (self.tetrisRainActivated and self.rainDropCount == 0):
             this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
-            block = self.letItRain()
+            self.rainDropCount += 1
+            self.gravityPausieren()
+            self.timer = self.player.setInterval(20, self.gravity)
+            return self.letItRain()
+        
+        elif (self.tetrisRainActivated):
+ 
             self.rainDropCount += 1
             if (self.rainDropCount > 29):
                 
@@ -196,18 +229,9 @@ class Field(object):
                 self.rainDropCount = 0
                 self.gravityPausieren()
                 self.gravityWiederStarten()
-            return block
-        
-        elif (self.tetrisRainActivated):
-            block = self.letItRain()
-            self.rainDropCount += 1
-            if (self.rainDropCount > 30):
-                
-                self.tetrisRainActivated = False
-                self.rainDropCount = 0
-                self.gravityPausieren()
-                self.gravityWiederStarten()
-            return block
+                return self.newFallingStone()
+            else:
+                return self.letItRain()
         
         elif(self.thunderActivated):
             this = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
@@ -267,7 +291,7 @@ class Field(object):
         elif not self.Queue:
             return self.generateRandomBlock()
         else:
-            a = self.Queue.pop(0)
+            a = self.Queue.popleft()
             b = self.checkSpawn(a)
             if b:
                 if (a == "cube"):
@@ -461,7 +485,7 @@ class Field(object):
             self.block.part8.unlink()
             self.block.part9.unlink()
             self.block.part10.unlink()
-        elif (self.block.blockType == "bomb"):
+        elif (self.block.blockType == "bomb") or (self.block.blockType == "rain"):
             self.block.part1.unlink()
         else:        
             self.block.part1.unlink()
@@ -484,7 +508,18 @@ class Field(object):
             self.gameMenue.endeSpiel()
         else:
             
-            block = rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
+            return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
             self.gravityPausieren()
-            self.timer = self.player.setInterval(20, self.gravity)
-            return block
+    
+    def processSpecialsQueue(self, QueueString):
+        if (QueueString == "rain"):
+            self.tetrisRainActivated = True
+        elif (QueueString == "bomb"):
+            self.bombActivated = True
+        elif (QueueString == "super"):
+            self.superBlock = True
+        elif (QueueString == "thunder"):
+            self.thunderActivated = True
+        else:
+            pass
+        
