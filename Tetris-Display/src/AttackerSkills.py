@@ -1,5 +1,3 @@
-from libavg import avg
-
 class AttackerSkills(object):
     
     def __init__(self,field,player):
@@ -9,8 +7,7 @@ class AttackerSkills(object):
     def inverseControl(self):
         
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -21,8 +18,7 @@ class AttackerSkills(object):
     def leftFreeze(self):
         
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -33,8 +29,7 @@ class AttackerSkills(object):
     def rightFreeze(self):
         
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -45,8 +40,7 @@ class AttackerSkills(object):
     def rotateFreeze(self):
         
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -57,8 +51,7 @@ class AttackerSkills(object):
     def speedUp(self):
         
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -68,8 +61,7 @@ class AttackerSkills(object):
     
     def makeBlockInvisible(self):
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
@@ -98,8 +90,7 @@ class AttackerSkills(object):
     def noPoints(self):
 
         if (self.field.gameMenue.skillsOnCooldown == True):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.field.gameMenue.rootNode)
-            this.play()
+            pass
         else:
             
             self.field.gameMenue.skillsOnCooldown = True
