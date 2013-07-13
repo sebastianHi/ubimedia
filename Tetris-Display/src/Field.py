@@ -448,8 +448,9 @@ class Field(object):
     
     def clearForNextRound(self):
         self.player.clearInterval(self.timer)
-        
-        if(self.block.blockType == "super"):
+        if (self.block is None):
+            pass
+        elif(self.block.blockType == "super"):
             self.block.part1.unlink()
             self.block.part2.unlink()
             self.block.part3.unlink()

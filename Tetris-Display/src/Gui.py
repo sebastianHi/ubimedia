@@ -51,7 +51,7 @@ class Gui(AVGApp):
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
 #-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCHt, self.lobbyMenu.firstPlayer, self.test)   
+        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 

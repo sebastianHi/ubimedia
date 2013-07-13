@@ -12,13 +12,25 @@ class AttackerSpecials(object):
 
         
     def orderSuperBlock(self):
-        self.field2.superBlock = True
-        self.field1.updateScore(-10) #TODO: genug geld??
         
+        if (self.field1.score - 10 < 0):
+            pass
+        else:
+            self.field1.updateScore(-10)
+            self.field2.superBlock = True
+    
     def orderRainOfBlocks(self):
-        self.field2.tetrisRainActivated = True
-        self.field1.updateScore(-10)
+        
+        if (self.field1.score - 10 < 0):
+            pass
+        else:
+            self.field1.updateScore(-10)
+            self.field2.tetrisRainActivated = True
     
     def orderThunder(self):
-        self.field2.thunderActivated = True
-        self.field1.updateScore(-10)
+        
+        if (self.field1.score - 10 < 0):
+            pass
+        else:
+            self.field1.updateScore(-10)
+            self.field2.thunderActivated = True

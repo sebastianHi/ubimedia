@@ -357,10 +357,12 @@ class GameMenue(object):
                 winner = "Team 1"
             elif(scoreTeam1 < scoreTeam2):
                 winner = "Team 2"
+        self.player.clearInterval(self.SkillActivator)
         self.divNodeGameMenue.active = False
         self.winLooseMenu.buttonNextGame.sensitive = True
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
+
         this = avg.SoundNode(href="victory.mp3", loop=False, volume=1.0, parent = self.rootNode)
         this.play()
     
@@ -462,4 +464,4 @@ class GameMenue(object):
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         if (self.countOfSkillsActivated == 7):
-            avg.Player.clearInterval(self.SkillActivator)
+            self.player.clearInterval(self.SkillActivator)
