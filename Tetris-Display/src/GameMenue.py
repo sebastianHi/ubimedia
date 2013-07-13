@@ -4,6 +4,9 @@ from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
 from OptionMenue import OptionMenue
 import random
+from AttackerSkills import AttackerSkills
+from AttackerSpecials import AttackerSpecials
+from DefenderSkills import DefenderSkills
 
 class GameMenue(object):
     
@@ -142,6 +145,12 @@ class GameMenue(object):
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
+        self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
+        self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
+        self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player)
+        self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
+        self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
         this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
         this.play()
         self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)

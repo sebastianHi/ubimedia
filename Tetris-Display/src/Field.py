@@ -183,7 +183,7 @@ class Field(object):
                 self.gameMenue.endeSpiel() 
     
     
-    def newFallingStone(self):#  <-- rufe stein, der macht den rest. gebe das feld mit.
+    def newFallingStone(self):
         
         if (self.tetrisRainActivated and self.rainDropCount == 0):
             this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
@@ -267,7 +267,7 @@ class Field(object):
         elif not self.Queue:
             return self.generateRandomBlock()
         else:
-            a = self.Queue.pop()
+            a = self.Queue.pop(0)
             b = self.checkSpawn(a)
             if b:
                 if (a == "cube"):

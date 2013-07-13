@@ -13,7 +13,7 @@ class AttackerSpecials(object):
         
     def orderSuperBlock(self):
         self.field2.superBlock = True
-        self.field1.updateScore(-10)
+        self.field1.updateScore(-10) #TODO: genug geld??
         
     def orderRainOfBlocks(self):
         self.field2.tetrisRainActivated = True
