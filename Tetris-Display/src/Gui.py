@@ -29,6 +29,7 @@ class Gui(AVGApp):
         self.keepCountingToStart = True
         self.player= avg.Player.get()
         self.rootNode= self._parentNode
+        self.switchAttacker = True
         
         
         self.mainMenu = MainMenue(self.rootNode)
@@ -267,55 +268,117 @@ class Gui(AVGApp):
 #-----------------------------------------------------Skills aktivieren-------------------------------------------------------------------
     #attacker normal
         elif((befehl == "inverseControl") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.inverseControl()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.inverseControl()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.inverseControl()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.inverseControl()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.inverseControl()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.inverseControl()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
-                
+                    
         elif((befehl == "leftFreeze") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.leftFreeze()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.leftFreeze()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
         elif((befehl == "rightFreeze") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.rightFreeze()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.rightFreeze()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
         elif((befehl == "rotateFreeze") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.rotateFreeze()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.rotateFreeze()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
         elif((befehl == "speedUp") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.speedUp()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.speedUp()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
         elif((befehl == "makeBlockInvisible") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.makeBlockInvisible()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.makeBlockInvisible()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
         elif((befehl == "noPoints") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerNormalField2.noPoints()
-            elif(ip == self.lobbyMenu.playerIP[3]):
-                self.gameMenu.attackerNormalField1.noPoints()
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+            elif(self.modus == 3):
+                if(self.switchAttacker):
+                    self.gameMenu.attackerNormalField2.leftFreeze()
+                    self.switchAttacker = False
+                else:
+                    self.gameMenu.attackerNormalField1.leftFreeze()
+                    self.switchAttacker = True          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
+            
     #attacker spezial
         elif((befehl == "orderSuperBlock") & (self.zustand == 2)):
             if(ip == self.lobbyMenu.playerIP[2]):
