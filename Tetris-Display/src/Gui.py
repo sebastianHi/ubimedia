@@ -219,24 +219,6 @@ class Gui(AVGApp):
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
-        elif((befehl == "spezialBeispiel") & (self.zustand == 2)):
-            print "Spezialfaehigkeit"
-            
-            if(self.lobbyMenu.modus == 3):
-                if(self.dreiSpielerSkillSwitch):
-                    print "fuehre hier den aufruf fuer feld 1 auf"
-                    self.dreiSpielerSkillSwitch = False
-                else:
-                    print "fuehre hier den aufruf fuer feld 2 auf"
-                    self.dreiSpielerSkillSwitch = True
-            
-            
-            if(ip == self.lobbyMenu.playerIP[2]):
-                print "fuehre hier den aufruf fuer feld 2 auf"
-            elif((ip == self.lobbyMenu.playerIP[3])& (self.zustand ==2)):
-                print "fuehre hier den aufruf fuer feld 1 auf"
-            else:
-                raise SyntaxError("Falscher Spieler wollte Spezial ausfuehren!")
 #-----------------------Rdy Signal fuer Lobby------------------------------
         elif((befehl == "rdy") & (self.zustand == 1)):
             self.lobbyMenu.playerGotRdy(ip)
@@ -381,24 +363,38 @@ class Gui(AVGApp):
             
     #attacker spezial
         elif((befehl == "orderSuperBlock") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerSpezialonField2.orderSuperBlock()
-            elif(ip == self.lobbyMenu.playerIP[3]):
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerSpezialonField2.orderSuperBlock()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerSpezialonField1.orderSuperBlock()
+            elif(self.modus == 3):
                 self.gameMenu.attackerSpezialonField1.orderSuperBlock()
+                self.gameMenu.attackerSpezialonField2.orderSuperBlock()
             else:
                 raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
+            
         elif((befehl == "orderRainOfBlocks") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerSpezialonField2.orderRainOfBlocks()
-            elif(ip == self.lobbyMenu.playerIP[3]):
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerSpezialonField2.orderRainOfBlocks()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerSpezialonField1.orderRainOfBlocks()
+            elif(self.modus == 3):
                 self.gameMenu.attackerSpezialonField1.orderRainOfBlocks()
+                self.gameMenu.attackerSpezialonField2.orderRainOfBlocks()
             else:
                 raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
+            
         elif((befehl == "orderThunder") & (self.zustand == 2)):
-            if(ip == self.lobbyMenu.playerIP[2]):
-                self.gameMenu.attackerSpezialonField2.orderThunder()
-            elif(ip == self.lobbyMenu.playerIP[3]):
+            if(self.modus == 4):
+                if(ip == self.lobbyMenu.playerIP[2]):
+                    self.gameMenu.attackerSpezialonField2.orderThunder()
+                elif(ip == self.lobbyMenu.playerIP[3]):
+                    self.gameMenu.attackerSpezialonField1.orderThunder()
+            elif(self.modus == 3):
                 self.gameMenu.attackerSpezialonField1.orderThunder()
+                self.gameMenu.attackerSpezialonField2.orderThunder()
             else:
                 raise SyntaxError(" Falscher spieler wollte spezial attacker skill ausfuehren")
     #defender
