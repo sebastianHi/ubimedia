@@ -485,10 +485,9 @@ class Field(object):
     def gravityWiederStarten(self):
         self.timer = self.player.setInterval(self.speed, self.gravity)
 
-    def letItRain(self): #returns a rainDrop at a random location at the top or ends the game
+    def letItRain(self, RandomNumber): #returns a rainDrop at a random location at the top or ends the game
 
-        self.randomNumber = random.randint(0,13)
-        if (self.matrix[self.randomNumber][0]):
+        if (self.matrix[RandomNumber][0]):
             self.gameMenue.endeSpiel()
         else:
             
@@ -496,24 +495,38 @@ class Field(object):
     
     def letItRainScript(self):
         
-        if (self.tetrisRainActivated and self.rainDropCount == 0):
-            self.block = self.letItRain()
-            this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
-            self.rainDropCount += 1
-            self.timer1 = self.player.setInterval(20, self.gravity)
+        b = True
+        for i in range (14):
+            b = b and self.matrix[i][0]
+        if b:
+            self.gameMenue.endeSpiel()
+        
+        elif (self.tetrisRainActivated and self.rainDropCount == 0):
+            self.randomNumber = random.randint(0,13)
+            if (self.matrix[self.randomNumber][0]):
+                self.letItRainScript()
+            else:
+                self.block = self.letItRain(self.randomNumber)
+                this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+                this.play()
+                self.rainDropCount += 1
+                self.timer1 = self.player.setInterval(20, self.gravity)
         
         elif (self.tetrisRainActivated):
             
-            self.rainDropCount += 1
-            if (self.rainDropCount > 29):
-                
-                self.tetrisRainActivated = False
-                self.rainDropCount = 0
-                self.player.clearInterval(self.timer1)
-                self.block = self.newFallingStone()
+            self.randomNumber = random.randint(0,13)
+            if (self.matrix[self.randomNumber][0]):
+                self.letItRainScript()
             else:
-                self.block = self.letItRain()
+                self.rainDropCount += 1
+                if (self.rainDropCount > 29):
+                    
+                    self.tetrisRainActivated = False
+                    self.rainDropCount = 0
+                    self.player.clearInterval(self.timer1)
+                    self.block = self.newFallingStone()
+                else:
+                    self.block = self.letItRain(self.randomNumber)
         else:
             pass
 

@@ -15,7 +15,19 @@ class rainDropBlock(object):
 
         self.blockType = "rain"
         self.currPos1 = CurrentPosition
-
+    
+    def moveBlockLeft(self):
+        pass
+    
+    def moveBlockRight(self):
+        pass
+    
+    def rotateLeft(self):
+        pass
+    
+    def rotateRight(self):
+        pass
+ 
     def hitGround(self): # gibt True zurueck, wenn es den "Boden" bzw ein Hindernis beruehrt, sonst False
         if(self.currPos1[1] + 1 > 18):
             return True

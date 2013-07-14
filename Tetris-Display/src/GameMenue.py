@@ -329,6 +329,8 @@ class GameMenue(object):
     def rundenWechsel(self):
         self.field1.clearForNextRound()
         #TODO: self.field2.clearForNextRound()
+        self.resetField(self.field1)
+        #self.resetField(self.field2)
         self.round += 1
         self.roundNumber.text = str(self.round)
         self.speedNumber.text = str(self.round)
@@ -465,3 +467,17 @@ class GameMenue(object):
                 this.play()
         if (self.countOfSkillsActivated == 7):
             self.player.clearInterval(self.SkillActivator)
+
+    def resetField(self, Field):
+        
+        Field.inverseSteuerung = False
+        Field.freezeLeft = False
+        Field.freezeRight = False
+        Field.freezeRotate = False
+        Field.speedToGround = False
+        Field.superBlock = False
+        Field.bombActivated = False
+        Field.thunderActivated = False
+        Field.tetrisRainActivated = False
+        Field.noMoneyForYou = False
+        Field.rainDropCount = 0
