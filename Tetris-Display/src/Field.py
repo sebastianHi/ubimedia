@@ -37,12 +37,12 @@ class Field(object):
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
         self.initBlock();
         self.timer = self.player.setInterval(self.speed, self.gravity)
-
-
              
     def initBlock(self):
-    
-        if (self.thunderActivated or self.tetrisRainActivated or self.superBlock or self.bombActivated):
+
+        if (self.tetrisRainActivated):
+            self.letItRainScript()
+        elif (self.thunderActivated or self.superBlock or self.bombActivated):
             self.block = self.newFallingStone()
         else: 
             if (not self.specialsQueue):
@@ -199,7 +199,7 @@ class Field(object):
             return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
         
         elif (RandomNumber == 9):
-            #self.specialsQueue.append("rain")
+            self.specialsQueue.append("rain")
             return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
         
         elif (RandomNumber == 10):
@@ -212,31 +212,7 @@ class Field(object):
     
     def newFallingStone(self):
         
-        if (self.tetrisRainActivated and self.rainDropCount == 0):
-            this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
-            self.rainDropCount += 1
-            print self.rainDropCount
-            self.player.clearInterval(self.timer)
-            self.timer1 = self.player.setInterval(20, self.gravity)
-            return self.letItRain()
-        
-        elif (self.tetrisRainActivated):
-            
-            self.rainDropCount += 1
-            print self.rainDropCount
-            if (self.rainDropCount > 29):
-                
-                self.tetrisRainActivated = False
-                self.rainDropCount = 0
-                print self.rainDropCount
-                self.player.clearInterval(self.timer1)
-                self.player.setInterval(self.speed, self.gravity)
-                return self.newFallingStone()
-            else:
-                return self.letItRain()
-        
-        elif(self.thunderActivated):
+        if(self.thunderActivated):
             this = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
             randomNumber = random.randint(0,13)
@@ -509,7 +485,7 @@ class Field(object):
     def gravityWiederStarten(self):
         self.timer = self.player.setInterval(self.speed, self.gravity)
 
-    def letItRain(self):
+    def letItRain(self): #returns a rainDrop at a random location at the top or ends the game
 
         self.randomNumber = random.randint(0,13)
         if (self.matrix[self.randomNumber][0]):
@@ -517,6 +493,30 @@ class Field(object):
         else:
             
             return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
+    
+    def letItRainScript(self):
+        
+        if (self.tetrisRainActivated and self.rainDropCount == 0):
+            self.block = self.letItRain()
+            this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
+            this.play()
+            self.rainDropCount += 1
+            self.timer1 = self.player.setInterval(20, self.gravity)
+        
+        elif (self.tetrisRainActivated):
+            
+            self.rainDropCount += 1
+            if (self.rainDropCount > 29):
+                
+                self.tetrisRainActivated = False
+                self.rainDropCount = 0
+                self.player.clearInterval(self.timer1)
+                self.block = self.newFallingStone()
+            else:
+                self.block = self.letItRain()
+        else:
+            pass
+
     
     def processSpecialsQueue(self, QueueString):
         if (QueueString == "rain"):
