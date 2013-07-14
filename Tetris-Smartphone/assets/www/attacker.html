@@ -2,7 +2,6 @@
 <html> 
 <head> 
 	<title>Attacker!</title> 
-
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
     <style>
 	html, body { padding: 0; margin: 0; }
@@ -27,43 +26,43 @@
     		<h1>Game On!</h1>
 		</div>
 		<div data-role="content"> 
-			
+			<script>setInterval("checkLength()", 100); console.log("Test.");</script>
             <div class="ui-grid-d">
 	           <div class="ui-block-a">
-                   <a href="#passive" data-role="button" data-inline="true" data-mini="true">Passive Skills</a>
+                   <a href="#passive" data-role="button" data-inline="true" data-mini="true">Normal Skills</a>
                 </div>
 	           
                 <div class="ui-block-b" align="left" data-inline="true">Left Stones
                     <br>
-                    <a href="#" data-role="button" data-inline="true" onClick="addI();">I-Shape</a>
+                    <a href="#" data-role="button" data-inline="true" onClick="addI();" id="bt1"><img src="img/I-Shape.png" border="0"/></a>
                     <br>
-                   <a href="#" data-role="button" data-inline="true" onClick="addCircle();">Circle</a>
+                   <a href="#" data-role="button" data-inline="true" onClick="addCircle();" id="bt2"><img src="img/Circle.png" border="0"/></a>
                     <br>
-                    <a href="#" data-role="button" data-inline="true" onClick="addL();">L-Shape</a>
+                    <a href="#" data-role="button" data-inline="true" onClick="addL();" id="bt3"><img src="img/L-Shape.png" border="0"/></a>
                     <br>
-                   <a href="#" data-role="button" data-inline="true" onClick="addInvL();">Inv-L-Shape</a>
+                   <a href="#" data-role="button" data-inline="true" onClick="addInvL();" id="bt4"><img src="img/Inv-L-Shape.png" border="0"/></a>
                 </div>
 	          
                 <div class="ui-block-c" align="center">
                     <ul data-role="listview" id="DALIST">
                     </ul>
                 <div class="ui-grid-solo">
-	               <div class="ui-block-a"><p></p>
+	               <div class="ui-block-a"><p>NEXT</p>
                     <div id="nextblock"></div></div>
                 </div>
                 </div>
               
                 <div class="ui-block-d" align="right">Right Stones
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addS();">S-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addS();" id="bt5"><img src="img/S-Shape.png" border="0"/></a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addZ();">Z-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addZ();" id="bt6"><img src="img/Z-Shape.png" border="0"/></a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addT();">T-Shape</a>
+                 <a href="#" data-role="button" data-inline="true" onClick="addT();" id="bt7"><img src="img/T-Shape.png" border="0"/></a>
                 </div>
                
                 <div class="ui-block-e" align="right">
-                    <a href="#active" data-role="button" data-inline="true" data-mini="true">Active Skills</a>
+                    <a href="#active" data-role="button" data-inline="true" data-mini="true">Special Skills</a>
                 </div>
             </div><!-- /grid-b -->
 			
