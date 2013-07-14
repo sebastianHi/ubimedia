@@ -35,8 +35,9 @@ class Field(object):
         # Matrix hat die Form Matrix[0-13][0-18] und ist mit False initialisiert
         self.matrix = [[False for i in range(19)] for j in range(14)] #@UnusedVariable
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
-        self.timer = self.player.setInterval(self.speed, self.gravity)
         self.initBlock();
+        self.timer = self.player.setInterval(self.speed, self.gravity)
+
 
              
     def initBlock(self):
@@ -46,7 +47,6 @@ class Field(object):
         else: 
             if (not self.specialsQueue):
                 self.block = self.newFallingStone()
-                self.tetrisRainActivated = True
             else:
                 string = self.specialsQueue.popleft()
                 self.processSpecialsQueue(string)
@@ -195,19 +195,19 @@ class Field(object):
             else:
                 self.gameMenue.endeSpiel() 
         elif (RandomNumber == 8):
-            self.bombActivated = True
+            self.specialsQueue.append("bomb")
             return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
         
         elif (RandomNumber == 9):
-            self.tetrisRainActivated = True
+            #self.specialsQueue.append("rain")
             return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
         
         elif (RandomNumber == 10):
-            self.thunderActivated = True
+            #self.specialsQueue.append("thunder")
             return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
         
         else:
-            self.superBlock = True
+            #self.specialsQueue.append("super")
             return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
     
     def newFallingStone(self):
@@ -216,19 +216,22 @@ class Field(object):
             this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
             this.play()
             self.rainDropCount += 1
-            self.gravityPausieren()
-            self.timer = self.player.setInterval(20, self.gravity)
+            print self.rainDropCount
+            self.player.clearInterval(self.timer)
+            self.timer1 = self.player.setInterval(20, self.gravity)
             return self.letItRain()
         
         elif (self.tetrisRainActivated):
- 
+            
             self.rainDropCount += 1
+            print self.rainDropCount
             if (self.rainDropCount > 29):
                 
                 self.tetrisRainActivated = False
                 self.rainDropCount = 0
-                self.gravityPausieren()
-                self.gravityWiederStarten()
+                print self.rainDropCount
+                self.player.clearInterval(self.timer1)
+                self.player.setInterval(self.speed, self.gravity)
                 return self.newFallingStone()
             else:
                 return self.letItRain()
@@ -370,20 +373,24 @@ class Field(object):
         if (self.block is None):
             pass
         elif (self.block.blockType == "bomb"):
+            
             if (self.block.hitGround()):
                 self.block.explode()
             else:
                 self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] + 1)
                 self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
+                
         elif (self.block.blockType == "super"):
+            
             if (self.block.hitGround()):
                 self.block.steadyBlockSuper()
                 self.superBlock = False
-                self.blockHitGround()
-               
+                self.blockHitGround()               
             else:
                 self.block.setBlock()
+                
         elif (self.block.blockType == "rain"):
+            
             if (self.block.hitGround()):
                 self.matrixSteadyRectNodes[self.block.currPos1[0]][self.block.currPos1[1]] = self.block.part1
                 self.matrix[self.block.currPos1[0]][self.block.currPos1[1]] = True
@@ -393,7 +400,8 @@ class Field(object):
                 self.block.currPos1 = (self.block.currPos1[0] ,self.block.currPos1[1] + 1)
                 self.block.part1.pos = (self.block.part1.pos[0],self.block.part1.pos[1] + self.gameMenue.blocksize)
         #test
-        elif(self.block.hitGround()):     
+        elif(self.block.hitGround()):
+                 
             self.steadyBlock()
             self.blockHitGround()
         else:
@@ -509,7 +517,6 @@ class Field(object):
         else:
             
             return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
-            self.gravityPausieren()
     
     def processSpecialsQueue(self, QueueString):
         if (QueueString == "rain"):

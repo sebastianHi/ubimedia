@@ -13,24 +13,24 @@ class AttackerSpecials(object):
         
     def orderSuperBlock(self):
         
-        if (self.field1.score - 10 < 0):
+        if (self.field1.score - 20 < 0):
             pass
         else:
-            self.field1.updateScore(-10)
+            self.field1.updateScore(-20)
             self.field2.specialsQueue.append("super")
     
     def orderRainOfBlocks(self):
         
-        if (self.field1.score - 10 < 0):
+        if (self.field1.score - 40 < 0):
             pass
         else:
-            self.field1.updateScore(-20)
+            self.field1.updateScore(-40)
             self.field2.specialsQueue.append("rain")
     
     def orderThunder(self):
         
-        if (self.field1.score - 10 < 0):
+        if (self.field1.score - 32 < 0):
             pass
         else:
-            self.field1.updateScore(-15)
+            self.field1.updateScore(-32)
             self.field2.specialsQueue.append("thunder")

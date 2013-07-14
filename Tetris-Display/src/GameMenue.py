@@ -33,7 +33,7 @@ class GameMenue(object):
         self.tetrishoehe = self.blocksize * 19
         self.round = 1
         self.rundenDauer = 180
-        self.speed = [750,650,600,500,400]
+        self.speed = [750,700,650,600,550]
         
         self.countOfSkillsActivated = 0
         self.inverseControlActive = False
