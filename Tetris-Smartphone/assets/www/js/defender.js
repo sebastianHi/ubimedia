@@ -55,3 +55,19 @@
     function onError() {
         alert('onError!');
     }
+
+function skipBlock(){
+    send(ip+"###skipBlock");
+};
+
+function slowPace(){
+    send(ip+"###slowPace");
+};
+
+function bomb(){
+    send(ip+"###orderBomb");
+};
+
+function reduceTime(){
+    send(ip+"###reduceTime");
+};

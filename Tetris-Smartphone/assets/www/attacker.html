@@ -26,7 +26,7 @@
     		<h1>Game On!</h1>
 		</div>
 		<div data-role="content"> 
-			<script>setInterval("checkLength()", 100); console.log("Test.");</script>
+			<script>setInterval("checkLength()", 100);</script>
             <div class="ui-grid-d">
 	           <div class="ui-block-a">
                    <a href="#passive" data-role="button" data-inline="true" data-mini="true">Normal Skills</a>
@@ -34,13 +34,13 @@
 	           
                 <div class="ui-block-b" align="left" data-inline="true">Left Stones
                     <br>
-                    <a href="#" data-role="button" data-inline="true" onClick="addI();" id="bt1"><img src="img/I-Shape.png" border="0"/></a>
+                    <a href="#" data-role="button" data-inline="true" ontouchstart="addI();" id="bt1"><img src="img/I-Shape.png" border="0"/></a>
                     <br>
-                   <a href="#" data-role="button" data-inline="true" onClick="addCircle();" id="bt2"><img src="img/Circle.png" border="0"/></a>
+                   <a href="#" data-role="button" data-inline="true" ontouchstart="addCircle();" id="bt2"><img src="img/Circle.png" border="0"/></a>
                     <br>
-                    <a href="#" data-role="button" data-inline="true" onClick="addL();" id="bt3"><img src="img/L-Shape.png" border="0"/></a>
+                    <a href="#" data-role="button" data-inline="true" ontouchstart="addL();" id="bt3"><img src="img/L-Shape.png" border="0"/></a>
                     <br>
-                   <a href="#" data-role="button" data-inline="true" onClick="addInvL();" id="bt4"><img src="img/Inv-L-Shape.png" border="0"/></a>
+                   <a href="#" data-role="button" data-inline="true" ontouchstart="addInvL();" id="bt4"><img src="img/Inv-L-Shape.png" border="0"/></a>
                 </div>
 	          
                 <div class="ui-block-c" align="center">
@@ -54,11 +54,11 @@
               
                 <div class="ui-block-d" align="right">Right Stones
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addS();" id="bt5"><img src="img/S-Shape.png" border="0"/></a>
+                 <a href="#" data-role="button" data-inline="true" ontouchstart="addS();" id="bt5"><img src="img/S-Shape.png" border="0"/></a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addZ();" id="bt6"><img src="img/Z-Shape.png" border="0"/></a>
+                 <a href="#" data-role="button" data-inline="true" ontouchstart="addZ();" id="bt6"><img src="img/Z-Shape.png" border="0"/></a>
                     <br>
-                 <a href="#" data-role="button" data-inline="true" onClick="addT();" id="bt7"><img src="img/T-Shape.png" border="0"/></a>
+                 <a href="#" data-role="button" data-inline="true" ontouchstart="addT();" id="bt7"><img src="img/T-Shape.png" border="0"/></a>
                 </div>
                
                 <div class="ui-block-e" align="right">
@@ -72,7 +72,14 @@
 		<div data-role="panel" id="passive" data-position="left" data-display="reveal" data-dismissible="true" data-theme="a">
 					
 			<div class="panel-content">
-				<h3>Passive Skills</h3>
+				<h3>Normal Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="inverseControl();">Inverse Control</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="freezeLeft();">Freeze Left</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-r" data-inline="true" ontouchstart="freezeRight();">Freeze Right</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="refresh" data-inline="true" ontouchstart="freezeRotate();">Freeze Rotate</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="gear" data-inline="true" ontouchstart="speedUp();">Speed Up</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="search" data-inline="true" ontouchstart="invisBlock();">Invisible Block</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="delete" data-inline="true" ontouchstart="noPoints();">No Points</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 				
@@ -82,7 +89,10 @@
 		<div data-role="panel" id="active" data-position="right" data-display="reveal" data-dismissible="true" data-theme="b">
 					
 			<div class="panel-content">
-				<h3>Active Skills</h3>
+				<h3>Special Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="grid" data-inline="true" ontouchstart="superBlock();">Super Block</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-d" data-inline="true" ontouchstart="rainOfBlocks();">Rain of Blocks</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="alert" data-inline="true" ontouchstart="callThunder();">THUNDER</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 	

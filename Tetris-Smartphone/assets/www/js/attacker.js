@@ -93,3 +93,43 @@ if(queue.length > 4){
     $('#bt7').removeClass('ui-disabled');
 }
 };
+
+function inverseControl(){
+    send(ip+"###inverseControl");
+};
+
+function leftFreeze(){
+    send(ip+"###freezeRight");
+};
+
+function rightFreeze(){
+    send(ip+"###freezeLeft");
+};
+
+function rotateFreeze(){
+    send(ip+"###freezeRotate");
+};
+
+function speedUp(){
+    send(ip+"###speedUp");
+};
+
+function invisBlock(){
+    send(ip+"###makeBlockInvisible");
+};
+
+function noPoints(){
+    send(ip+"###noPoints");
+};
+
+function superBlock(){
+    send(ip+"###orderSuperBlock");
+};
+
+function rainOfBlocks(){
+    send(ip+"###orderRainOfBlocks");
+};
+
+function callThunder(){
+    send(ip+"###orderThunder");
+};

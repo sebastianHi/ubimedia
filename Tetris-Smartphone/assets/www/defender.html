@@ -27,11 +27,11 @@
 		    <div style="clear: both;"></div>
 	   </div><br>
            <div class="ui-grid-b" id="middle">
-               <div class="ui-block-a" align="left"><br><br><br><a class="alignleft" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" data-inline="true" onClick="moveLeft();">Move Left</a></div>
+               <div class="ui-block-a" align="left"><br><br><br><a class="alignleft" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" data-inline="true" ontouchstart="moveLeft();">Move Left</a></div>
 	           <div class="ui-block-b" align="center"><p>Current Block:</p><br>
                <p id="CurrBlock">Picture of Block here...</p><br>
                 <p>Move Phone to Rotate</p></div>
-	           <div class="ui-block-c" align="right"><br><br><br><a class="alignright" data-icon="arrow-r" href="#" data-role="button" data-inline="true" data-iconpos="top" onClick="moveRight();">Move Right</a></div>
+	           <div class="ui-block-c" align="right"><br><br><br><a class="alignright" data-icon="arrow-r" href="#" data-role="button" data-inline="true" data-iconpos="top" ontouchstart="moveRight();">Move Right</a></div>
         <div style="clear: both;"></div>
 		      </div>
         
@@ -41,7 +41,9 @@
 		<div data-role="panel" id="passive" data-position="left" data-display="reveal" data-dismissible="true" data-theme="a">
 					
 			<div class="panel-content">
-				<h3>Passive Skills</h3>
+				<h3>Normal Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="forward" data-inline="true" ontouchstart="skipBlock();">Skip Block</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="minus" data-inline="true" ontouchstart="slowPace();">Slow Pace</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 				
@@ -51,7 +53,9 @@
 		<div data-role="panel" id="active" data-position="right" data-display="reveal" data-dismissible="true" data-theme="b">
 					
 			<div class="panel-content">
-				<h3>Active Skills</h3>
+				<h3>Active Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="delete" data-inline="true" ontouchstart="bomb();">Call Bomb</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="minus" data-inline="true" ontouchstart="reduceTime();">Reduce Time</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 	
