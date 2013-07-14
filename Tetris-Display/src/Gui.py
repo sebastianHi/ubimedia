@@ -49,9 +49,10 @@ class Gui(AVGApp):
         
     def initLobby(self):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
+        print self.lobbyMenu
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
-#-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------ZUM TESTEN --------TODO:------------------------------------------------------------------------------------------------------------------------
         self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
@@ -68,7 +69,7 @@ class Gui(AVGApp):
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
         self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMainAfterGameFinished)
-        #TODO:  + rollenzuweisung
+        #rollenzuweisung
         if(self.lobbyMenu.modus == 4 ):
             ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
             ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")

@@ -257,7 +257,7 @@ class LobbyMenue(object):
             
      
     def swapPlayer(self,event):
-#TODO: hier muss man drag und drop implementieren mit deren hilfe man rectnode tauschen kann
+#TODO: hier muss man drag und drop implementieren mit deren hilfe man den text der rectnodes tauschen kann
         pass
         
     def updateJoinedPlayerNumber(self, ip, name):

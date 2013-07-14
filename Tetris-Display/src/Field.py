@@ -5,7 +5,8 @@ from libavg import avg
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, id):
+        self.id = id
         self.score = 0
         self.gameMenue = gameMenue
         if(xWertLinksOben <= (self.gameMenue.divNodeGameMenue.size[0]/2)):
@@ -133,16 +134,6 @@ class Field(object):
             self.matrixSteadyRectNodes[s][0] = None
         this = avg.SoundNode(href="cash.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
         this.play()
-#         for y in range(0,19):
-#             s = ""
-#             for x in range(0,14):
-#                 if(self.matrix[x][y]):
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
-#                 else:
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
-#             print s
-#             print ""
-#             print ""
                    
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,11)
@@ -152,7 +143,10 @@ class Field(object):
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")

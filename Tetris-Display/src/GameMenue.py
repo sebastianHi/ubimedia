@@ -2,6 +2,7 @@ from libavg import avg
 from Field import Field
 from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
+from GrafikChanceMenue import GrafikChanceMenue
 from OptionMenue import OptionMenue
 import random
 from AttackerSkills import AttackerSkills
@@ -19,6 +20,7 @@ class GameMenue(object):
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.winLooseMenu = WinLooseMenue(self.rootNode)
         self.optionMenu = OptionMenue(self.rootNode)
+        self.grafikMenu = GrafikChanceMenue(self.rootNode, self.player)
         self.menueLinkerXwert  = int(self.divNodeGameMenue.size[0]/2- self.divNodeGameMenue.size[0]*0.04)
         self.menueRechterXwert = int(self.divNodeGameMenue.size[0]/2+ self.divNodeGameMenue.size[0]*0.04)
         self.rahmenbreite = int(self.divNodeGameMenue.size[0]*0.025)
@@ -141,6 +143,21 @@ class GameMenue(object):
         #Optionevents
         self.background.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.background, self.startOptionMenu)
         self.optionMenu.buttonResume.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonResume, self.stopOptionMenue)
+        self.optionMenu.buttonGrafik.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonGrafik, self.clickOnOptionGrafikButtom)
+        self.optionMenu.buttonFinish.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonFinish, self.finishEarly)
+        self.optionMenu.buttonSound.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonSound, self.turnSoundOff)
+        #grafikchancebottoms
+        self.grafikMenu.buttonBreiteM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteM, self.clickBreiteM)
+        self.grafikMenu.buttonBreiteMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteMM, self.clickBreiteMM)
+        self.grafikMenu.buttonBreitePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreitePP, self.clickBreitePP)
+        self.grafikMenu.buttonBreiteP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteP, self.clickBreiteP)
+        
+        self.grafikMenu.buttonLaengeM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeM, self.clickLaengeM)
+        self.grafikMenu.buttonLaengeMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeMM, self.clickLaengeMM)
+        self.grafikMenu.buttonLaengeP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeP, self.clickLaengeP)
+        self.grafikMenu.buttonLaengePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengePP, self.clickLaengePP)
+        
+        self.grafikMenu.buttonBack.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBack, self.clickOnBackButtomGrafikChanceMenue)
 #fuer Matrix feld initialisierung 
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
@@ -158,8 +175,8 @@ class GameMenue(object):
         #TODO: loeschbarmacen:
         self.field2.chanceSpeed(200000);
         
-        print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
-        print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
+        #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
+        #print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
 #buttoms werden initialisiert
         
 #-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
@@ -236,41 +253,7 @@ class GameMenue(object):
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-    # Ueberpruefung der FeldPunkte
-#         avg.RectNode(pos=(self.xstartFeld1, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld1, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld1, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld1, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld2, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld2, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld2, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld2, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         
-        
-        
-        
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         
     def berechneLinkesXUntenYFeld1(self,rechteKante, untereSchranke, obereSchranke):
         linkesX = int(self.divNodeGameMenue.size[0] * 0.03) 
@@ -311,7 +294,7 @@ class GameMenue(object):
                 self.timerLimit.text = str(self.rundenDauer)
         
                 self.field1.chanceSpeed(self.speed[self.round-1])
-                #self.field2.chanceSpeed(self.speed[self.round-1])
+                #TODO:self.field2.chanceSpeed(self.speed[self.round-1])
                 self.round += 1
                 if(self.round > 5):
                     self.field1.clearForNextRound()
@@ -324,8 +307,7 @@ class GameMenue(object):
             else:
                 count -= 1
                 self.timerLimit.text = str(count)
-    
-#TODO: eventuell Spiel beenden lassen      
+         
     def rundenWechsel(self):
         self.field1.clearForNextRound()
         #TODO: self.field2.clearForNextRound()
@@ -342,8 +324,8 @@ class GameMenue(object):
         
         self.field1.speed = self.speed[(self.round -1)]
         self.field1.timer = self.field1.player.setInterval(self.field1.speed, self.field1.gravity)
-        #self.field2.speed = self.speed[(self.round -1)]
-        #self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
+        #TODO:self.field2.speed = self.speed[(self.round -1)]
+        #TODO:self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
         self.field1.initBlock()
 #TODO:         self.field2.initBlock()
 
@@ -356,11 +338,12 @@ class GameMenue(object):
             if(scoreTeam1 == scoreTeam2):
                 winner = "Unentschieden"
             elif(scoreTeam1 > scoreTeam2):
-                winner = "Team 1"
+                winner = "Team 1 gewinnt"
             elif(scoreTeam1 < scoreTeam2):
-                winner = "Team 2"
+                winner = "Team 2 gewinnt"
         self.player.clearInterval(self.SkillActivator)
         self.divNodeGameMenue.active = False
+        self.optionMenu.divNodeOptionMenue.active = False
         self.winLooseMenu.buttonNextGame.sensitive = True
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
@@ -405,6 +388,59 @@ class GameMenue(object):
         self.field1.gravityWiederStarten()
         self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
         
+        
+    def finishEarly(self, event):
+        self.field1.score = 0
+        self.field2.score = 0
+        self.endeSpiel()
+        
+    def turnSoundOff(self, event):
+        text = self.optionMenu.buttonSound.getTextNode().text
+        if(text == "Sound:  An"):
+            self.optionMenu.buttonSound.updateTextNode("Sound:  Aus")
+        else:
+            self.optionMenu.buttonSound.updateTextNode("Sound:  An")
+    #TODO: hier alle sound nodes auf off stellen
+    
+    def clickOnOptionGrafikButtom(self,event):
+        self.optionMenu.divNodeOptionMenue.active = False
+        self.grafikMenu.divNodeGrafikMenue.active = True
+        
+    def clickOnBackButtomGrafikChanceMenue(self, event):
+        self.grafikMenu.divNodeGrafikMenue.active = False
+        self.optionMenu.divNodeOptionMenue.active = True
+            
+    def clickBreiteP(self,event):
+        #TODO: Breite +
+        pass
+    
+    def clickBreitePP(self,event):
+        #TODO: Breite + +
+        pass
+    
+    def clickBreiteM(self,event):
+        #TODO: Breite -
+        pass
+    
+    def clickBreiteMM(self,event):
+        #TODO: Breite --
+        pass
+    
+    def clickLaengeP(self,event):
+        #TODO: Laenge +
+        pass
+    
+    def clickLaengePP(self,event):
+        #TODO: Laenge + +
+        pass
+    
+    def clickLaengeM(self,event):
+        #TODO: Laenge -
+        pass
+    
+    def clickLaengeMM(self,event):
+        #TODO: Laenge --
+        pass
         
     def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
 

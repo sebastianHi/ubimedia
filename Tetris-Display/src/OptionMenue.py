@@ -45,8 +45,7 @@ class OptionMenue(object):
                                    color = "0404B4",
                                    size = avg.Point2D(self.divNodeOptionMenue.size[0]*0.15,self.divNodeOptionMenue.size[1]*0.10))
         self.buttonGrafik.addTextGameTypeAndMain("Grafik")
-        
-        #TODO:  4 buttoms fuer grafik veraendern
+   
         
         self.buttonSound = TextRectNode(parent = self.divNodeOptionMenue, 
                                    pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.72),
@@ -62,7 +61,7 @@ class OptionMenue(object):
                                    fillopacity=1,
                                    color = "0404B4",
                                    size = avg.Point2D(self.divNodeOptionMenue.size[0]*0.15,self.divNodeOptionMenue.size[1]*0.10))
-        self.buttonFinish.addTextGameTypeAndMain("Beende")
+        self.buttonFinish.addTextGameTypeAndMain("Beenden")
     
     
 
