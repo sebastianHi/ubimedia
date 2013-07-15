@@ -11,7 +11,8 @@ from DefenderSkills import DefenderSkills
 
 class GameMenue(object):
     
-    def __init__(self, parent, player, modus):
+    def __init__(self, parent, player, modus, gui):
+        self.gui = gui
         self.modus = modus  # 0 = classic    1 = equal
         self.player = player
         self.rootNode = parent
@@ -44,7 +45,7 @@ class GameMenue(object):
         self.speedUpActive = False
         self.makeBlockInvisibleActive = False
         self.noPointsActive = False
-        self.skillsOnCooldown = False        
+       
         
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
@@ -159,8 +160,8 @@ class GameMenue(object):
         self.grafikMenu.buttonBack.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBack, self.clickOnBackButtomGrafikChanceMenue)
 #fuer Matrix feld initialisierung 
         self.yUnten =  self.yOben + self.tetrishoehe
-        self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self,1)
-        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self,2)
+        self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self,1, self.gui)
+        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self,2, self.gui)
         self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
         self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
         self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
@@ -401,6 +402,7 @@ class GameMenue(object):
             self.optionMenu.buttonSound.updateTextNode("Sound:  An")
     #TODO: hier alle sound nodes auf off stellen
     
+    
     def clickOnOptionGrafikButtom(self,event):
         self.optionMenu.divNodeOptionMenue.active = False
         self.grafikMenu.divNodeGrafikMenue.active = True
@@ -444,12 +446,14 @@ class GameMenue(object):
     def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
 
         randomNumber = random.randint(1,7)
+        freigeschalteterBlock = ""
         if (randomNumber == 1):
             if (self.rightFreezeActive == True):
                 self.activateOneSkill()
             else:
                 self.rightFreezeActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockRightFreeze"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         elif (randomNumber == 2):
@@ -458,6 +462,7 @@ class GameMenue(object):
             else:
                 self.leftFreezeActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockLeftFreeze"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         elif (randomNumber == 3):
@@ -466,6 +471,7 @@ class GameMenue(object):
             else:
                 self.rotateFreezeActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockRotateFreeze"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         elif (randomNumber == 4):
@@ -474,6 +480,7 @@ class GameMenue(object):
             else:
                 self.noPointsActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockNoPoints"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         elif (randomNumber == 5):
@@ -482,6 +489,7 @@ class GameMenue(object):
             else:
                 self.inverseControlActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockInverseControl"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         elif (randomNumber == 6):
@@ -490,6 +498,7 @@ class GameMenue(object):
             else:
                 self.makeBlockInvisibleActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockBlockInvisible"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         else:
@@ -498,11 +507,22 @@ class GameMenue(object):
             else:
                 self.speedUpActive = True
                 self.countOfSkillsActivated += 1
+                freigeschalteterBlock = "unlockSpeedUp"
                 this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
                 this.play()
         if (self.countOfSkillsActivated == 7):
             self.player.clearInterval(self.SkillActivator)
-
+        #sende
+        if(freigeschalteterBlock != ""):
+            if(self.gui.lobbyMenu.modus == 3):
+                ip = self.gui.lobbyMenue.playerID[2]
+                self.gui.sendMsgToAll(ip+ "###"+freigeschalteterBlock)
+            elif(self.gui.lobbyMenu.modus == 4):
+                ip1 = self.gui.lobbyMenue.playerID[2]
+                ip2 = self.gui.lobbyMenue.playerID[3]
+                self.gui.sendMsgToAll(ip1+"###"+freigeschalteterBlock)
+                self.gui.sendMsgToAll(ip2+"###"+freigeschalteterBlock)
+        
     def resetField(self, Field):
         
         Field.inverseSteuerung = False

@@ -65,7 +65,7 @@ class Gui(AVGApp):
             thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
         
     def initGame(self):
-        self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype)
+        self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype, self)
         self.lobbyMenu.divNodelobbyMenue.active = False 
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
@@ -498,6 +498,9 @@ class Gui(AVGApp):
         if(len(msgList) > 0):
             msg = msgList.popleft()
             self.eventHandler(msg)
+            
+    def sendMsgToAll(self, msg):
+        ipStorage.updateAll(msg)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####

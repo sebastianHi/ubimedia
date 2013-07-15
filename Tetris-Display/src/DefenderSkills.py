@@ -64,9 +64,9 @@ class DefenderSkills(object):
             oldValue = int (self.field.gameMenue.timerLimit.text)
             oldValue -= 30
             if (oldValue < 1):
-                self.field.gameMenue.timerLimit.text = 1
+                self.field.gameMenue.timerLimit.text = str(1)
             else:
-                self.field.gameMenue.timerLimit.text = oldValue
+                self.field.gameMenue.timerLimit.text = str(oldValue)
             self.field.updateScore(-3)
         
     def endSlowPace(self):

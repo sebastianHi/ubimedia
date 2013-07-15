@@ -5,7 +5,8 @@ from libavg import avg
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, idd):
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, idd, gui):
+        self.gui = gui
         self.id = idd
         self.score = 0
         self.gameMenue = gameMenue
@@ -54,8 +55,13 @@ class Field(object):
                 self.block = self.newFallingStone()
   
    
-    def blockHitGround(self):
+    def blockHitGround(self, spezialblock = ""):
         self.checkRows()
+        if(spezialblock == ""):
+            if(id == 1):
+                self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[0]+"###"+"dropBlock")
+            else:
+                    self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[1]+"###"+"dropBlock")
         self.initBlock()
         self.timer = self.player.setInterval(self.speed, self.gravity)
         
@@ -380,7 +386,7 @@ class Field(object):
             if (self.block.hitGround()):
                 self.block.steadyBlockSuper()
                 self.superBlock = False
-                self.blockHitGround()               
+                self.blockHitGround("super")               
             else:
                 self.block.setBlock()
                 
