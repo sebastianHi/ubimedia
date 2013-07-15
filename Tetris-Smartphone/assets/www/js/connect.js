@@ -140,7 +140,8 @@ function moveRight(){
 };
 
 function ready(){
-send(ip+"###nickname:"+rdy);
+send(ip+"###rdy");
+    ready = true;
 console.log("sent ready.");
 };
 
