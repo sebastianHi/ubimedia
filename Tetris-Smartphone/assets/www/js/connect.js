@@ -61,10 +61,6 @@ function buildHost() {
             case "NXT_BLOCK":
                     tickList();
                     break;
-            case "gamestart":
-                    if(role == 0){ $.mobile.changePage("defender.html"); }
-                    else { $.mobile.changePage("attacker.html"); }
-                break;
             }
         }
         }
@@ -75,7 +71,6 @@ function buildHost() {
 
     function prepareSocket(){
         buildHost();
-        updateRole();
         
     }
 
