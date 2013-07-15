@@ -141,9 +141,11 @@ function moveRight(){
 
 function ready(){
 send(ip+"###nickname:"+rdy);
+console.log("sent ready.");
 };
 
 function disconnect(){
+ send(ip+"###disconnect"); 
  ip = null;
  sock.close();
  $.mobile.changePage("connect.html");
