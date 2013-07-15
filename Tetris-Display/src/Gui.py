@@ -469,8 +469,6 @@ class Gui(AVGApp):
         
              
     def backToMainAfterGameFinished(self, event):
-        print "All Clients left"
-        print "Nachfragen, wie man den Server neustarten muss"
         self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
         self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
         self.mainMenu.divNodeMainMenue.active = True 
@@ -496,6 +494,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
         ipStorage.updateAll("Client with IP "+self.peer.host+" has disconnected")#Update all
          
     def onOpen(self):
+        print "Added"
         ipStorage.addNewClient(self.peer.host, self) ##adds current Connection and Client IP to the Storage
         self.sendMessage(self.peer.host) #Sends IP-Adress to Target
         ipStorage.updateAll("New Client with IP "+self.peer.host+" has joined")
@@ -503,7 +502,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
                
     def onMessage(self, msg, binary):
         print "sending echo:", msg ##print incoming message
-        #self.sendMessage("Received: "+msg, binary)##send back message to initiating client
+        self.sendMessage("Received: "+msg, binary)##send back message to initiating client
         Gui.eventHandler(msg)
 
 if __name__ == '__main__':

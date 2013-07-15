@@ -5,8 +5,8 @@ from libavg import avg
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, id):
-        self.id = id
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, idd):
+        self.id = idd
         self.score = 0
         self.gameMenue = gameMenue
         if(xWertLinksOben <= (self.gameMenue.divNodeGameMenue.size[0]/2)):
@@ -143,7 +143,7 @@ class Field(object):
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                if(id == 1):
+                if(self.id == 1):
                     self.gameMenue.endeSpiel("Team 2 gewinnt")
                 else:
                     self.gameMenue.endeSpiel("Team 1 gewinnt")
@@ -153,41 +153,60 @@ class Field(object):
             if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() 
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt") 
             
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
         elif(RandomNumber == 7):
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() 
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
+                     
         elif (RandomNumber == 8):
             self.specialsQueue.append("bomb")
             return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
@@ -258,7 +277,10 @@ class Field(object):
             if (a):
                 return superBlock.superBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
 
         ##if queue leer dann random sonst erstes element der queue
         elif not self.Queue:
@@ -284,7 +306,10 @@ class Field(object):
                 else:
                     pass
             else: 
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
         
     
     def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
@@ -482,7 +507,10 @@ class Field(object):
     def letItRain(self, RandomNumber): #returns a rainDrop at a random location at the top or ends the game
 
         if (self.matrix[RandomNumber][0]):
-            self.gameMenue.endeSpiel()
+            if(self.id == 1):
+                self.gameMenue.endeSpiel("Team 2 gewinnt")
+            else:
+                self.gameMenue.endeSpiel("Team 1 gewinnt")
         else:
             
             return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
@@ -493,7 +521,10 @@ class Field(object):
         for i in range (14):
             b = b and self.matrix[i][0]
         if b:
-            self.gameMenue.endeSpiel()
+            if(self.id == 1):
+                self.gameMenue.endeSpiel("Team 2 gewinnt")
+            else:
+                self.gameMenue.endeSpiel("Team 1 gewinnt")
         
         elif (self.tetrisRainActivated and self.rainDropCount == 0):
             self.randomNumber = random.randint(0,13)
