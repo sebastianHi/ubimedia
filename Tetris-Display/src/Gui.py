@@ -32,7 +32,6 @@ class Gui(AVGApp):
         self.player= avg.Player.get()
         self.rootNode= self._parentNode
         self.switchAttacker = True
-        
         self.checkMsgTimer = self.player.setInterval(10, self.checkMsg)
         
         self.mainMenu = MainMenue(self.rootNode)
