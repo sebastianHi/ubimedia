@@ -4,7 +4,7 @@ var ip = null;
 var currIP = null;
 var currCmd = null;
 var nickname = null;
-var ready = false;
+var readyvalue = false;
 
 function buildHost() {
     sock = new WebSocket(wsuri);
@@ -36,9 +36,6 @@ function buildHost() {
             switch (currCmd) {
             case "Test":
                     console.log("Got Test Signal. Parser seems to work.");
-                break;
-            case "CHK_RDY":
-                    if(ready){  send(ip+"###rdy"); } else { send(ip+"###notRdy"); }
                 break;
             case "attacker":
                 $.mobile.changePage("attacker.html");
@@ -124,7 +121,7 @@ function buildHost() {
 
 function getNickname(){
      document.getElementById('nick2').innerHTML = document.getElementById('nick').value;
-}
+};
 
 function setNickname(){
     nickname = document.getElementById('nick').value;
@@ -140,9 +137,9 @@ function moveRight(){
 };
 
 function ready(){
-send(ip+"###rdy");
-    ready = true;
-console.log("sent ready.");
+    send(ip+"###rdy");
+    readyvalue = true;
+    console.log("sent ready.");
 };
 
 function disconnect(){
@@ -150,4 +147,4 @@ function disconnect(){
  ip = null;
  sock.close();
  $.mobile.changePage("connect.html");
-}
+};
