@@ -2,6 +2,7 @@ from libavg import avg
 from Field import Field
 from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
+from GrafikChanceMenue import GrafikChanceMenue
 from OptionMenue import OptionMenue
 import random
 from AttackerSkills import AttackerSkills
@@ -10,7 +11,8 @@ from DefenderSkills import DefenderSkills
 
 class GameMenue(object):
     
-    def __init__(self, parent, player, modus):
+    def __init__(self, parent, player, modus, gui):
+        self.gui = gui
         self.modus = modus  # 0 = classic    1 = equal
         self.player = player
         self.rootNode = parent
@@ -19,6 +21,7 @@ class GameMenue(object):
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.winLooseMenu = WinLooseMenue(self.rootNode)
         self.optionMenu = OptionMenue(self.rootNode)
+        self.grafikMenu = GrafikChanceMenue(self.rootNode, self.player)
         self.menueLinkerXwert  = int(self.divNodeGameMenue.size[0]/2- self.divNodeGameMenue.size[0]*0.04)
         self.menueRechterXwert = int(self.divNodeGameMenue.size[0]/2+ self.divNodeGameMenue.size[0]*0.04)
         self.rahmenbreite = int(self.divNodeGameMenue.size[0]*0.025)
@@ -34,7 +37,6 @@ class GameMenue(object):
         self.round = 1
         self.rundenDauer = 180
         self.speed = [750,700,650,600,550]
-        
         self.countOfSkillsActivated = 0
         self.inverseControlActive = False
         self.leftFreezeActive = False
@@ -42,8 +44,7 @@ class GameMenue(object):
         self.rotateFreezeActive = False
         self.speedUpActive = False
         self.makeBlockInvisibleActive = False
-        self.noPointsActive = False
-        self.skillsOnCooldown = False        
+        self.noPointsActive = False       
         self.initSounds()
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
@@ -123,16 +124,16 @@ class GameMenue(object):
         self.hoeheMitlererBalken += 4*fontS
 
          
-        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.94),
+                                      fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
           
-        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.94),
+                                      fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0",  
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
@@ -141,10 +142,25 @@ class GameMenue(object):
         #Optionevents
         self.background.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.background, self.startOptionMenu)
         self.optionMenu.buttonResume.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonResume, self.stopOptionMenue)
+        self.optionMenu.buttonGrafik.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonGrafik, self.clickOnOptionGrafikButtom)
+        self.optionMenu.buttonFinish.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonFinish, self.finishEarly)
+        self.optionMenu.buttonSound.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonSound, self.turnSoundOff)
+        #grafikchancebottoms
+        self.grafikMenu.buttonBreiteM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteM, self.clickBreiteM)
+        self.grafikMenu.buttonBreiteMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteMM, self.clickBreiteMM)
+        self.grafikMenu.buttonBreitePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreitePP, self.clickBreitePP)
+        self.grafikMenu.buttonBreiteP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteP, self.clickBreiteP)
+        
+        self.grafikMenu.buttonLaengeM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeM, self.clickLaengeM)
+        self.grafikMenu.buttonLaengeMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeMM, self.clickLaengeMM)
+        self.grafikMenu.buttonLaengeP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeP, self.clickLaengeP)
+        self.grafikMenu.buttonLaengePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengePP, self.clickLaengePP)
+        
+        self.grafikMenu.buttonBack.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBack, self.clickOnBackButtomGrafikChanceMenue)
 #fuer Matrix feld initialisierung 
         self.yUnten =  self.yOben + self.tetrishoehe
-        self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self)
-        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self)
+        self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self,1, self.gui)
+        self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self,2, self.gui)
         self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
         self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
         self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
@@ -154,11 +170,9 @@ class GameMenue(object):
         self.playSound("gameStart")
         self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
-        #TODO: loeschbarmacen:
-        self.field2.chanceSpeed(200000);
         
-        print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
-        print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
+        #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
+        #print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
 #buttoms werden initialisiert
         
 #-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
@@ -235,41 +249,7 @@ class GameMenue(object):
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-    # Ueberpruefung der FeldPunkte
-#         avg.RectNode(pos=(self.xstartFeld1, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld1, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld1, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld1, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld2, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld2, self.yOben)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xstartFeld2, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         avg.RectNode(pos=(self.xendFeld2, self.yUnten)
-#                      ,size =avg.Point2D(self.blocksize,self.blocksize),
-#                      parent = self.divNodeGameMenue)
-#         
-        
-        
-        
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         
     def berechneLinkesXUntenYFeld1(self,rechteKante, untereSchranke, obereSchranke):
         linkesX = int(self.divNodeGameMenue.size[0] * 0.03) 
@@ -310,7 +290,7 @@ class GameMenue(object):
                 self.timerLimit.text = str(self.rundenDauer)
         
                 self.field1.chanceSpeed(self.speed[self.round-1])
-                #self.field2.chanceSpeed(self.speed[self.round-1])
+                self.field2.chanceSpeed(self.speed[self.round-1])
                 self.round += 1
                 if(self.round > 5):
                     self.field1.clearForNextRound()
@@ -323,13 +303,12 @@ class GameMenue(object):
             else:
                 count -= 1
                 self.timerLimit.text = str(count)
-    
-#TODO: eventuell Spiel beenden lassen      
+         
     def rundenWechsel(self):
         self.field1.clearForNextRound()
-        #TODO: self.field2.clearForNextRound()
+        self.field2.clearForNextRound()
         self.resetField(self.field1)
-        #self.resetField(self.field2)
+        self.resetField(self.field2)
         self.round += 1
         self.roundNumber.text = str(self.round)
         self.speedNumber.text = str(self.round)
@@ -340,10 +319,10 @@ class GameMenue(object):
         
         self.field1.speed = self.speed[(self.round -1)]
         self.field1.timer = self.field1.player.setInterval(self.field1.speed, self.field1.gravity)
-        #self.field2.speed = self.speed[(self.round -1)]
-        #self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
+        self.field2.speed = self.speed[(self.round -1)]
+        self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
         self.field1.initBlock()
-#TODO:         self.field2.initBlock()
+        self.field2.initBlock()
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -354,11 +333,14 @@ class GameMenue(object):
             if(scoreTeam1 == scoreTeam2):
                 winner = "Unentschieden"
             elif(scoreTeam1 > scoreTeam2):
-                winner = "Team 1"
+                winner = "Team 1 gewinnt"
             elif(scoreTeam1 < scoreTeam2):
-                winner = "Team 2"
+                winner = "Team 2 gewinnt"
         self.player.clearInterval(self.SkillActivator)
+        self.field1.gravityPausieren()
+        self.player.clearInterval(self.timeLimitCounter)
         self.divNodeGameMenue.active = False
+        self.optionMenu.divNodeOptionMenue.active = False
         self.winLooseMenu.buttonNextGame.sensitive = True
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
@@ -403,9 +385,66 @@ class GameMenue(object):
         self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
         
         
+    def finishEarly(self, event):
+        self.field1.score = 0
+        self.field2.score = 0
+        self.endeSpiel()
+        
+    def turnSoundOff(self, event):
+        text = self.optionMenu.buttonSound.getTextNode().text
+        if(text == "Sound:  An"):
+            self.deactivateSound()
+            self.optionMenu.buttonSound.updateTextNode("Sound:  Aus")
+        else:
+            self.initSounds()
+            self.optionMenu.buttonSound.updateTextNode("Sound:  An")
+    #TODO: hier alle sound nodes auf off stellen
+    
+    
+    def clickOnOptionGrafikButtom(self,event):
+        self.optionMenu.divNodeOptionMenue.active = False
+        self.grafikMenu.divNodeGrafikMenue.active = True
+        
+    def clickOnBackButtomGrafikChanceMenue(self, event):
+        self.grafikMenu.divNodeGrafikMenue.active = False
+        self.optionMenu.divNodeOptionMenue.active = True
+            
+    def clickBreiteP(self,event):
+        self.player.getMainCanvas().resolution = (1000,1000)
+        #self.player.setResolution(False,1000,1000,32)
+    
+    def clickBreitePP(self,event):
+        #TODO: Breite + +
+        pass
+    
+    def clickBreiteM(self,event):
+        #TODO: Breite -
+        pass
+    
+    def clickBreiteMM(self,event):
+        #TODO: Breite --
+        pass
+    
+    def clickLaengeP(self,event):
+        #TODO: Laenge +
+        pass
+    
+    def clickLaengePP(self,event):
+        #TODO: Laenge + +
+        pass
+    
+    def clickLaengeM(self,event):
+        #TODO: Laenge -
+        pass
+    
+    def clickLaengeMM(self,event):
+        #TODO: Laenge --
+        pass
+        
     def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
 
         randomNumber = random.randint(1,7)
+        freigeschalteterBlock = ""
         if (randomNumber == 1):
             if (self.rightFreezeActive == True):
                 self.activateOneSkill()
@@ -413,6 +452,8 @@ class GameMenue(object):
                 self.rightFreezeActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockRightFreeze"
+
         elif (randomNumber == 2):
             if (self.leftFreezeActive == True):
                 self.activateOneSkill()
@@ -420,6 +461,8 @@ class GameMenue(object):
                 self.leftFreezeActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockLeftFreeze"
+
         elif (randomNumber == 3):
             if (self.rotateFreezeActive == True):
                 self.activateOneSkill()
@@ -427,6 +470,7 @@ class GameMenue(object):
                 self.rotateFreezeActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockRotateFreeze"
         elif (randomNumber == 4):
             if (self.noPointsActive == True):
                 self.activateOneSkill()
@@ -434,6 +478,8 @@ class GameMenue(object):
                 self.noPointsActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockNoPoints"
+
         elif (randomNumber == 5):
             if (self.inverseControlActive == True):
                 self.activateOneSkill()
@@ -441,6 +487,7 @@ class GameMenue(object):
                 self.inverseControlActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockInverseControl"
         elif (randomNumber == 6):
             if (self.makeBlockInvisibleActive == True):
                 self.activateOneSkill()
@@ -448,6 +495,7 @@ class GameMenue(object):
                 self.makeBlockInvisibleActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockBlockInvisible"
         else:
             if (self.speedUpActive == True):
                 self.activateOneSkill()
@@ -455,9 +503,20 @@ class GameMenue(object):
                 self.speedUpActive = True
                 self.countOfSkillsActivated += 1
                 self.playSound("skillUnlocked")
+                freigeschalteterBlock = "unlockSpeedUp"
         if (self.countOfSkillsActivated == 7):
             self.player.clearInterval(self.SkillActivator)
-
+        #sende
+        if(freigeschalteterBlock != ""):
+            if(self.gui.lobbyMenu.modus == 3):
+                ip = self.gui.lobbyMenue.playerID[2]
+                self.gui.sendMsgToAll(ip+ "###"+freigeschalteterBlock)
+            elif(self.gui.lobbyMenu.modus == 4):
+                ip1 = self.gui.lobbyMenue.playerID[2]
+                ip2 = self.gui.lobbyMenue.playerID[3]
+                self.gui.sendMsgToAll(ip1+"###"+freigeschalteterBlock)
+                self.gui.sendMsgToAll(ip2+"###"+freigeschalteterBlock)
+        
     def resetField(self, Field):
         
         Field.inverseSteuerung = False
@@ -518,12 +577,3 @@ class GameMenue(object):
         self.roundSound.unlink()
         self.skillUnlockedSound.unlink()
         self.thunderSound.unlink()
-        
-    def toggleSound(self, String): #toggles the sound
-        if (String == "AN"):
-            self.initSounds()
-        elif (String == "AUS"):
-            self.deactivateSound()
-        else:
-            pass
-        

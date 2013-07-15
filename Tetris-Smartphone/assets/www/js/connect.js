@@ -4,8 +4,7 @@ var ip = null;
 var currIP = null;
 var currCmd = null;
 var nickname = null;
-var role = 0;
-var ready = false;
+var readyvalue = false;
 
 function buildHost() {
     sock = new WebSocket(wsuri);
@@ -28,6 +27,7 @@ function buildHost() {
             console.log("IP Regocnized and transmitted.");
             transmitNickname();
         } else {
+            console.log("Parsed other data: " +e.data + "however ip: " +ip);
         parse(e.data);
         
         if (currIp != ip) {
@@ -37,17 +37,12 @@ function buildHost() {
             case "Test":
                     console.log("Got Test Signal. Parser seems to work.");
                 break;
-            case "SWP_POS":
-                    if(role == 0){
-                        role = 1;
-                    } else { role = 0; }
-                    updateRole();
+            case "attacker":
+                $.mobile.changePage("attacker.html");
                 break;
-            case "CHK_RDY":
-                    if(ready){  send(ip+"###rdy"); } else { send(ip+"###not_rdy"); }
-                break;
-            case "SWP_TEAM":
-                    //swap team
+            case "defender":
+                $.mobile.changePage("defender.html");
+                startWatch();
                 break;
             case "GAME_START":
                     //game start signal
@@ -55,19 +50,42 @@ function buildHost() {
             case "DISC_CLNT":
                     //kick client
                 break;
+            case "dropBlock":
+                    tickList();    
+                break;
             case "GAME_PAUSE":
                     //pauses the game
                 break;
             case "GAME_RESUME":
                     //resumes the game
                 break;
+            case "notRdy":
+                resetReady();
+                break;
             case "NXT_BLOCK":
                     tickList();
                     break;
-            case "gamestart":
-                    if(role == 0){ $.mobile.changePage("defender.html"); }
-                    else { $.mobile.changePage("attacker.html"); }
-                break;
+            case "unlockRightFreeze":
+                    $('#frzRight').removeClass('ui-disabled');
+                    break;
+            case "unlockLeftFreeze":
+                    $('#frzLeft').removeClass('ui-disabled');
+                    break;
+            case "unlockRotateFreeze":
+                    $('#frzRotate').removeClass('ui-disabled');
+                    break;
+            case "unlockNoPoints":
+                    $('#noPts').removeClass('ui-disabled');
+                    break;
+            case "unlockInverseControl":
+                    $('#invControl').removeClass('ui-disabled');
+                    break;
+            case "unlockBlockInvisible":
+                    $('#invBlock').removeClass('ui-disabled');
+                    break;
+            case "unlockSpeedUp":
+                    $('#spdUp').removeClass('ui-disabled');
+                    break;
             }
         }
         }
@@ -78,7 +96,6 @@ function buildHost() {
 
     function prepareSocket(){
         buildHost();
-        updateRole();
         
     }
 
@@ -132,7 +149,7 @@ function buildHost() {
 
 function getNickname(){
      document.getElementById('nick2').innerHTML = document.getElementById('nick').value;
-}
+};
 
 function setNickname(){
     nickname = document.getElementById('nick').value;
@@ -148,11 +165,25 @@ function moveRight(){
 };
 
 function ready(){
-send(ip+"###nickname:"+rdy);
+    $('#readybutton').addClass('ui-disabled');
+    send(ip+"###rdy");
+    readyvalue = true;
+    console.log("sent ready.");
 };
 
-function updateRole(){
-    if(role == 0){
-    document.getElementbyId("role").innerHTML = "Defender";
-    } else { document.getElementbyId("role").innerHTML = "Attacker"; }
+function disconnect(){
+ send(ip+"###disconnect"); 
+ ip = null;
+ sock.close();
+ $.mobile.changePage("connect.html");
+};
+
+function softDrop(){
+    send(ip+"###speedDown");
+};
+
+function resetReady(){
+    $('#readybutton').removeClass('ui-disabled');
+    readyvalue = false;
+    console.log("Reversed ready.");
 }

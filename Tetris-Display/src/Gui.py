@@ -1,5 +1,6 @@
 from libavg import AVGApp
 from TextRectNode import *
+from collections import deque
 from IPStorage import *
 from MainMenue import MainMenue
 from LobbyMenue import LobbyMenue
@@ -11,7 +12,7 @@ from autobahn.websocket import WebSocketServerFactory,WebSocketServerProtocol, l
 import sys,thread 
 
 class Gui(AVGApp):
-    
+
     def init(self):
 
 ############################################################
@@ -19,7 +20,8 @@ class Gui(AVGApp):
 #        zustand = 1    :    Gui ist im LobbyMenu
 #        zustand = 2    :    Gui ist im Gamemenu
 ############################################################
-
+    
+        self.zumtestenaberloeschbar = True #HierLoeschbar TODO:
         self.zustand = 0
         self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
@@ -30,7 +32,7 @@ class Gui(AVGApp):
         self.player= avg.Player.get()
         self.rootNode= self._parentNode
         self.switchAttacker = True
-        
+        self.checkMsgTimer = self.player.setInterval(10, self.checkMsg)
         
         self.mainMenu = MainMenue(self.rootNode)
         self.mainMenu.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1, self.onClickMain1v1)
@@ -51,7 +53,7 @@ class Gui(AVGApp):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
-#-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------ZUM TESTEN --------TODO:------------------------------------------------------------------------------------------------------------------------
         self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
@@ -63,24 +65,25 @@ class Gui(AVGApp):
             thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
         
     def initGame(self):
-        self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype)
+        self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype, self)
         self.lobbyMenu.divNodelobbyMenue.active = False 
         self.gameMenu.divNodeGameMenue.active = True
         self.zustand = 2
         self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMainAfterGameFinished)
-        #TODO:  + rollenzuweisung
-        if(self.lobbyMenu.modus == 4 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], "attacker")
-        if(self.lobbyMenu.modus == 3 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
-        if(self.lobbyMenu.modus == 2 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+        #rollenzuweisung
+        if(self.zumtestenaberloeschbar):
+            if(self.lobbyMenu.modus == 4 ):
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], self.lobbyMenu.playerIP[3]+"###"+"attacker")
+            if(self.lobbyMenu.modus == 3 ):
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
+            if(self.lobbyMenu.modus == 2 ):
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
@@ -107,7 +110,7 @@ class Gui(AVGApp):
                                    fillopacity=1,
                                    color = "0404B4",
                                    size = avg.Point2D(self.lobbyMenu.divNodelobbyMenue.size[0]/2,self.lobbyMenu.divNodelobbyMenue.size[1]*0.35))
-        
+        self.lobbyMenu.backButton.setInactiv()
         self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
         self.countNode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.countNode, self.interruptCount)
         self.timer = self.player.setInterval(1000, self.countCount)
@@ -115,6 +118,8 @@ class Gui(AVGApp):
         
     def interruptCount(self, event):
         self.keepCountingToStart = False
+        self.lobbyMenu.rdyPlayer =  [False,False,False,False]
+        ipStorage.updateAll("notRdy")
         self.maybeStart()
         
         
@@ -124,7 +129,6 @@ class Gui(AVGApp):
         self.countNode.setInactiv()
         if(self.keepCountingToStart):
             self.initGame()
-             
         elif(self.lobbyMenu.modus == 2):
             self.lobbyMenu.divNodelobbyMenue.active = True
             self.lobbyMenu.firstPlayer.setActiv()
@@ -142,6 +146,8 @@ class Gui(AVGApp):
             self.lobbyMenu.forthPlayer.setActiv()
         else:
             raise SyntaxError("Wrong Modus gameCounter")
+        self.lobbyMenu.backButton.setActiv()
+        self.keepCountingToStart = True
         
    
    
@@ -155,7 +161,7 @@ class Gui(AVGApp):
 
     def eventHandler(self,msg):
 ##parser
-        print msg
+
         ip = ""
         l = []
         count = 0
@@ -176,46 +182,50 @@ class Gui(AVGApp):
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
-            print "GotNickForIP : ",ip," Nick: ", befehl[9:befehl.__len__()]
+           
             self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
             
-        elif(befehl == "disconnect" & (self.zustand ==1)):
+        elif((befehl == "disconnect") & (self.zustand ==1)):
             ipStorage.dropConnection(ip)
             self.lobbyMenu.updatePlayerLeft(ip)
 #----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
         elif(  (befehl == "moveLeft" )   & (self.zustand == 2)):
-            print "GotMoveLeft"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveLeft()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.moveLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
         elif((befehl == "moveRight")   & (self.zustand == 2)):
-            print "GotMoveRight"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveRight()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.moveRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
-        elif((befehl == "moveRotateR" )& (self.zustand == 2)):
-            print "GotMoveRotateR"
+        elif((befehl == "RotateR" )& (self.zustand == 2)):
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateRight()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.rotateRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
-        elif((befehl == "moveRotateL" )& (self.zustand == 2)):
-            print "GotRotateL"
+        elif((befehl == "RotateL" )& (self.zustand == 2)):
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateLeft()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.rotateLeft()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
+        
+        elif((befehl == "speedDown") & (self.zustand == 2)):
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.speedDown()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.field2.speedDown()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
@@ -223,7 +233,7 @@ class Gui(AVGApp):
         elif((befehl == "rdy") & (self.zustand == 1)):
             self.lobbyMenu.playerGotRdy(ip)
             
-        elif((befehl == "rdy") & (self.zustand == 1)):
+        elif((befehl == "notRdy") & (self.zustand == 1)):
             self.lobbyMenu.playerNotRdyAnylonge(ip)
 #----------------------------------------------------Block erzeugen----------------------------------------------------------------------           
         elif(((befehl == "L")|
@@ -432,6 +442,7 @@ class Gui(AVGApp):
     
     def test(self, event):  ## <<-----------------loeschbar nur zum gamestart mit mausklick
         self.initGame()
+        self.zumtestenaberloeschbar = False
     
     
 #----------------------------------------------------------EventHandlerButtoms----------------------------------------------------------------------------------------------------------
@@ -468,8 +479,6 @@ class Gui(AVGApp):
         
              
     def backToMainAfterGameFinished(self, event):
-        print "All Clients left"
-        print "Nachfragen, wie man den Server neustarten muss"
         self.gameMenu.winLooseMenu.divNodeWinLooseMenue.active = False
         self.gameMenu.winLooseMenu.buttonNextGame.sensitive = False
         self.mainMenu.divNodeMainMenue.active = True 
@@ -485,6 +494,14 @@ class Gui(AVGApp):
         listenWS(self.factory)
         reactor.run(installSignalHandlers=0)##"installSignalHandlers=0" Necessary for Multithreading @UndefinedVariable
         
+    def checkMsg(self):
+        if(len(msgList) > 0):
+            msg = msgList.popleft()
+            self.eventHandler(msg)
+            
+    def sendMsgToAll(self, msg):
+        ipStorage.updateAll(msg)
+        
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####
 class EchoServerProtocol(WebSocketServerProtocol):
@@ -496,15 +513,16 @@ class EchoServerProtocol(WebSocketServerProtocol):
          
     def onOpen(self):
         ipStorage.addNewClient(self.peer.host, self) ##adds current Connection and Client IP to the Storage
-        self.sendMessage(self.peer.host) #Sends IP-Adress to Target
-        ipStorage.updateAll("New Client with IP "+self.peer.host+" has joined")
-        self.sendMessage(self.peer.host+"###"+"Test") ##See if Parser Works.
-               
+        ipStorage.sendMessageToOneIP(self.peer.host, str(self.peer.host))
+        print "Client joined"
+          
     def onMessage(self, msg, binary):
-        print "sending echo:", msg ##print incoming message
-        #self.sendMessage("Received: "+msg, binary)##send back message to initiating client
-        Gui.eventHandler(msg)
+        self.sendMessage("Received: "+msg, binary)##send back message to initiating client
+        msgList.append(msg)
+
 
 if __name__ == '__main__':
+    msgList = deque()
     ipStorage = IPStorage()
-    Gui.start(resolution = (900,600))
+    resolution = avg.Player.get().getScreenResolution()
+    Gui.start(resolution = resolution)

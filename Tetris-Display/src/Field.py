@@ -4,7 +4,9 @@ from collections import deque
 
 class Field(object):
 
-    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue):
+    def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, idd, gui):
+        self.gui = gui
+        self.id = idd
         self.score = 0
         self.gameMenue = gameMenue
         if(xWertLinksOben <= (self.gameMenue.divNodeGameMenue.size[0]/2)):
@@ -52,8 +54,13 @@ class Field(object):
                 self.block = self.newFallingStone()
   
    
-    def blockHitGround(self):
+    def blockHitGround(self, spezialblock = ""):
         self.checkRows()
+        if(spezialblock == ""):
+            if(id == 1):
+                self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[0]+"###"+"dropBlock")
+            else:
+                    self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[1]+"###"+"dropBlock")
         self.initBlock()
         self.timer = self.player.setInterval(self.speed, self.gravity)
         
@@ -130,67 +137,79 @@ class Field(object):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
         self.gameMenue.playSound("cash")
-#         for y in range(0,19):
-#             s = ""
-#             for x in range(0,14):
-#                 if(self.matrix[x][y]):
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
-#                 else:
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
-#             print s
-#             print ""
-#             print ""
                    
     def generateRandomBlock(self):
-        RandomNumber = random.randint(1,11)
+        RandomNumber = random.randint(1,7)
 
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if a:
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if a:
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
           
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
             
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() 
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt") 
             
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
         elif(RandomNumber == 7):
             a = self.checkSpawn("cross")
             if a: 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel() 
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
+                     
         elif (RandomNumber == 8):
             self.specialsQueue.append("bomb")
             return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
@@ -260,7 +279,10 @@ class Field(object):
             if (a):
                 return superBlock.superBlock(self.gameMenue, self)
             else:
-                self.gameMenue.endeSpiel()
+                if(self.id):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
 
         ##if queue leer dann random sonst erstes element der queue
         elif not self.Queue:
@@ -286,7 +308,10 @@ class Field(object):
                 else:
                     pass
             else: 
-                self.gameMenue.endeSpiel()
+                if(self.id == 1):
+                    self.gameMenue.endeSpiel("Team 2 gewinnt")
+                else:
+                    self.gameMenue.endeSpiel("Team 1 gewinnt")
         
     
     def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
@@ -357,7 +382,7 @@ class Field(object):
             if (self.block.hitGround()):
                 self.block.steadyBlockSuper()
                 self.superBlock = False
-                self.blockHitGround()               
+                self.blockHitGround("super")               
             else:
                 self.block.setBlock()
                 
@@ -476,7 +501,10 @@ class Field(object):
     def letItRain(self, RandomNumber): #returns a rainDrop at a random location at the top or ends the game
 
         if (self.matrix[RandomNumber][0]):
-            self.gameMenue.endeSpiel()
+            if(self.id == 1):
+                self.gameMenue.endeSpiel("Team 2 gewinnt")
+            else:
+                self.gameMenue.endeSpiel("Team 1 gewinnt")
         else:
             
             return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
@@ -487,7 +515,10 @@ class Field(object):
         for i in range (14):
             b = b and self.matrix[i][0]
         if b:
-            self.gameMenue.endeSpiel()
+            if(self.id == 1):
+                self.gameMenue.endeSpiel("Team 2 gewinnt")
+            else:
+                self.gameMenue.endeSpiel("Team 1 gewinnt")
         
         elif (self.tetrisRainActivated and self.rainDropCount == 0):
             self.randomNumber = random.randint(0,13)

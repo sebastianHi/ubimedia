@@ -213,11 +213,11 @@ class LobbyMenue(object):
         for k in self.playerIP:
             i+=1
             if(k == ip):
-                self.rdyPlayer = True
+                self.rdyPlayer[i] = True
                 break
         p = True
         for b in range(0,self.modus):
-            p = p & self.rdyPlayer[b]
+            p = (p) and (self.rdyPlayer[b])
         if p:
             self.gui.gameCounter()
             
@@ -232,7 +232,7 @@ class LobbyMenue(object):
          
     def updatePlayerLeft(self, ip):
         self.connectedPlayers-=1
-        self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+        self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
         i = 0
         b = False
         for i in range(self.modus):
@@ -257,15 +257,14 @@ class LobbyMenue(object):
             
      
     def swapPlayer(self,event):
-#TODO: hier muss man drag und drop implementieren mit deren hilfe man rectnode tauschen kann
+#TODO: hier muss man drag und drop implementieren mit deren hilfe man den text der rectnodes tauschen kann
         pass
         
     def updateJoinedPlayerNumber(self, ip, name):
         if(self.connectedPlayers+1>self.modus):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         else:
-            self.connectedPlayers += 1
-            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+            self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers+1)+"/"+ str(self.modus))
             self.player[self.connectedPlayers] = name
             (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
             self.playerIP[self.connectedPlayers] = ip

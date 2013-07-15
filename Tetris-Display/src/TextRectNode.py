@@ -84,3 +84,7 @@ class TextRectNode(avg.RectNode):
             self.textNodeA.fontsize-=1
         self.textNodeA.text = textA
         self.textNodeB.fontsize = self.textNodeA.fontsize
+        
+    def updateTextForLobbyLine(self,textA, textB):
+        self.textNodeA.text = textA
+        self.textNodeB.text = textB

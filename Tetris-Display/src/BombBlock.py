@@ -271,7 +271,7 @@ class BombBlock(object):
         self.Field.player.clearInterval(self.Field.timer)
         self.part1.unlink()
         self.Field.bombActivated = False
-        self.Field.blockHitGround()
+        self.Field.blockHitGround("Bomb")
         # eventuell hier noch sound abspielen einer explosion oder so
 
     def rotateLeft(self):

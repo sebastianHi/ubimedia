@@ -1,6 +1,7 @@
 //The Coordinate IDs
     var xacc = 0;
     var yacc = 0;
+    var rotate = false;
 
 // The watch id references the current `watchAcceleration`
     var watchID = null;
@@ -41,11 +42,19 @@
         yacc = acceleration.y;
         
         if(yacc<(-4)){
-            send(ip+"###RotateL");
+            if(rotate == false){
+                send(ip+"###RotateL");
+                rotate = true;
+            } 
+            
         } else {
             if(yacc>4){
-            send(ip+"###RotateR");
-            } else { }
+            if(rotate == false){
+                send(ip+"###RotateR");
+                rotate = true;
+            }
+                
+            } else { rotate = false; }
         }
         
     }
@@ -55,3 +64,19 @@
     function onError() {
         alert('onError!');
     }
+
+function skipBlock(){
+    send(ip+"###skipBlock");
+};
+
+function slowPace(){
+    send(ip+"###slowPace");
+};
+
+function bomb(){
+    send(ip+"###orderBomb");
+};
+
+function reduceTime(){
+    send(ip+"###reduceTime");
+};

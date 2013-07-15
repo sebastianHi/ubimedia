@@ -9,8 +9,11 @@
 	<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script> -->
 	<style>
 	.panel-content { padding:10px; }
-    .alignleft { float: left;  }
-    .alignright { float: right; }
+    .alignleft { float: left; .ui-btn { padding 50px; }  }
+    .alignright { float: right; .ui-btn { padding 50px; } }
+    .ui-button.ui-widget{
+        500, 500
+        }
 	</style>
 </head> 
 
@@ -27,11 +30,12 @@
 		    <div style="clear: both;"></div>
 	   </div><br>
            <div class="ui-grid-b" id="middle">
-               <div class="ui-block-a" align="left"><br><br><br><a class="alignleft" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" data-inline="true" onClick="moveLeft();">Move Left</a></div>
+               <div class="ui-block-a" align="left"><br><br><br><a class="alignleft" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" ontouchstart="moveLeft();" class="big">Move Left</a></div>
 	           <div class="ui-block-b" align="center"><p>Current Block:</p><br>
                <p id="CurrBlock">Picture of Block here...</p><br>
-                <p>Move Phone to Rotate</p></div>
-	           <div class="ui-block-c" align="right"><br><br><br><a class="alignright" data-icon="arrow-r" href="#" data-role="button" data-inline="true" data-iconpos="top" onClick="moveRight();">Move Right</a></div>
+                <p>Move Phone to Rotate</p>
+               <a href="#" data-role="button" data-icon="arrow-d" data-iconpos="top" ontouchstart="softDrop();" class="big">Drop</a></div>
+	           <div class="ui-block-c" align="right"><br><br><br><a class="alignright" data-icon="arrow-r" href="#" data-role="button" data-iconpos="top" ontouchstart="moveRight();" class="big">Move Right</a></div>
         <div style="clear: both;"></div>
 		      </div>
         
@@ -41,7 +45,9 @@
 		<div data-role="panel" id="passive" data-position="left" data-display="reveal" data-dismissible="true" data-theme="a">
 					
 			<div class="panel-content">
-				<h3>Passive Skills</h3>
+				<h3>Normal Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="forward" data-inline="true" ontouchstart="skipBlock();">Skip Block</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="minus" data-inline="true" ontouchstart="slowPace();">Slow Pace</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 				
@@ -51,7 +57,9 @@
 		<div data-role="panel" id="active" data-position="right" data-display="reveal" data-dismissible="true" data-theme="b">
 					
 			<div class="panel-content">
-				<h3>Active Skills</h3>
+				<h3>Active Skills</h3><hr>
+                <a href="#" data-role="button" data-theme="a" data-icon="delete" data-inline="true" ontouchstart="bomb();">Call Bomb</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="minus" data-inline="true" ontouchstart="reduceTime();">Reduce Time</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 	
