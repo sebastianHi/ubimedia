@@ -11,7 +11,6 @@ function buildHost() {
     
     sock.onopen = function () {
         console.log("connected to " + wsuri);
-        $('#readybutton').removeClass('ui-disabled');
     };
     sock.onclose = function (e) {
         console.log("connection closed (" + e.code + ")");
@@ -139,9 +138,9 @@ function moveRight(){
 };
 
 function ready(){
+    $('#readybutton').addClass('ui-disabled');
     send(ip+"###rdy");
     readyvalue = true;
-    $('#readybutton').addClass('ui-disabled');
     console.log("sent ready.");
 };
 
