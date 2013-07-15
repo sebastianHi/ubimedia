@@ -15,7 +15,29 @@ class DefenderSkills(object):
             pass
         else:
             self.field.updateScore(-1)
-            self.field.initBlock()
+            self.player.clearInterval(self.timer)
+            if (self.block is None):
+                pass
+            elif(self.block.blockType == "super"):
+                self.block.part1.unlink()
+                self.block.part2.unlink()
+                self.block.part3.unlink()
+                self.block.part4.unlink()
+                self.block.part5.unlink()
+                self.block.part6.unlink()
+                self.block.part7.unlink()
+                self.block.part8.unlink()
+                self.block.part9.unlink()
+                self.block.part10.unlink()
+            elif (self.block.blockType == "bomb") or (self.block.blockType == "rain"):
+                self.block.part1.unlink()
+            else:        
+                self.block.part1.unlink()
+                self.block.part2.unlink()
+                self.block.part3.unlink()
+                self.block.part4.unlink()
+            self.block = None
+            self.field.blockHitGround()
             
     def slowPace(self): # slows down the falling pace by half a second for 5 seconds
 
