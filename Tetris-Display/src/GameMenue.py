@@ -124,16 +124,16 @@ class GameMenue(object):
         self.hoeheMitlererBalken += 4*fontS
 
          
-        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.94),
+                                      fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0", 
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
           
-        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.96),
-                                      fontsize = 0.022*self.divNodeGameMenue.size[1], 
+        self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.94),
+                                      fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0",  
                                       parent = self.divNodeGameMenue, 
                                       color = "000000", font = "arial", 
@@ -291,7 +291,7 @@ class GameMenue(object):
                 self.timerLimit.text = str(self.rundenDauer)
         
                 self.field1.chanceSpeed(self.speed[self.round-1])
-                #TODO:self.field2.chanceSpeed(self.speed[self.round-1])
+                self.field2.chanceSpeed(self.speed[self.round-1])
                 self.round += 1
                 if(self.round > 5):
                     self.field1.clearForNextRound()
@@ -307,9 +307,9 @@ class GameMenue(object):
          
     def rundenWechsel(self):
         self.field1.clearForNextRound()
-        #TODO: self.field2.clearForNextRound()
+        self.field2.clearForNextRound()
         self.resetField(self.field1)
-        #self.resetField(self.field2)
+        self.resetField(self.field2)
         self.round += 1
         self.roundNumber.text = str(self.round)
         self.speedNumber.text = str(self.round)
@@ -321,10 +321,10 @@ class GameMenue(object):
         
         self.field1.speed = self.speed[(self.round -1)]
         self.field1.timer = self.field1.player.setInterval(self.field1.speed, self.field1.gravity)
-        #TODO:self.field2.speed = self.speed[(self.round -1)]
-        #TODO:self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
+        self.field2.speed = self.speed[(self.round -1)]
+        self.field2.timer = self.field2.player.setInterval(self.field2.speed, self.field2.gravity)
         self.field1.initBlock()
-#TODO:         self.field2.initBlock()
+        self.field2.initBlock()
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -410,8 +410,8 @@ class GameMenue(object):
         self.optionMenu.divNodeOptionMenue.active = True
             
     def clickBreiteP(self,event):
-        #TODO: Breite +
-        pass
+        self.player.getMainCanvas().resolution = (1000,1000)
+        #self.player.setResolution(False,1000,1000,32)
     
     def clickBreitePP(self,event):
         #TODO: Breite + +
