@@ -56,6 +56,9 @@ function buildHost() {
             case "GAME_RESUME":
                     //resumes the game
                 break;
+            case "notRdy":
+                resetReady();
+                break;
             case "NXT_BLOCK":
                     tickList();
                     break;
@@ -153,4 +156,10 @@ function disconnect(){
 
 function softDrop(){
     send(ip+"###speedDown");
+};
+
+function resetReady(){
+    $('#readybutton').removeClass('ui-disabled');
+    readyvalue = false;
+    console.log("Reversed ready.");
 }
