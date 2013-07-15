@@ -205,7 +205,7 @@ class Gui(AVGApp):
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
-        elif((befehl == "moveRotateR" )& (self.zustand == 2)):
+        elif((befehl == "RotateR" )& (self.zustand == 2)):
             print "GotMoveRotateR"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateRight()
@@ -214,7 +214,7 @@ class Gui(AVGApp):
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
-        elif((befehl == "moveRotateL" )& (self.zustand == 2)):
+        elif((befehl == "RotateL" )& (self.zustand == 2)):
             print "GotRotateL"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateLeft()
