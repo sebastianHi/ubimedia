@@ -110,7 +110,7 @@ class Gui(AVGApp):
                                    fillopacity=1,
                                    color = "0404B4",
                                    size = avg.Point2D(self.lobbyMenu.divNodelobbyMenue.size[0]/2,self.lobbyMenu.divNodelobbyMenue.size[1]*0.35))
-        
+        self.lobbyMenu.backButton.setInactiv()
         self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
         self.countNode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.countNode, self.interruptCount)
         self.timer = self.player.setInterval(1000, self.countCount)
@@ -129,7 +129,6 @@ class Gui(AVGApp):
         self.countNode.setInactiv()
         if(self.keepCountingToStart):
             self.initGame()
-             
         elif(self.lobbyMenu.modus == 2):
             self.lobbyMenu.divNodelobbyMenue.active = True
             self.lobbyMenu.firstPlayer.setActiv()
@@ -147,6 +146,8 @@ class Gui(AVGApp):
             self.lobbyMenu.forthPlayer.setActiv()
         else:
             raise SyntaxError("Wrong Modus gameCounter")
+        self.lobbyMenu.backButton.setActiv()
+        self.keepCountingToStart = True
         
    
    
