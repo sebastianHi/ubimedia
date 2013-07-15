@@ -1,6 +1,7 @@
 //The Coordinate IDs
     var xacc = 0;
     var yacc = 0;
+    var rotate = false;
 
 // The watch id references the current `watchAcceleration`
     var watchID = null;
@@ -20,7 +21,7 @@
     function startWatch() {
 
         // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
+        var options = { frequency: 1000 };
 
         watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
     }
@@ -41,11 +42,19 @@
         yacc = acceleration.y;
         
         if(yacc<(-4)){
-            send(ip+"###RotateL");
+            if(rotate == false){
+                send(ip+"###RotateL");
+                rotate = true;
+            } 
+            
         } else {
             if(yacc>4){
-            send(ip+"###RotateR");
-            } else { }
+            if(rotate == false){
+                send(ip+"###RotateR");
+                rotate = true;
+            }
+                
+            } else { rotate = false; }
         }
         
     }
