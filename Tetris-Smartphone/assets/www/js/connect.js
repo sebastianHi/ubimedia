@@ -151,3 +151,7 @@ function disconnect(){
  sock.close();
  $.mobile.changePage("connect.html");
 };
+
+function softDrop(){
+    send(ip+"###speedDown");
+}
