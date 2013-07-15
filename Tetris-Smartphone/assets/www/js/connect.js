@@ -28,6 +28,7 @@ function buildHost() {
             console.log("IP Regocnized and transmitted.");
             transmitNickname();
         } else {
+            console.log("Parsed other data: " +e.data + "however ip: " +ip);
         parse(e.data);
         
         if (currIp != ip) {
@@ -44,7 +45,7 @@ function buildHost() {
                     updateRole();
                 break;
             case "CHK_RDY":
-                    if(ready){  send(ip+"###rdy"); } else { send(ip+"###not_rdy"); }
+                    if(ready){  send(ip+"###rdy"); } else { send(ip+"###notRdy"); }
                 break;
             case "SWP_TEAM":
                     //swap team
