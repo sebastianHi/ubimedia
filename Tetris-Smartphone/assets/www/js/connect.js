@@ -4,7 +4,6 @@ var ip = null;
 var currIP = null;
 var currCmd = null;
 var nickname = null;
-var role = 0;
 var ready = false;
 
 function buildHost() {
@@ -38,17 +37,14 @@ function buildHost() {
             case "Test":
                     console.log("Got Test Signal. Parser seems to work.");
                 break;
-            case "SWP_POS":
-                    if(role == 0){
-                        role = 1;
-                    } else { role = 0; }
-                    updateRole();
-                break;
             case "CHK_RDY":
                     if(ready){  send(ip+"###rdy"); } else { send(ip+"###notRdy"); }
                 break;
-            case "SWP_TEAM":
-                    //swap team
+            case "attacker":
+                $.mobile.changePage("attacker.html");
+                break;
+            case "defender":
+                $.mobile.changePage("defender.html");
                 break;
             case "GAME_START":
                     //game start signal
@@ -152,8 +148,8 @@ function ready(){
 send(ip+"###nickname:"+rdy);
 };
 
-function updateRole(){
-    if(role == 0){
-    document.getElementbyId("role").innerHTML = "Defender";
-    } else { document.getElementbyId("role").innerHTML = "Attacker"; }
+function disconnect(){
+ ip = null;
+ sock.close();
+ $.mobile.changePage("connect.html");
 }
