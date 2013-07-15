@@ -396,7 +396,7 @@ class GameMenue(object):
             self.deactivateSound()
             self.optionMenu.buttonSound.updateTextNode("Sound:  Aus")
         else:
-            self.initSounds()
+            self.activateSound()
             self.optionMenu.buttonSound.updateTextNode("Sound:  An")
     #TODO: hier alle sound nodes auf off stellen
     
@@ -568,12 +568,23 @@ class GameMenue(object):
             pass
         
     def deactivateSound(self): #deactivates all sound nodes
-        self.bombSound.unlink()
-        self.cashSound.unlink()
-        self.deniedSound.unlink()
-        self.gameStartSound.unlink()
-        self.rainSound.unlink()
-        self.rotateSound.unlink()
-        self.roundSound.unlink()
-        self.skillUnlockedSound.unlink()
-        self.thunderSound.unlink()
+        self.bombSound.volume = 0.0
+        self.cashSound.volume = 0.0
+        self.deniedSound.volume = 0.0
+        self.gameStartSound.volume = 0.0
+        self.rainSound.volume = 0.0
+        self.rotateSound.volume = 0.0
+        self.roundSound.volume = 0.0
+        self.skillUnlockedSound.volume = 0.0
+        self.thunderSound.volume = 0.0
+        
+    def activateSound(self): #activates all sound nodes
+        self.bombSound.volume = 1.0
+        self.cashSound.volume = 1.0
+        self.deniedSound.volume = 1.0
+        self.gameStartSound.volume = 1.0
+        self.rainSound.volume = 1.0
+        self.rotateSound.volume = 1.0
+        self.roundSound.volume = 1.0
+        self.skillUnlockedSound.volume = 1.0
+        self.thunderSound.volume = 1.0
