@@ -44,7 +44,7 @@ class GameMenue(object):
         self.makeBlockInvisibleActive = False
         self.noPointsActive = False
         self.skillsOnCooldown = False        
-        
+        self.initSounds()
 #Gui initialisierung
         self.initFeld(self.xstartFeld1, self.xendFeld1, self.yOben )
         self.initFeld(self.xstartFeld2, self.xendFeld2, self.yOben )
@@ -151,8 +151,7 @@ class GameMenue(object):
         self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player)
         self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
-        this = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
-        this.play()
+        self.playSound("gameStart")
         self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
         #TODO: loeschbarmacen:
@@ -334,8 +333,7 @@ class GameMenue(object):
         self.round += 1
         self.roundNumber.text = str(self.round)
         self.speedNumber.text = str(self.round)
-        this = avg.SoundNode(href="round.mp3", loop=False, volume=1.0, parent = self.rootNode)
-        this.play()
+        self.playSound("round")
 
         
     def fieldChanceRundenWechsel(self):
@@ -365,8 +363,7 @@ class GameMenue(object):
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
 
-        this = avg.SoundNode(href="victory.mp3", loop=False, volume=1.0, parent = self.rootNode)
-        this.play()
+        self.playSound("victory")
     
     def naechsteZahlDurch14Teilbar(self,value):
         x = value % 14
@@ -415,56 +412,49 @@ class GameMenue(object):
             else:
                 self.rightFreezeActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         elif (randomNumber == 2):
             if (self.leftFreezeActive == True):
                 self.activateOneSkill()
             else:
                 self.leftFreezeActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         elif (randomNumber == 3):
             if (self.rotateFreezeActive == True):
                 self.activateOneSkill()
             else:
                 self.rotateFreezeActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         elif (randomNumber == 4):
             if (self.noPointsActive == True):
                 self.activateOneSkill()
             else:
                 self.noPointsActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         elif (randomNumber == 5):
             if (self.inverseControlActive == True):
                 self.activateOneSkill()
             else:
                 self.inverseControlActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         elif (randomNumber == 6):
             if (self.makeBlockInvisibleActive == True):
                 self.activateOneSkill()
             else:
                 self.makeBlockInvisibleActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         else:
             if (self.speedUpActive == True):
                 self.activateOneSkill()
             else:
                 self.speedUpActive = True
                 self.countOfSkillsActivated += 1
-                this = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
-                this.play()
+                self.playSound("skillUnlocked")
         if (self.countOfSkillsActivated == 7):
             self.player.clearInterval(self.SkillActivator)
 
@@ -481,3 +471,59 @@ class GameMenue(object):
         Field.tetrisRainActivated = False
         Field.noMoneyForYou = False
         Field.rainDropCount = 0
+        
+    def initSounds(self):
+        self.deniedSound = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.skillUnlockedSound = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.gameStartSound = avg.SoundNode(href="gameStart.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.rotateSound = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.rootNode)
+        self.victorySound = avg.SoundNode(href="victory.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.thunderSound = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.rootNode)
+        self.roundSound = avg.SoundNode(href="round.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.rainSound = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        self.bombSound = avg.SoundNode(href="bomb.wav", loop=False, volume=1.0, parent = self.rootNode)
+        self.cashSound = avg.SoundNode(href="cash.mp3", loop=False, volume=1.0, parent = self.rootNode)
+        
+    def playSound(self, String):
+        if (String == "rain"):
+            self.rainSound.play()
+        elif (String == "bomb"):
+            self.bombSound.play()
+        elif (String == "cash"):
+            self.cashSound.play()
+        elif (String == "round"):
+            self.roundSound.play()
+        elif (String == "thunder"):
+            self.thunderSound.play()
+        elif (String == "victory"):
+            self.victorySound.play()
+        elif (String == "rotate"):
+            self.rotateSound.play()
+        elif (String == "denied"):
+            self.deniedSound.play()
+        elif (String == "gameStart"):
+            self.gameStartSound.play()
+        elif (String == "skillUnlocked"):
+            self.skillUnlockedSound.play()
+        else:
+            pass
+        
+    def deactivateSound(self): #deactivates all sound nodes
+        self.bombSound.unlink()
+        self.cashSound.unlink()
+        self.deniedSound.unlink()
+        self.gameStartSound.unlink()
+        self.rainSound.unlink()
+        self.rotateSound.unlink()
+        self.roundSound.unlink()
+        self.skillUnlockedSound.unlink()
+        self.thunderSound.unlink()
+        
+    def toggleSound(self, String): #toggles the sound
+        if (String == "AN"):
+            self.initSounds()
+        elif (String == "AUS"):
+            self.deactivateSound()
+        else:
+            pass
+        

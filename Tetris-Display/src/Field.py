@@ -1,7 +1,6 @@
 import rainDropBlock, superBlock, BombBlock, crossFallingBlock,cubeFallingBlock,IFallingBlock, LFallingBlock, reverseLFallingBlock, reverseZFallingBlock, ZFallingBlock
 import random
 from collections import deque
-from libavg import avg
 
 class Field(object):
 
@@ -96,8 +95,7 @@ class Field(object):
                 
         if(amountOfRows>0):
             if (self.noMoneyForYou):
-                this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-                this.play()
+                self.gameMenue.playSound("denied")
             else:
                 self.updateScore(amountOfRows)
         
@@ -131,8 +129,7 @@ class Field(object):
         for s in range (14):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
-        this = avg.SoundNode(href="cash.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-        this.play()
+        self.gameMenue.playSound("cash")
 #         for y in range(0,19):
 #             s = ""
 #             for x in range(0,14):
@@ -213,8 +210,7 @@ class Field(object):
     def newFallingStone(self):
         
         if(self.thunderActivated):
-            this = avg.SoundNode(href="thunder.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("thunder")
             randomNumber = random.randint(0,13)
             for i in range(19):
                 randomInc = random.randint(-1,1)
@@ -394,8 +390,7 @@ class Field(object):
         
     def moveLeft(self):
         if((self.block is None) | self.freezeLeft):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.block.moveBlockRight()
         else:
@@ -404,8 +399,7 @@ class Field(object):
     
     def moveRight(self):
         if((self.block is None)| self.freezeRight):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.block.moveBlockLeft()
         else:
@@ -414,29 +408,23 @@ class Field(object):
     
     def rotateLeft(self):
         if((self.block is None)| self.freezeRotate):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
-            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("rotate")
             self.block.rotateRight()
         else:
-            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("rotate")
             self.block.rotateLeft()
             
     
     def rotateRight(self):
         if((self.block is None)| self.freezeRotate):
-            this = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
-            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("rotate")
             self.block.rotateLeft()
         else:
-            this = avg.SoundNode(href="rotate.wav", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-            this.play()
+            self.gameMenue.playSound("rotate")
             self.block.rotateRight()
             
     def speedDown(self):
@@ -507,8 +495,7 @@ class Field(object):
                 self.letItRainScript()
             else:
                 self.block = self.letItRain(self.randomNumber)
-                this = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.gameMenue.rootNode)
-                this.play()
+                self.gameMenue.playSound("rain")
                 self.rainDropCount += 1
                 self.timer1 = self.player.setInterval(20, self.gravity)
         
