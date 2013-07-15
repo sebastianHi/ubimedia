@@ -51,7 +51,6 @@ class Gui(AVGApp):
         
     def initLobby(self):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
-        print self.lobbyMenu
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
 #-------------------------------ZUM TESTEN --------TODO:------------------------------------------------------------------------------------------------------------------------
@@ -160,7 +159,7 @@ class Gui(AVGApp):
 
     def eventHandler(self,msg):
 ##parser
-        print msg
+
         ip = ""
         l = []
         count = 0
@@ -181,7 +180,7 @@ class Gui(AVGApp):
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
-            print "GotNickForIP : ",ip," Nick: ", befehl[9:befehl.__len__()]
+           
             self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
             
         elif((befehl == "disconnect") & (self.zustand ==1)):
@@ -496,7 +495,6 @@ class Gui(AVGApp):
     def checkMsg(self):
         if(len(msgList) > 0):
             msg = msgList.popleft()
-            print msg
             self.eventHandler(msg)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
@@ -516,9 +514,6 @@ class EchoServerProtocol(WebSocketServerProtocol):
     def onMessage(self, msg, binary):
         self.sendMessage("Received: "+msg, binary)##send back message to initiating client
         msgList.append(msg)
-        print "messageList: ", len(msgList)
-        print "messageList Laenge:", msgList.maxlen
-        print "sending echo:", msg ##print incoming message
 
 
 if __name__ == '__main__':
