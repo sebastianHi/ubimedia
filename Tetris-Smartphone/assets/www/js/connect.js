@@ -43,6 +43,7 @@ function buildHost() {
                 break;
             case "defender":
                 $.mobile.changePage("defender.html");
+                startWatch();
                 break;
             case "GAME_START":
                     //game start signal
