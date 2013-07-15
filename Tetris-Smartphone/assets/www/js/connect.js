@@ -50,6 +50,9 @@ function buildHost() {
             case "DISC_CLNT":
                     //kick client
                 break;
+            case "dropBlock":
+                    tickList();    
+                break;
             case "GAME_PAUSE":
                     //pauses the game
                 break;
@@ -61,6 +64,27 @@ function buildHost() {
                 break;
             case "NXT_BLOCK":
                     tickList();
+                    break;
+            case "unlockRightFreeze":
+                    $('#frzRight').removeClass('ui-disabled');
+                    break;
+            case "unlockLeftFreeze":
+                    $('#frzLeft').removeClass('ui-disabled');
+                    break;
+            case "unlockRotateFreeze":
+                    $('#frzRotate').removeClass('ui-disabled');
+                    break;
+            case "unlockNoPoints":
+                    $('#noPts').removeClass('ui-disabled');
+                    break;
+            case "unlockInverseControl":
+                    $('#invControl').removeClass('ui-disabled');
+                    break;
+            case "unlockBlockInvisible":
+                    $('#invBlock').removeClass('ui-disabled');
+                    break;
+            case "unlockSpeedUp":
+                    $('#spdUp').removeClass('ui-disabled');
                     break;
             }
         }
