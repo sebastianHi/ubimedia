@@ -21,7 +21,7 @@ class Gui(AVGApp):
 #        zustand = 2    :    Gui ist im Gamemenu
 ############################################################
     
-        self.zumtestenaberloeschbar = False #HierLoeschbar TODO:
+        self.zumtestenaberloeschbar = True #HierLoeschbar TODO:
         self.zustand = 0
         self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
@@ -119,6 +119,7 @@ class Gui(AVGApp):
     def interruptCount(self, event):
         self.keepCountingToStart = False
         self.lobbyMenu.rdyPlayer =  [False,False,False,False]
+        ipStorage.updateAll("notRdy")
         self.maybeStart()
         
         
@@ -440,7 +441,7 @@ class Gui(AVGApp):
     
     def test(self, event):  ## <<-----------------loeschbar nur zum gamestart mit mausklick
         self.initGame()
-        self.zumtestenaberloeschbar = True
+        self.zumtestenaberloeschbar = False
     
     
 #----------------------------------------------------------EventHandlerButtoms----------------------------------------------------------------------------------------------------------
