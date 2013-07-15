@@ -232,7 +232,7 @@ class LobbyMenue(object):
          
     def updatePlayerLeft(self, ip):
         self.connectedPlayers-=1
-        self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+        self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
         i = 0
         b = False
         for i in range(self.modus):
@@ -264,8 +264,7 @@ class LobbyMenue(object):
         if(self.connectedPlayers+1>self.modus):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         else:
-            self.connectedPlayers += 1
-            self.numberPlayers.updateTextNode("Players connected:   " + str(self.connectedPlayers)+"/"+ str(self.modus))
+            self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers+1)+"/"+ str(self.modus))
             self.player[self.connectedPlayers] = name
             (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
             self.playerIP[self.connectedPlayers] = ip

@@ -1,5 +1,6 @@
 from libavg import AVGApp
 from TextRectNode import *
+from collections import deque
 from IPStorage import *
 from MainMenue import MainMenue
 from LobbyMenue import LobbyMenue
@@ -11,7 +12,7 @@ from autobahn.websocket import WebSocketServerFactory,WebSocketServerProtocol, l
 import sys,thread 
 
 class Gui(AVGApp):
-    
+
     def init(self):
 
 ############################################################
@@ -31,6 +32,7 @@ class Gui(AVGApp):
         self.rootNode= self._parentNode
         self.switchAttacker = True
         
+        self.checkMsgTimer = self.player.setInterval(10, self.checkMsg)
         
         self.mainMenu = MainMenue(self.rootNode)
         self.mainMenu.button1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1, self.onClickMain1v1)
@@ -224,7 +226,7 @@ class Gui(AVGApp):
         elif((befehl == "rdy") & (self.zustand == 1)):
             self.lobbyMenu.playerGotRdy(ip)
             
-        elif((befehl == "rdy") & (self.zustand == 1)):
+        elif((befehl == "notRdy") & (self.zustand == 1)):
             self.lobbyMenu.playerNotRdyAnylonge(ip)
 #----------------------------------------------------Block erzeugen----------------------------------------------------------------------           
         elif(((befehl == "L")|
@@ -484,6 +486,12 @@ class Gui(AVGApp):
         listenWS(self.factory)
         reactor.run(installSignalHandlers=0)##"installSignalHandlers=0" Necessary for Multithreading @UndefinedVariable
         
+    def checkMsg(self):
+        if(len(msgList) > 0):
+            msg = msgList.popleft()
+            print msg
+            self.eventHandler(msg)
+        
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####
 class EchoServerProtocol(WebSocketServerProtocol):
@@ -494,17 +502,19 @@ class EchoServerProtocol(WebSocketServerProtocol):
         ipStorage.updateAll("Client with IP "+self.peer.host+" has disconnected")#Update all
          
     def onOpen(self):
-        print "Added"
         ipStorage.addNewClient(self.peer.host, self) ##adds current Connection and Client IP to the Storage
-        self.sendMessage(self.peer.host) #Sends IP-Adress to Target
-        ipStorage.updateAll("New Client with IP "+self.peer.host+" has joined")
-        self.sendMessage(self.peer.host+"###"+"Test") ##See if Parser Works.
-               
+        ipStorage.sendMessageToOneIP(self.peer.host, str(self.peer.host))
+        print "Client joined"
+          
     def onMessage(self, msg, binary):
-        print "sending echo:", msg ##print incoming message
         self.sendMessage("Received: "+msg, binary)##send back message to initiating client
-        Gui.eventHandler(msg)
+        msgList.append(msg)
+        print "messageList: ", len(msgList)
+        print "messageList Laenge:", msgList.maxlen
+        print "sending echo:", msg ##print incoming message
+
 
 if __name__ == '__main__':
+    msgList = deque()
     ipStorage = IPStorage()
     Gui.start(resolution = (900,600))

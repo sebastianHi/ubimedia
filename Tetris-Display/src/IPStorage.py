@@ -7,7 +7,6 @@ Created on 15.06.2013
 class IPStorage():
     def __init__(self):
         self._ipList=dict({})
-        self._gui = None;
         
     def addNewClient(self,ip,connection): ##adds a new Client to the Dictionary
         self._ipList[ip]=connection 
@@ -26,5 +25,4 @@ class IPStorage():
             self._ipList[key].sendMessage(msg)
         
     def sendMessageToOneIP(self,ip,msg):
-        #self._ipList[ip].sendMessage(msg)
-        pass
+        self._ipList[ip].sendMessage(msg)
