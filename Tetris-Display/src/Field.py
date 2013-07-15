@@ -136,7 +136,7 @@ class Field(object):
         this.play()
                    
     def generateRandomBlock(self):
-        RandomNumber = random.randint(1,11)
+        RandomNumber = random.randint(1,7)
 
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")

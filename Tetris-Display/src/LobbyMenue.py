@@ -213,11 +213,11 @@ class LobbyMenue(object):
         for k in self.playerIP:
             i+=1
             if(k == ip):
-                self.rdyPlayer = True
+                self.rdyPlayer[i] = True
                 break
         p = True
         for b in range(0,self.modus):
-            p = p & self.rdyPlayer[b]
+            p = (p) and (self.rdyPlayer[b])
         if p:
             self.gui.gameCounter()
             

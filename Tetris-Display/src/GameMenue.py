@@ -172,8 +172,6 @@ class GameMenue(object):
         this.play()
         self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
-        #TODO: loeschbarmacen:
-        self.field2.chanceSpeed(200000);
         
         #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         #print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1

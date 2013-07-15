@@ -73,17 +73,17 @@ class Gui(AVGApp):
         self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMainAfterGameFinished)
         #rollenzuweisung
         if(self.lobbyMenu.modus == 4 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], "attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], self.lobbyMenu.playerIP[3]+"attacker")
         if(self.lobbyMenu.modus == 3 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"attacker")
         if(self.lobbyMenu.modus == 2 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
@@ -182,7 +182,7 @@ class Gui(AVGApp):
             print "GotNickForIP : ",ip," Nick: ", befehl[9:befehl.__len__()]
             self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
             
-        elif(befehl == "disconnect" & (self.zustand ==1)):
+        elif((befehl == "disconnect") & (self.zustand ==1)):
             ipStorage.dropConnection(ip)
             self.lobbyMenu.updatePlayerLeft(ip)
 #----------------------Bewegungen Des Blocks-------------------------------!!!!!!<--- brauche den aktuell fallenden Block bzw links oder rechts
