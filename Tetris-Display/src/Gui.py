@@ -222,6 +222,15 @@ class Gui(AVGApp):
                 self.gameMenu.field2.rotateLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
+        
+        elif((befehl == "speedDown") & (self.zustand == 2)):
+            print "speedDown"
+            if(ip == self.lobbyMenu.playerIP[0]):
+                self.gameMenu.field1.speedDown()
+            elif(ip == self.lobbyMenu.playerIP[1]):
+                self.gameMenu.field2.speedDown()
+            else:
+                raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
             
 #-----------------------Rdy Signal fuer Lobby------------------------------
         elif((befehl == "rdy") & (self.zustand == 1)):

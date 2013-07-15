@@ -339,6 +339,8 @@ class GameMenue(object):
             elif(scoreTeam1 < scoreTeam2):
                 winner = "Team 2 gewinnt"
         self.player.clearInterval(self.SkillActivator)
+        self.field1.gravityPausieren()
+        self.player.clearInterval(self.timeLimitCounter)
         self.divNodeGameMenue.active = False
         self.optionMenu.divNodeOptionMenue.active = False
         self.winLooseMenu.buttonNextGame.sensitive = True
