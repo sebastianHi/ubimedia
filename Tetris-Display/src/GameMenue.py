@@ -36,7 +36,6 @@ class GameMenue(object):
         self.round = 1
         self.rundenDauer = 180
         self.speed = [750,700,650,600,550]
-        
         self.countOfSkillsActivated = 0
         self.inverseControlActive = False
         self.leftFreezeActive = False

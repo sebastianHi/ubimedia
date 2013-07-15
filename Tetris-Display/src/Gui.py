@@ -73,17 +73,17 @@ class Gui(AVGApp):
         self.gameMenu.winLooseMenu.buttonNextGame.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.gameMenu.winLooseMenu.buttonNextGame, self.backToMainAfterGameFinished)
         #rollenzuweisung
         if(self.lobbyMenu.modus == 4 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"attacker")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], self.lobbyMenu.playerIP[3]+"attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], self.lobbyMenu.playerIP[3]+"###"+"attacker")
         if(self.lobbyMenu.modus == 3 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"attacker")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
         if(self.lobbyMenu.modus == 2 ):
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"defender")
-            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
+            ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
@@ -118,6 +118,7 @@ class Gui(AVGApp):
         
     def interruptCount(self, event):
         self.keepCountingToStart = False
+        self.lobbyMenu.rdyPlayer =  [False,False,False,False]
         self.maybeStart()
         
         
@@ -190,7 +191,7 @@ class Gui(AVGApp):
             print "GotMoveLeft"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveLeft()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.moveLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -199,7 +200,7 @@ class Gui(AVGApp):
             print "GotMoveRight"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.moveRight()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.moveRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -208,7 +209,7 @@ class Gui(AVGApp):
             print "GotMoveRotateR"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateRight()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.rotateRight()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
@@ -217,7 +218,7 @@ class Gui(AVGApp):
             print "GotRotateL"
             if(ip == self.lobbyMenu.playerIP[0]):
                 self.gameMenu.field1.rotateLeft()
-            elif(ip == self.lobbyMenu.player[1]):
+            elif(ip == self.lobbyMenu.playerIP[1]):
                 self.gameMenu.field2.rotateLeft()
             else:
                 raise SyntaxError("Falscher Spieler wollte bewegung machen; Gui") 
