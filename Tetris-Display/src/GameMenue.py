@@ -509,11 +509,11 @@ class GameMenue(object):
         #sende
         if(freigeschalteterBlock != ""):
             if(self.gui.lobbyMenu.modus == 3):
-                ip = self.gui.lobbyMenue.playerID[2]
+                ip = self.gui.lobbyMenu.playerID[2]
                 self.gui.sendMsgToAll(ip+ "###"+freigeschalteterBlock)
             elif(self.gui.lobbyMenu.modus == 4):
-                ip1 = self.gui.lobbyMenue.playerID[2]
-                ip2 = self.gui.lobbyMenue.playerID[3]
+                ip1 = self.gui.lobbyMenu.playerID[2]
+                ip2 = self.gui.lobbyMenu.playerID[3]
                 self.gui.sendMsgToAll(ip1+"###"+freigeschalteterBlock)
                 self.gui.sendMsgToAll(ip2+"###"+freigeschalteterBlock)
         

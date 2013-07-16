@@ -60,8 +60,8 @@ class Field(object):
         if(spezialblock == ""):
             if(self.gui.lobbyMenu.modus == 3):
                 self.countBlocks+= 1
-                print self.gameMenue.field1.countBlocks,self.gameMenue.field2.countBlocks, id
-                if(id == 1):
+                print self.gameMenue.field1.countBlocks,self.gameMenue.field2.countBlocks, self.id
+                if(self.id == 1):
                     if(self.gameMenue.field2.countBlocks <= self.countBlocks):
                         self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[2], self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock")
                         print self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock"

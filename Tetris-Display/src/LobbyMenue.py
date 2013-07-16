@@ -343,17 +343,34 @@ class LobbyMenue(object):
         for i in range(self.modus):
             if(self.playerIP[i] == ip):
                 if(i+1 < self.modus):
-                    if(self.player[i+1] != ""):
+                    if((self.player[i+1] != "Attacker") | (self.player[i+1] != "Defender") ):
                         self.player[i] = self.player[i+1]
                         self.playerIP[i] = self.playerIP[i+1]
                         self.rdyPlayer[i] = False 
                         (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
                     else:
-                        self.player[i] = ""
+                        if((i == 0) | (i == 1)):
+                            self.player[i] = "Defender"
+                            self.playerIP[i] = ""
+                            self.rdyPlayer[i] = False 
+                            (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
+                        else:
+                            self.player[i] = "Attacker"
+                            self.playerIP[i] = ""
+                            self.rdyPlayer[i] = False 
+                            (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
+                else:
+                    if((i == 0) | (i == 1)):
+                        self.player[i] = "Defender"
                         self.playerIP[i] = ""
                         self.rdyPlayer[i] = False 
-                        (self.rectNodPlayerArr[i]).updateTextNode("Player "+ (i+1)) 
-                    b = True
+                        (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
+                    else:
+                        self.player[i] = "Attacker"
+                        self.playerIP[i] = ""
+                        self.rdyPlayer[i] = False 
+                        (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
+                b = True
             else:
                 if(b):
                     if(i+1 < self.modus):
