@@ -527,8 +527,8 @@ class EchoServerProtocol(WebSocketServerProtocol):
 if __name__ == '__main__':
     msgList = deque()
     ipStorage = IPStorage()
-#     resolution = avg.Player.get().getScreenResolution()
+    resolution = avg.Player.get().getScreenResolution()
 #     avg.Player.get().setWindowPos(0,0)
 #     avg.Player.get().setWindowFrame(False)
 #     Gui.start(resolution = resolution)
-    Gui.start(resolution = (900,600))
+    Gui.start(resolution = (1400,800))

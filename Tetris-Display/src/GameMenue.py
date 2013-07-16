@@ -36,7 +36,7 @@ class GameMenue(object):
         self.tetrishoehe = self.blocksize * 19
         self.round = 1
         self.rundenDauer = 180
-        self.speed = [750,700,650,600,550]
+        self.speed = [700,650,600,550,500]
         self.countOfSkillsActivated = 0
         self.inverseControlActive = False
         self.leftFreezeActive = False
@@ -168,7 +168,7 @@ class GameMenue(object):
         self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
         self.playSound("gameStart")
-        self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
+        self.SkillActivator = self.player.setInterval(10000, self.activateOneSkill)
         
         
         #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
@@ -345,7 +345,7 @@ class GameMenue(object):
         self.winLooseMenu.buttonNextGame.sensitive = True
         self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
         self.winLooseMenu.divNodeWinLooseMenue.active = True
-
+        self.gui.sendMsgToAll("gameEnds")
         self.playSound("victory")
     
     def naechsteZahlDurch14Teilbar(self,value):
@@ -509,11 +509,12 @@ class GameMenue(object):
         #sende
         if(freigeschalteterBlock != ""):
             if(self.gui.lobbyMenu.modus == 3):
-                ip = self.gui.lobbyMenu.playerID[2]
+                ip = self.gui.lobbyMenu.playerIP[2]
+                print ip+ "###"+freigeschalteterBlock
                 self.gui.sendMsgToAll(ip+ "###"+freigeschalteterBlock)
             elif(self.gui.lobbyMenu.modus == 4):
-                ip1 = self.gui.lobbyMenu.playerID[2]
-                ip2 = self.gui.lobbyMenu.playerID[3]
+                ip1 = self.gui.lobbyMenu.playerIP[2]
+                ip2 = self.gui.lobbyMenu.playerIP[3]
                 self.gui.sendMsgToAll(ip1+"###"+freigeschalteterBlock)
                 self.gui.sendMsgToAll(ip2+"###"+freigeschalteterBlock)
         

@@ -15,7 +15,7 @@ class DefenderSkills(object):
             pass
         else:
             self.field.updateScore(-1)
-            self.player.clearInterval(self.timer)
+            self.player.clearInterval(self.field.timer)
             if (self.block is None):
                 pass
             elif(self.block.blockType == "super"):

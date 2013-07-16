@@ -335,7 +335,7 @@ class LobbyMenue(object):
         self.rdyPlayer[i] = False
         
          
-    def updatePlayerLeft(self, ip):
+    def updatePlayerLeft(self, ip):#TODO:
         self.connectedPlayers-=1
         self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
         i = 0
