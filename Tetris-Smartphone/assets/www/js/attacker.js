@@ -76,9 +76,10 @@ function tickList(){
         case "T-Shape":
             console.log("Sending Signal to Server.");
             send(ip+"###cross");
+        
     }
     updateQueueList();
-    document.getElementById('nextblock').innerHTML = '<img src='+'"'+'img/'+next+'.png"';
+    document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png"';
 };
 
 function checkLength(){
