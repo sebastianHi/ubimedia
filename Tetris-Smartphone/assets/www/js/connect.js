@@ -51,6 +51,7 @@ function buildHost() {
                     //kick client
                 break;
             case "dropBlock":
+                    console.log("TickList. Proceed.");
                     tickList();    
                 break;
             case "GAME_PAUSE":

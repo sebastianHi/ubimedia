@@ -47,30 +47,38 @@ function updateQueueList(){
 
 function tickList(){
     var next = queue.shift();
+    console.log("Shifted Next Element, which is: "+next);
     switch(next){
         case "I-Shape":
             send(ip+"###I");
+            console.log("Sending Signal to Server.");
             break;
         case "Circle":
             send(ip+"###cube");
+            console.log("Sending Signal to Server.");
             break;
         case "L-Shape":
             send(ip+"###L");
+            console.log("Sending Signal to Server.");
             break;
         case "Inv-L-Shape":
             send(ip+"###reverseL");
+            console.log("Sending Signal to Server.");
             break;
         case "S-Shape":
             send(ip+"###reverseZ");
+            console.log("Sending Signal to Server.");
             break;
         case "Z-Shape":
             send(ip+"###Z");
+            console.log("Sending Signal to Server.");
             break;
         case "T-Shape":
+            console.log("Sending Signal to Server.");
             send(ip+"###cross");
     }
     updateQueueList();
-    document.getElementById('nextblock').innerHTML = next;
+    document.getElementById('nextblock').innerHTML = '<img src='+'"'+'img/'+next+'.png"';
 };
 
 function checkLength(){
