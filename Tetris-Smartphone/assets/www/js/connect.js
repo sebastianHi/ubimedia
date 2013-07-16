@@ -57,8 +57,26 @@ function buildHost() {
             case "GAME_PAUSE":
                     //pauses the game
                 break;
-            case "GAME_RESUME":
-                    //resumes the game
+            case "cube":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/Circle.png">';    
+                break;
+            case "I":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/I-Shape.png">';
+                break;
+            case "L":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/L-Shape.png">';
+                break;
+            case "reverseL":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/Inv-L-Shape.png">';
+                break;
+            case "reverseZ":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/S-Shape.png">';
+                break;
+            case "Z":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/Z-Shape.png">';
+                break;
+            case "cross":
+                document.getElementById('CurrBlock').innerHTML = '<img src="img/T-Shape.png">';
                 break;
             case "notRdy":
                 resetReady();

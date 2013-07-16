@@ -79,7 +79,7 @@ function tickList(){
         
     }
     updateQueueList();
-    document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png"';
+    document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png">';
 };
 
 function checkLength(){
