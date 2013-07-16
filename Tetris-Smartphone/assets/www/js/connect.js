@@ -106,6 +106,12 @@ function buildHost() {
 
     function transmitNickname(){
         console.log("Transmitting command:"+ ip+"###nickname:"+nickname);
+        if(nickname.length > 10){
+            nickname = nickname.substr(0,10);
+        }
+        if(nickname.length == 0){
+            nickname = "Anonymous"
+        }
         send(ip+"###nickname:"+nickname);
     }
 		
