@@ -525,4 +525,6 @@ if __name__ == '__main__':
     msgList = deque()
     ipStorage = IPStorage()
     resolution = avg.Player.get().getScreenResolution()
+    avg.Player.get().setWindowPos(0,0)
+    avg.Player.get().setWindowFrame(False)
     Gui.start(resolution = resolution)

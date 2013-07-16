@@ -104,7 +104,14 @@ class Field(object):
             if (self.noMoneyForYou):
                 self.gameMenue.playSound("denied")
             else:
-                self.updateScore(amountOfRows)
+                if  (amountOfRows == 1):
+                    self.updateScore(1)#<-----1 fuer 1
+                elif(amountOfRows == 2):
+                    self.updateScore(3)#<-----3 fuer 2
+                elif(amountOfRows == 3):
+                    self.updateScore(5)#<-----5 fuer 3
+                elif(amountOfRows == 4):
+                    self.updateScore(7)#<-----7 fuer 4
         
     def updateScore(self, points):
         self.score += points
