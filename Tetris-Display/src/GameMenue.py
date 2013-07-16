@@ -398,7 +398,6 @@ class GameMenue(object):
         else:
             self.activateSound()
             self.optionMenu.buttonSound.updateTextNode("Sound:  An")
-    #TODO: hier alle sound nodes auf off stellen
     
     
     def clickOnOptionGrafikButtom(self,event):
@@ -410,8 +409,8 @@ class GameMenue(object):
         self.optionMenu.divNodeOptionMenue.active = True
             
     def clickBreiteP(self,event):
-        self.player.getMainCanvas().resolution = (1000,1000)
-        #self.player.setResolution(False,1000,1000,32)
+        #TODO: Breite  +
+        pass
     
     def clickBreitePP(self,event):
         #TODO: Breite + +

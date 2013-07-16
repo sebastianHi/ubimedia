@@ -21,7 +21,7 @@ class Gui(AVGApp):
 #        zustand = 2    :    Gui ist im Gamemenu
 ############################################################
     
-        self.zumtestenaberloeschbar = True #HierLoeschbar TODO:
+        self.zumtestenaberloeschbar = True #HierLoeschbar
         self.zustand = 0
         self.gtype = 0  # 0 = classic    1 = equal
         self.ipStorage = ipStorage
@@ -53,8 +53,8 @@ class Gui(AVGApp):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
-#-------------------------------ZUM TESTEN --------TODO:------------------------------------------------------------------------------------------------------------------------
-        self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
+#-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------------
+        #TODO: Zum Testen self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
@@ -524,5 +524,8 @@ class EchoServerProtocol(WebSocketServerProtocol):
 if __name__ == '__main__':
     msgList = deque()
     ipStorage = IPStorage()
-    resolution = avg.Player.get().getScreenResolution()
-    Gui.start(resolution = resolution)
+#     resolution = avg.Player.get().getScreenResolution()
+#     avg.Player.get().setWindowPos(0,0)
+#     avg.Player.get().setWindowFrame(False)
+#     Gui.start(resolution = resolution)
+    Gui.start(resolution = (900,600))
