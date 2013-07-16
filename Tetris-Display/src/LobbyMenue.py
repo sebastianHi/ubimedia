@@ -341,24 +341,35 @@ class LobbyMenue(object):
         i = 0
         b = False
         for i in range(self.modus):
-            if(b):
-                if(i < self.modus):
-                    self.player[i-1] = self.player[i] 
-                    self.playerIP[i-1]  =self.playerIP[i] 
-                    self.rdyPlayer[i-1] = self.rdyPlayer[i]
-                    self.rectNodPlayerArr[i-1].updateTextNode(self.player[i-1])
-                else:
-                    self.player[i] = ""
-                    self.playerIP[i] = ""
-                    self.rdyPlayer[i] = False 
-                    (self.rectNodPlayerArr[i]).updateTextNode("") 
             if(self.playerIP[i] == ip):
-                self.player[i] = ""
-                self.playerIP[i] = ""
-                self.rdyPlayer[i] = False 
-                (self.rectNodPlayerArr[i]).updateTextNode("") 
-                b = True
-    
+                if(i+1 < self.modus):
+                    if(self.player[i+1] != ""):
+                        self.player[i] = self.player[i+1]
+                        self.playerIP[i] = self.playerIP[i+1]
+                        self.rdyPlayer[i] = False 
+                        (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
+                    else:
+                        self.player[i] = ""
+                        self.playerIP[i] = ""
+                        self.rdyPlayer[i] = False 
+                        (self.rectNodPlayerArr[i]).updateTextNode("Player "+ (i+1)) 
+                    b = True
+            else:
+                if(b):
+                    if(i+1 < self.modus):
+                        if(self.player[i+1] != ""):
+                            self.player[i] = self.player[i+1]
+                            self.playerIP[i] = self.playerIP[i+1]
+                            self.rdyPlayer[i] = False 
+                            (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
+                        else:
+                            self.player[i] = ""
+                            self.playerIP[i] = ""
+                            self.rdyPlayer[i] = False 
+                            (self.rectNodPlayerArr[i]).updateTextNode("Player "+ (i+1)) 
+           
+        self.gui.sendMsgToAll("notRdy")
+        
         
     def updateJoinedPlayerNumber(self, ip, name):
         if(self.connectedPlayers+1>self.modus):

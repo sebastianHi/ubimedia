@@ -12,7 +12,7 @@ class IPStorage():
         self._ipList[ip]=connection 
     
     def dropConnection(self,ip):##removes Connection out of Dict
-        del self._ipList[ip]
+        self._ipList[ip] = None
         
     def getAllCurrentConnections(self):#returns all currently active Connections
         return self._ipList
@@ -22,7 +22,8 @@ class IPStorage():
     
     def updateAll(self,msg): #sends Message to all connected Clients
         for key in self._ipList:
-            self._ipList[key].sendMessage(key+"###"+msg)
+            if (self._ipList[key] != None):
+                self._ipList[key].sendMessage(key+"###"+msg)
         
     def sendMessageToOneIP(self,ip,msg):
         self._ipList[ip].sendMessage(msg)
