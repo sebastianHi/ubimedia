@@ -338,6 +338,7 @@ class GameMenue(object):
                 winner = "Team 2 gewinnt"
         self.player.clearInterval(self.SkillActivator)
         self.field1.gravityPausieren()
+        self.field2.gravityPausieren()
         self.player.clearInterval(self.timeLimitCounter)
         self.divNodeGameMenue.active = False
         self.optionMenu.divNodeOptionMenue.active = False

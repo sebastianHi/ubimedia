@@ -13,6 +13,7 @@ class Field(object):
             self.feldScore = self.gameMenue.scoreTeam1
         else:
             self.feldScore = self.gameMenue.scoreTeam2
+        self.countBlocks = 0
         self.inverseSteuerung = False
         self.freezeLeft = False
         self.freezeRight = False
@@ -57,10 +58,24 @@ class Field(object):
     def blockHitGround(self, spezialblock = ""):
         self.checkRows()
         if(spezialblock == ""):
-            if(id == 1):
-                self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[0]+"###"+"dropBlock")
+            if(self.gui.lobbyMenu.modus == 3):
+                self.countBlocks+= 1
+                print self.gameMenue.field1.countBlocks,self.gameMenue.field2.countBlocks, id
+                if(id == 1):
+                    if(self.gameMenue.field2.countBlocks <= self.countBlocks):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[2], self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock")
+                        print self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock"
+                else:
+                    if(self.gameMenue.field1.countBlocks < self.countBlocks):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[2], self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock")
+                        print self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock"
             else:
-                    self.gui.sendMsgToAll(self.gui.lobbyMenu.playerIP[1]+"###"+"dropBlock")
+                if(id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[3], self.gui.lobbyMenu.playerIP[3]+"###"+"dropBlock")
+                    print self.gui.lobbyMenu.playerIP[0]+"###"+"dropBlock"
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[2], self.gui.lobbyMenu.playerIP[2]+"###"+"dropBlock")
+                    print self.gui.lobbyMenu.playerIP[1]+"###"+"dropBlock"
         self.initBlock()
         self.timer = self.player.setInterval(self.speed, self.gravity)
         
@@ -151,6 +166,11 @@ class Field(object):
         if (RandomNumber == 1):
             a = self.checkSpawn("cube")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"cube")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"cube")
+                    
                 return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -161,6 +181,11 @@ class Field(object):
         elif (RandomNumber == 2):
             a = self.checkSpawn("I")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"I")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"I")
+                    
                 return IFallingBlock.IFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -171,6 +196,10 @@ class Field(object):
         elif (RandomNumber == 3):
             a = self.checkSpawn("L")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"L")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"L")
                 return LFallingBlock.LFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -181,6 +210,11 @@ class Field(object):
         elif (RandomNumber == 4):
             a = self.checkSpawn("reverseL")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"reverseL")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"reverseL")
+                    
                 return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -191,6 +225,11 @@ class Field(object):
         elif (RandomNumber == 5):
             a = self.checkSpawn("reverseZ")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"reverseZ")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"reverseZ")
+                 
                 return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -201,6 +240,11 @@ class Field(object):
         elif (RandomNumber == 6):
             a = self.checkSpawn("Z")
             if a:
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"Z")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"Z")
+                 
                 return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -210,6 +254,11 @@ class Field(object):
         elif(RandomNumber == 7):
             a = self.checkSpawn("cross")
             if a: 
+                if(self.id == 1):
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"cross")
+                else:
+                    self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"cross")
+                 
                 return crossFallingBlock.crossFallingBlock(self.gameMenue, self)
             else:
                 if(self.id == 1):
@@ -299,18 +348,59 @@ class Field(object):
             b = self.checkSpawn(a)
             if b:
                 if (a == "cube"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"cube")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"cube")
+                 
                     return cubeFallingBlock.cubeFallingBlock(self.gameMenue, self)
                 elif (a == "I"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"I")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"I")
+                 
+                    
                     return IFallingBlock.IFallingBlock(self.gameMenue, self)
                 elif (a== "L"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"L")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"L")
+                 
+                    
                     return LFallingBlock.LFallingBlock(self.gameMenue, self)
                 elif (a == "Z"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"Z")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"Z")
+                 
+                    
                     return ZFallingBlock.ZFallingBlock(self.gameMenue, self)
                 elif (a == "reverseL"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"reverseL")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"reverseL")
+                 
+                    
                     return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
                 elif (a == "reverseZ"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"reverseZ")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"reverseZ")
+                 
+                    
                     return reverseZFallingBlock.reverseZFallingBlock(self.gameMenue, self)
                 elif (a == "cross"):
+                    if(self.id == 1):
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[0],self.gui.lobbyMenu.playerIP[0]+"###"+"cross")
+                    else:
+                        self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[1],self.gui.lobbyMenu.playerIP[1]+"###"+"cross")
+                 
+                    
                     return crossFallingBlock.crossFallingBlock(self.gameMenue,self)
                 else:
                     pass
