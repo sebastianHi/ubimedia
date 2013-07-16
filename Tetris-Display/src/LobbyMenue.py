@@ -29,8 +29,8 @@ class LobbyMenue(object):
         self.modus = modus
         if(self.modus==2):
             self.playstyleModus = "1vs1"
-            self.player[0] = "Player 1"
-            self.player[1] = "Player 2"
+            self.player[0] = "Defender"
+            self.player[1] = "Defender"
         elif(self.modus == 3):
             self.playstyleModus = "1vs1vs1"
             self.player[0] = "Defender"
@@ -357,16 +357,22 @@ class LobbyMenue(object):
             else:
                 if(b):
                     if(i+1 < self.modus):
-                        if(self.player[i+1] != ""):
+                        if((self.player[i+1] != "Attacker") | (self.player[i+1] != "Defender") ):
                             self.player[i] = self.player[i+1]
                             self.playerIP[i] = self.playerIP[i+1]
                             self.rdyPlayer[i] = False 
                             (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
                         else:
-                            self.player[i] = ""
-                            self.playerIP[i] = ""
-                            self.rdyPlayer[i] = False 
-                            (self.rectNodPlayerArr[i]).updateTextNode("Player "+ (i+1)) 
+                            if((i == 0) | (i == 1)):
+                                self.player[i] = "Defender"
+                                self.playerIP[i] = ""
+                                self.rdyPlayer[i] = False 
+                                (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
+                            else:
+                                self.player[i] = "Attacker"
+                                self.playerIP[i] = ""
+                                self.rdyPlayer[i] = False 
+                                (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
            
         self.gui.sendMsgToAll("notRdy")
         
@@ -380,4 +386,5 @@ class LobbyMenue(object):
             (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
             self.playerIP[self.connectedPlayers] = ip
             self.connectedPlayers+=1
+            print self.playerIP[0],self.playerIP[1],self.playerIP[2],self.playerIP[3]
             

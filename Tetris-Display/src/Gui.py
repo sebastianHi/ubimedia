@@ -178,7 +178,7 @@ class Gui(AVGApp):
         
         befehl = ''.join(l)
         
-        print "befehl: ",befehl,"ip: ",ip   
+        #print "befehl: ",befehl,"ip: ",ip   
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
@@ -501,6 +501,9 @@ class Gui(AVGApp):
             
     def sendMsgToAll(self, msg):
         ipStorage.updateAll(msg)
+        
+    def sendMsgToOne(self,ip, msg):
+        ipStorage.sendMessageToOneIP(ip, msg)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
 ###WEBSOCKETPROTOCOL USED FOR COMMUNICATION####
