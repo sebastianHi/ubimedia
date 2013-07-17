@@ -18,26 +18,26 @@ class GameTypeMenue(object):
             
             self.buttonCreateGame = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.3,self.divNodeTypeMenue.size[1]*0.25),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.25,self.divNodeTypeMenue.size[1]*0.15))
             self.buttonCreateGame.addTextGameTypeAndMain("Choose Gametype:")
             self.buttonCreateGame.setActivity(False)
 
             self.buttonEqualMode = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.45),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
             self.buttonEqualMode.addTextGameTypeAndMain("Equal-Mode")
              
             self.buttonNormalMode = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.60),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
             self.buttonNormalMode.addTextGameTypeAndMain("Classic-Mode")
             
             self.backButton = TextRectNode(parent = self.divNodeTypeMenue, 
                                        pos = (self.divNodeTypeMenue.size[0]*0.40,self.divNodeTypeMenue.size[1]*0.75),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeTypeMenue.size[0]*0.15,self.divNodeTypeMenue.size[1]*0.10))
             self.backButton.addTextGameTypeAndMain("Back")
             

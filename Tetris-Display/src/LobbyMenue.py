@@ -47,53 +47,67 @@ class LobbyMenue(object):
             
         
         self.divNodelobbyMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
-        self.background = avg.ImageNode(parent = self.divNodelobbyMenue, href = "DatBG.png", size = self.divNodelobbyMenue.size)
-            
+        self.background = avg.ImageNode(parent = self.divNodelobbyMenue, 
+                                        href = "DatBG.png",
+                                        pos = (0,self.divNodelobbyMenue.size[1]*0.29),  
+                                        size = (self.divNodelobbyMenue.size[0],self.divNodelobbyMenue.size[1]*0.71))
+         
+        self.settingsImage = avg.ImageNode(parent = self.divNodelobbyMenue, 
+                                           href = "Overlay1.png",
+                                           pos = (0,0), 
+                                           size = (self.divNodelobbyMenue.size[0],self.divNodelobbyMenue.size[1]*0.29))  
+          
         self.gameName = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.gameName.addTextForLobbyLine("IP:",socket.gethostbyname(socket.gethostname()))
+        self.gameName.setActivity(False)
         
         self.type = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         if(self.typ == 0):
             self.type.addTextForLobbyLine("Type:" , "Classic")
         else:
             self.type.addTextForLobbyLine("Type:" , "EqualMode")
+        self.type.setActivity(False)
         
         self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.playStyle.addTextForLobbyLine("Playstyle:" , self.playstyleModus)
+        self.playStyle.setActivity(False)
         
         self.numberPlayers = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         
         self.numberPlayers.addTextForLobbyLine("Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
+        self.numberPlayers.setActivity(False)
         
         self.backButton =  TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2.4,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(2*(self.divNodelobbyMenue.size[0]/2- self.divNodelobbyMenue.size[0]/2.4), self.divNodelobbyMenue.size[1]*0.14))
         self.backButton.addTextForBackButton("Back")
         
         self.teamOne = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamOne.addText("Team 1")
+        self.teamOne.setActivity(False)
         
         self.teamTwo = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamTwo.addText("Team 2")
+        self.teamTwo.setActivity(False)
         
         aktuelleHoehe = self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07 + self.divNodelobbyMenue.size[1]*0.15
         

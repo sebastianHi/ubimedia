@@ -1,6 +1,5 @@
 from libavg import avg
 from Field import Field
-from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
 from OptionMenue import OptionMenue
 import random

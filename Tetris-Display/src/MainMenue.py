@@ -26,19 +26,19 @@ class MainMenue(object):
             
             self.button1vs1 = TextRectNode(parent = self.divNodeMainMenue, 
                                        pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.45),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeMainMenue.size[0]*0.15,self.divNodeMainMenue.size[1]*0.10))
             self.button1vs1.addTextGameTypeAndMain("1vs1")
             
             self.button2vs2 = TextRectNode(parent = self.divNodeMainMenue, 
                                        pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.75),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeMainMenue.size[0]*0.15,self.divNodeMainMenue.size[1]*0.10))
             self.button2vs2.addTextGameTypeAndMain("2vs2")
             
             self.button1vs1vs1 = TextRectNode(parent = self.divNodeMainMenue, 
                                        pos = (self.divNodeMainMenue.size[0]*0.40,self.divNodeMainMenue.size[1]*0.60),
-                                       href = "DatBG.png",
+                                       href = "Overlay1.png",
                                        size = avg.Point2D(self.divNodeMainMenue.size[0]*0.15,self.divNodeMainMenue.size[1]*0.10))
             self.button1vs1vs1.addTextGameTypeAndMain("1vs1vs1")
             
