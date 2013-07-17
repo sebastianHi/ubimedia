@@ -48,7 +48,7 @@ function buildHost() {
                     //game start signal
                 break;
             case "DISC_CLNT":
-                    //kick client
+                    disconnect();
                 break;
             case "dropBlock":
                     console.log("TickList. Proceed.");
