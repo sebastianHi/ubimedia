@@ -17,7 +17,7 @@ class GameMenue(object):
         self.player = player
         self.rootNode = parent
         self.divNodeGameMenue= avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
-        self.background = avg.RectNode(parent = self.divNodeGameMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodeGameMenue.size )
+        self.background = avg.ImageNode(parent = self.divNodeGameMenue, href = "DatBG.png", size = self.divNodeGameMenue.size)
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.winLooseMenu = WinLooseMenue(self.rootNode)
         self.optionMenu = OptionMenue(self.rootNode)
