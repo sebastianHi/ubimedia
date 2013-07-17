@@ -150,8 +150,8 @@ class GameMenue(object):
         self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
         self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
         
-        self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
-        self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player)
+        self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player,self.gui)
+        self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player,self.gui)
         
         self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
