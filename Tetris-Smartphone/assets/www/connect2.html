@@ -12,13 +12,13 @@
            <div data-role="content">
                <script>getIp();getNickname();</script>
                <div class="ui-grid-b">
-	               <div class="ui-block-a">.//connection info<br><p>Connected to: <b id="connectto"></b></p><p>Username: <i id="nick2"></i></p></div>
-	               <div class="ui-block-b">Ready?<br><a href="#" data-role="button" data-iconpos="top" data-icon="check" ontouchstart="ready();" id="readybutton">Ready!</a></div>
-	               <div class="ui-block-c">.//game info<br><p>I don't give a fuck.</p></div>
+	               <div class="ui-block-a"><div style="background:#FaFad2;">.//connection info</div><br><p>Connected to: <b id="connectto"></b></p><p>Username: <i id="nick2"></i></p></div>
+	               <div class="ui-block-b"><div align="center" style="background:#FaFad2;">Are you ready?</div><br><a href="#" data-role="button" data-iconpos="top" data-icon="check" data-theme="c" ontouchstart="ready();" id="readybutton">Ready!</a></div>
+	               <div class="ui-block-c"><div align="right" style="background:#FaFad2;">game info\\.</div><div align="right"><br><p><u>Defender:</u>Try to score as many points as possible</p><br><u>Attacker:</u> Place blocks and harass defender.</div></div>
                </div><!-- /grid-b -->
                 <div class="ui-grid-b">
-	               <div class="ui-block-a">.//etc<p>Log:</p><p id="connection"></p></div>
-	               <div class="ui-block-b"><a href="#" data-role="button" data-icon="delete" data-iconpos="top" ontouchstart="disconnect();">Disconnect</a></div>
+	               <div class="ui-block-a"><div style="background:#FaFad2;">.//etc</div><p>Server-Client-Log:</p><p id="connection"></p></div>
+	               <div class="ui-block-b"><a href="#" data-role="button" data-icon="delete" data-iconpos="top" data-theme="b" ontouchstart="disconnect();">Disconnect</a></div>
                </div><!-- /grid-b -->
             </div>
         </div>
