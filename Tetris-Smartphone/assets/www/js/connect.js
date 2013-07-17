@@ -5,6 +5,7 @@ var currIP = null;
 var currCmd = null;
 var nickname = null;
 var readyvalue = false;
+var invControlUnlocked, leftFreezeUnlocked, rightFreezeUnlocked, rotateFreezeUnlocked, speedUPUnlocked, invisBlockUnlocked, noPointsUnlocked = false;
 
 function buildHost() {
     sock = new WebSocket(wsuri);
@@ -89,30 +90,37 @@ function buildHost() {
             case "unlockRightFreeze":
                 console.log("Skill unlocked!");
                 unlockFreezeRight();
+                rightFreezeUnlocked = true;
                 break;
             case "unlockLeftFreeze":
                 console.log("Skill unlocked!");
                 unlockFreezeLeft();
+                leftFreezeUnlocked = true;
                 break;
             case "unlockRotateFreeze":
                 console.log("Skill unlocked!");
                 unlockFreezeRotate();
+                rotateFreezeUnlocked = true;
                 break;
             case "unlockNoPoints":
                 console.log("Skill unlocked!");
                 unlockNoPts();
+                noPointsUnlocked = true;
                 break;
             case "unlockInverseControl":
                 console.log("Skill unlocked!");
-                unlockable = "InverseControl";
+                unlockInvControl();
+                invControlUnlocked = true;
                 break;
             case "unlockBlockInvisible":
                 console.log("Skill unlocked!");
                 unlockInvisBlock();
+                invisBlockUnlocked = true;
                 break;
             case "unlockSpeedUp":
                 console.log("Skill unlocked!");
                 unlockSpdUp();
+                speedUPUnlocked = true;
                 break;
             }
         }

@@ -1,6 +1,6 @@
 //Initialize Queue
 var queue = [];
-var unlockable = "";
+var DATCooldown
 
 function addI() {
     addToQueue("I-Shape");
@@ -109,30 +109,46 @@ if(queue.length > 4){
 
 function inverseControl() {
     send(ip+"###inverseControl");
+    $('#invControl').addClass('ui-disabled');
+    disableSkills();
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function leftFreeze() {
     send(ip+"###freezeLeft");
+    $('#frzLeft').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
+    
 }
 
 function rightFreeze() {
     send(ip+"###freezeRight");
+    $('#frzRight').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function rotateFreeze(){
     send(ip+"###freezeRotate");
+    $('#frzRotate').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function speedUp() {
     send(ip+"###speedUp");
+    $('#spdUp').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function invisBlock() {
     send(ip+"###makeBlockInvisible");
+    $('#invBlock').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function noPoints() {
     send(ip+"###noPoints");
+    $('#noPts').addClass('ui-disabled');
+    DATCooldown = setInterval("cooldown()", 30000);
 }
 
 function superBlock() {
@@ -184,4 +200,29 @@ $('#noPts').addClass('ui-disabled');
 $('#invControl').addClass('ui-disabled');
 $('#invBlock').addClass('ui-disabled');
 $('#spdUp').addClass('ui-disabled');
+}
+
+cooldown() {
+    if (invControlUnlocked){
+    $('#invControl').removeClass('ui-disabled');
+    }
+    if (leftFreezeUnlocked){
+    $('#frzLeft').removeClass('ui-disabled');
+    }
+    if (rightFreezeUnlocked){
+    $('#frzRight').removeClass('ui-disabled');
+    }
+    if (rotateFreezeUnlocked){
+    $('#frzRotate').removeClass('ui-disabled');
+    }
+    if (speedUPUnlocked){
+    $('#spdUp').removeClass('ui-disabled');
+    }
+    if (invisBlockUnlocked){
+    $('#invBlock').removeClass('ui-disabled');
+    }
+    if (noPointsUnlocked){
+    $('#noPts').removeClass('ui-disabled');
+    }
+    window.clearInterval(DATCooldown);
 }
