@@ -23,13 +23,13 @@ class IPStorage():
     def updateAll(self,msg): #sends Message to all connected Clients
         for key in self._ipList:
             if (self._ipList[key] != None):
-                print "Nachricht An Kevin: "+ key+"###"+msg
+                #print "Nachricht An Kevin: "+ key+"###"+msg
                 self._ipList[key].sendMessage(key+"###"+msg)
     
     #sendet nachricht an nur eine ip    
     def sendMessageToOneIP(self,ip,msg):
         if (self._ipList[ip] != None):
-            print "Nachricht An Kevin: "+ ip+"###"+msg
+            #print "Nachricht An Kevin: "+ ip+"###"+msg
             self._ipList[ip].sendMessage(ip+"###"+msg)
      
     #sendet ip an sich selbst        

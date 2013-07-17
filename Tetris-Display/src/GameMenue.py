@@ -158,7 +158,7 @@ class GameMenue(object):
         
         self.playSound("gameStart")
         if(self.gui.lobbyMenu.modus != 2):
-            self.SkillActivator = self.player.setInterval(10000, self.activateOneSkill)
+            self.SkillActivator = self.player.setInterval(120000, self.activateOneSkill)
         
         
         #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
@@ -346,7 +346,6 @@ class GameMenue(object):
 
     #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei, nur im 3 und 4 modus aktiviert
     def activateOneSkill(self): 
-        print "ICH BIN FREI"
         randomNumber = random.randint(1,7)
         freigeschalteterBlock = ""
         if (randomNumber == 1):

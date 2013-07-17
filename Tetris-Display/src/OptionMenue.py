@@ -11,7 +11,7 @@ class OptionMenue(object):
     def __init__(self, parent):
         self.rootNode = parent
         self.divNodeOptionMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
-        self.background = avg.ImageNode(parent = self.divNodeGameMenue, href = "DatBG.png", size = self.divNodeGameMenue.size)
+        self.background = avg.ImageNode(parent = self.divNodeOptionMenue, href = "DatBG.png", size = self.divNodeOptionMenue.size)
         self.header = TextRectNode(parent = self.divNodeOptionMenue, 
                                    href = "DatBG.png",
                                    pos = (0,0),

@@ -78,7 +78,7 @@ class Gui(AVGApp):
             if(self.lobbyMenu.modus == 3 ):
                 ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
                 ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attackerSolo")
             if(self.lobbyMenu.modus == 2 ):
                 ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
                 ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
@@ -177,7 +177,8 @@ class Gui(AVGApp):
         if((befehl == "moveLeft") | (befehl == "moveRight") | (befehl == "RotateR") | (befehl == "RotateL") | (befehl == "speedDown")):
             pass 
         else:
-            print "befehl: ",befehl,"   ip: ",ip,"  ", self.zustand
+            pass
+            #print "befehl: ",befehl,"   ip: ",ip,"  ", self.zustand
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
@@ -499,7 +500,6 @@ if __name__ == '__main__':
     msgList = deque()
     ipStorage = IPStorage()
     resolution = avg.Player.get().getScreenResolution()
-#     avg.Player.get().setWindowPos(0,0)
-#     avg.Player.get().setWindowFrame(False)
-#     Gui.start(resolution = resolution)
-    Gui.start(resolution = (1400,800))
+    avg.Player.get().setWindowPos(0,0)
+    avg.Player.get().setWindowFrame(False)
+    Gui.start(resolution = resolution)
