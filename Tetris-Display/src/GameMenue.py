@@ -2,7 +2,6 @@ from libavg import avg
 from Field import Field
 from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
-from GrafikChanceMenue import GrafikChanceMenue
 from OptionMenue import OptionMenue
 import random
 from AttackerSkills import AttackerSkills
@@ -21,7 +20,6 @@ class GameMenue(object):
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         self.winLooseMenu = WinLooseMenue(self.rootNode)
         self.optionMenu = OptionMenue(self.rootNode)
-        self.grafikMenu = GrafikChanceMenue(self.rootNode, self.player)
         self.menueLinkerXwert  = int(self.divNodeGameMenue.size[0]/2- self.divNodeGameMenue.size[0]*0.04)
         self.menueRechterXwert = int(self.divNodeGameMenue.size[0]/2+ self.divNodeGameMenue.size[0]*0.04)
         self.rahmenbreite = int(self.divNodeGameMenue.size[0]*0.025)
@@ -142,22 +140,9 @@ class GameMenue(object):
         #Optionevents
         self.background.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.background, self.startOptionMenu)
         self.optionMenu.buttonResume.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonResume, self.stopOptionMenue)
-        self.optionMenu.buttonGrafik.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonGrafik, self.clickOnOptionGrafikButtom)
         self.optionMenu.buttonFinish.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonFinish, self.finishEarly)
         self.optionMenu.buttonSound.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.optionMenu.buttonSound, self.turnSoundOff)
-        #grafikchancebottoms
-        self.grafikMenu.buttonBreiteM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteM, self.clickBreiteM)
-        self.grafikMenu.buttonBreiteMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteMM, self.clickBreiteMM)
-        self.grafikMenu.buttonBreitePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreitePP, self.clickBreitePP)
-        self.grafikMenu.buttonBreiteP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBreiteP, self.clickBreiteP)
-        
-        self.grafikMenu.buttonLaengeM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeM, self.clickLaengeM)
-        self.grafikMenu.buttonLaengeMM.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeMM, self.clickLaengeMM)
-        self.grafikMenu.buttonLaengeP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengeP, self.clickLaengeP)
-        self.grafikMenu.buttonLaengePP.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonLaengePP, self.clickLaengePP)
-        
-        self.grafikMenu.buttonBack.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.grafikMenu.buttonBack, self.clickOnBackButtomGrafikChanceMenue)
-#fuer Matrix feld initialisierung 
+
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self,1, self.gui)
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self,2, self.gui)
@@ -399,50 +384,9 @@ class GameMenue(object):
         else:
             self.activateSound()
             self.optionMenu.buttonSound.updateTextNode("Sound:  An")
-    
-    
-    def clickOnOptionGrafikButtom(self,event):
-        self.optionMenu.divNodeOptionMenue.active = False
-        self.grafikMenu.divNodeGrafikMenue.active = True
-        
-    def clickOnBackButtomGrafikChanceMenue(self, event):
-        self.grafikMenu.divNodeGrafikMenue.active = False
-        self.optionMenu.divNodeOptionMenue.active = True
-            
-    def clickBreiteP(self,event):
-        #TODO: Breite  +
-        pass
-    
-    def clickBreitePP(self,event):
-        #TODO: Breite + +
-        pass
-    
-    def clickBreiteM(self,event):
-        #TODO: Breite -
-        pass
-    
-    def clickBreiteMM(self,event):
-        #TODO: Breite --
-        pass
-    
-    def clickLaengeP(self,event):
-        #TODO: Laenge +
-        pass
-    
-    def clickLaengePP(self,event):
-        #TODO: Laenge + +
-        pass
-    
-    def clickLaengeM(self,event):
-        #TODO: Laenge -
-        pass
-    
-    def clickLaengeMM(self,event):
-        #TODO: Laenge --
-        pass
-        
-    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
 
+    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
+        print "ICH BIN FREI"
         randomNumber = random.randint(1,7)
         freigeschalteterBlock = ""
         if (randomNumber == 1):

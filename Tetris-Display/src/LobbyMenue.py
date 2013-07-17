@@ -1,4 +1,4 @@
-from libavg import avg
+from libavg import avg,ui
 from TextRectNode import TextRectNode
 import socket
 
@@ -184,12 +184,12 @@ class LobbyMenue(object):
             
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer]
 #----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            self.firstPlayer.connectEventHandler(avg.CURSORDOWN,avg.MOUSE, self.firstPlayer, self.onMouseDown)
-            self.firstPlayer.connectEventHandler(avg.CURSORMOTION,avg.MOUSE, self.firstPlayer, self.onMouseMove)
-            self.firstPlayer.connectEventHandler(avg.CURSORUP,avg.MOUSE, self.firstPlayer, self.onMouseUp)
-            self.secondPlayer.connectEventHandler(avg.CURSORDOWN,avg.MOUSE, self.secondPlayer, self.onMouseDown)
-            self.secondPlayer.connectEventHandler(avg.CURSORMOTION,avg.MOUSE, self.secondPlayer, self.onMouseMove)
-            self.secondPlayer.connectEventHandler(avg.CURSORUP,avg.MOUSE, self.secondPlayer, self.onMouseUp)
+            self.firstPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.firstPlayer, self.onMouseDown)
+            self.firstPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.firstPlayer, self.onMouseMove)
+            self.firstPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.firstPlayer, self.onMouseUp)
+            self.secondPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.secondPlayer, self.onMouseDown)
+            self.secondPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.secondPlayer, self.onMouseMove)
+            self.secondPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.secondPlayer, self.onMouseUp)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------      
             
         else:
@@ -222,21 +222,11 @@ class LobbyMenue(object):
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer]
             
 #----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            self.firstPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.firstPlayer, self.onMouseDown)
-            self.firstPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.firstPlayer, self.onMouseMove)
-            self.firstPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.firstPlayer, self.onMouseUp)
-            self.secondPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.secondPlayer, self.onMouseDown)
-            self.secondPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.secondPlayer, self.onMouseMove)
-            self.secondPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.secondPlayer, self.onMouseUp)
-            self.thirdPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.thirdPlayer, self.onMouseDown)
-            self.thirdPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.thirdPlayer, self.onMouseMove)
-            self.thirdPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.thirdPlayer, self.onMouseUp)
+            ui.DragRecognizer(eventNode = self.firstPlayer, eventSource = avg.TOUCH , moveHandler = self.onMove,  friction = 4)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- 
-     
-            
-    def onMouseDown(self, event):
+    def onMove(self, event, offset):
+        print "test"
         node = event.node
         if(self.modus == 4):
             if(node != self.firstPlayer):
@@ -259,17 +249,22 @@ class LobbyMenue(object):
                 self.firstPlayer.sensitive = False
             if(node != self.secondPlayer):
                 self.secondPlayer.sensitive = False
-            
-        self.oldPos = node.pos
-        node.setEventCapture()
-
-    def onMouseMove(self, event):
-        node = event.node
+        
         if self.oldPos != None:
-            node.pos = event.pos
+            node.pos = node.pos + offset
+        else:
+            self.oldPos = node.pos
 
-    def onMouseUp(self, event):
+    def onUp(self, event, offset):
+        print "UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
         node = event.node
+        print node
+        if self.oldPos != None:
+            self.swapPlayer(node.pos)
+            node.pos = self.oldPos
+            print self.oldPos
+            self.oldPos = None
+        
         if(self.modus == 4):
             if(node != self.firstPlayer):
                 self.firstPlayer.sensitive = True
@@ -291,16 +286,10 @@ class LobbyMenue(object):
                 self.firstPlayer.sensitive = True
             if(node != self.secondPlayer):
                 self.secondPlayer.sensitive = True
-                
-        if self.oldPos != None:
-            node.releaseEventCapture()
-            self.swapPlayer(node.pos)
-            node.pos = self.oldPos
-            print self.oldPos
-            self.oldPos = None
 
        
     def swapPlayer(self,offset):
+        print "test"
         pass#TODO:
 #         if(self.modus == 4):
 #             if((self.firstPlayer.pos[0]+self.firstPlayer.size[0]))
@@ -335,61 +324,44 @@ class LobbyMenue(object):
         self.rdyPlayer[i] = False
         
          
-    def updatePlayerLeft(self, ip):#TODO:
+    def updatePlayerLeft(self, ip):
         self.connectedPlayers-=1
         self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
         i = 0
         b = False
+        for j in range(self.modus):
+            self.rdyPlayer[j] = False
         for i in range(self.modus):
             if(self.playerIP[i] == ip):
-                if(i+1 < self.modus):
-                    if((self.player[i+1] != "Attacker") | (self.player[i+1] != "Defender") ):
+                if((i+1 < self.modus) & ((self.player[i+1] != "Attacker") & (self.player[i+1] != "Defender")) ):
+                    self.player[i] = self.player[i+1]
+                    self.playerIP[i] = self.playerIP[i+1]
+                    (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
+                else:
+                    if((i == 0) | (i == 1)):
+                        self.player[i] = "Defender"
+                        self.playerIP[i] = ""
+                        (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
+                    else:
+                        self.player[i] = "Attacker"
+                        self.playerIP[i] = ""
+                        (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
+                b = True
+            else:
+                if(b):
+                    if((i+1 < self.modus)&((self.player[i+1] != "Attacker") & (self.player[i+1] != "Defender"))):
                         self.player[i] = self.player[i+1]
                         self.playerIP[i] = self.playerIP[i+1]
-                        self.rdyPlayer[i] = False 
                         (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
                     else:
                         if((i == 0) | (i == 1)):
                             self.player[i] = "Defender"
                             self.playerIP[i] = ""
-                            self.rdyPlayer[i] = False 
                             (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
                         else:
                             self.player[i] = "Attacker"
                             self.playerIP[i] = ""
-                            self.rdyPlayer[i] = False 
                             (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
-                else:
-                    if((i == 0) | (i == 1)):
-                        self.player[i] = "Defender"
-                        self.playerIP[i] = ""
-                        self.rdyPlayer[i] = False 
-                        (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
-                    else:
-                        self.player[i] = "Attacker"
-                        self.playerIP[i] = ""
-                        self.rdyPlayer[i] = False 
-                        (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
-                b = True
-            else:
-                if(b):
-                    if(i+1 < self.modus):
-                        if((self.player[i+1] != "Attacker") | (self.player[i+1] != "Defender") ):
-                            self.player[i] = self.player[i+1]
-                            self.playerIP[i] = self.playerIP[i+1]
-                            self.rdyPlayer[i] = False 
-                            (self.rectNodPlayerArr[i]).updateTextNode(self.player[i]) 
-                        else:
-                            if((i == 0) | (i == 1)):
-                                self.player[i] = "Defender"
-                                self.playerIP[i] = ""
-                                self.rdyPlayer[i] = False 
-                                (self.rectNodPlayerArr[i]).updateTextNode("Defender") 
-                            else:
-                                self.player[i] = "Attacker"
-                                self.playerIP[i] = ""
-                                self.rdyPlayer[i] = False 
-                                (self.rectNodPlayerArr[i]).updateTextNode("Attacker")
            
         self.gui.sendMsgToAll("notRdy")
         
@@ -403,5 +375,4 @@ class LobbyMenue(object):
             (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
             self.playerIP[self.connectedPlayers] = ip
             self.connectedPlayers+=1
-            print self.playerIP[0],self.playerIP[1],self.playerIP[2],self.playerIP[3]
             

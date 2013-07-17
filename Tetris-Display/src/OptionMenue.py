@@ -37,18 +37,9 @@ class OptionMenue(object):
                                    color = "0404B4",
                                    size = avg.Point2D(self.divNodeOptionMenue.size[0]*0.15,self.divNodeOptionMenue.size[1]*0.10))
         self.buttonResume.addTextGameTypeAndMain("Resume")
-         
-        self.buttonGrafik = TextRectNode(parent = self.divNodeOptionMenue, 
-                                   pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.57),
-                                   fillcolor ="0404B4",
-                                   fillopacity=1,
-                                   color = "0404B4",
-                                   size = avg.Point2D(self.divNodeOptionMenue.size[0]*0.15,self.divNodeOptionMenue.size[1]*0.10))
-        self.buttonGrafik.addTextGameTypeAndMain("Grafik")
-   
         
         self.buttonSound = TextRectNode(parent = self.divNodeOptionMenue, 
-                                   pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.72),
+                                   pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.57),
                                    fillcolor ="0404B4",
                                    fillopacity=1,
                                    color = "0404B4",
@@ -56,7 +47,7 @@ class OptionMenue(object):
         self.buttonSound.addTextGameTypeAndMain("Sound:  An")
         
         self.buttonFinish = TextRectNode(parent = self.divNodeOptionMenue, 
-                                   pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.87),
+                                   pos = (self.divNodeOptionMenue.size[0]*0.40,self.divNodeOptionMenue.size[1]*0.72),
                                    fillcolor ="0404B4",
                                    fillopacity=1,
                                    color = "0404B4",

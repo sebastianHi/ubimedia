@@ -178,7 +178,7 @@ class Gui(AVGApp):
         
         befehl = ''.join(l)
         
-        #print "befehl: ",befehl,"ip: ",ip   
+        print "befehl: ",befehl,"ip: ",ip   
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
