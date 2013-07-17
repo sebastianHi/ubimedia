@@ -11,6 +11,7 @@ from DefenderSkills import DefenderSkills
 class GameMenue(object):
     
     def __init__(self, parent, player, modus, gui):
+        self.alreadyFinished = False
         self.gui = gui
         self.modus = modus  # 0 = classic    1 = equal
         self.player = player
@@ -146,12 +147,16 @@ class GameMenue(object):
         self.yUnten =  self.yOben + self.tetrishoehe
         self.field1 = Field(self.xstartFeld1, self.xendFeld1, self.yOben, self.yUnten,self.blocksize,self.player,self,1, self.gui)
         self.field2 = Field(self.xstartFeld2, self.xendFeld2, self.yOben, self.yUnten,self.blocksize,self.player,self,2, self.gui)
+        
         self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
         self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
+        
         self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
         self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player)
+        
         self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
+        
         self.playSound("gameStart")
         self.SkillActivator = self.player.setInterval(10000, self.activateOneSkill)
         
@@ -312,26 +317,28 @@ class GameMenue(object):
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
     def endeSpiel(self, winner = "check"):
-        if(winner == "check"):
-            scoreTeam1 = self.field1.score
-            scoreTeam2 = self.field2.score
-            if(scoreTeam1 == scoreTeam2):
-                winner = "Unentschieden"
-            elif(scoreTeam1 > scoreTeam2):
-                winner = "Team 1 gewinnt"
-            elif(scoreTeam1 < scoreTeam2):
-                winner = "Team 2 gewinnt"
-        self.player.clearInterval(self.SkillActivator)
-        self.field1.gravityPausieren()
-        self.field2.gravityPausieren()
-        self.player.clearInterval(self.timeLimitCounter)
-        self.divNodeGameMenue.active = False
-        self.optionMenu.divNodeOptionMenue.active = False
-        self.winLooseMenu.buttonNextGame.sensitive = True
-        self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
-        self.winLooseMenu.divNodeWinLooseMenue.active = True
-        self.gui.sendMsgToAll("gameEnds")
-        self.playSound("victory")
+        if(not self.alreadyFinished):
+            if(winner == "check"):
+                scoreTeam1 = self.field1.score
+                scoreTeam2 = self.field2.score
+                if(scoreTeam1 == scoreTeam2):
+                    winner = "Unentschieden"
+                elif(scoreTeam1 > scoreTeam2):
+                    winner = "Team 1 gewinnt"
+                elif(scoreTeam1 < scoreTeam2):
+                    winner = "Team 2 gewinnt"
+            self.player.clearInterval(self.SkillActivator)
+            self.alreadyFinished = True
+            self.field1.gravityPausieren()
+            self.field2.gravityPausieren()
+            self.player.clearInterval(self.timeLimitCounter)
+            self.divNodeGameMenue.active = False
+            self.optionMenu.divNodeOptionMenue.active = False
+            self.winLooseMenu.buttonNextGame.sensitive = True
+            self.winLooseMenu.buttonSomeOneWon.updateTextNode(winner)
+            self.winLooseMenu.divNodeWinLooseMenue.active = True
+            self.gui.sendMsgToAll("gameEnds")
+            self.playSound("victory")
     
     def naechsteZahlDurch14Teilbar(self,value):
         x = value % 14
@@ -455,12 +462,12 @@ class GameMenue(object):
             if(self.gui.lobbyMenu.modus == 3):
                 ip = self.gui.lobbyMenu.playerIP[2]
                 print ip+ "###"+freigeschalteterBlock
-                self.gui.sendMsgToAll(ip+ "###"+freigeschalteterBlock)
+                self.gui.sendMsgToOne(ip,freigeschalteterBlock)
             elif(self.gui.lobbyMenu.modus == 4):
                 ip1 = self.gui.lobbyMenu.playerIP[2]
                 ip2 = self.gui.lobbyMenu.playerIP[3]
-                self.gui.sendMsgToAll(ip1+"###"+freigeschalteterBlock)
-                self.gui.sendMsgToAll(ip2+"###"+freigeschalteterBlock)
+                self.gui.sendMsgToOne(ip1,freigeschalteterBlock)
+                self.gui.sendMsgToOne(ip2,freigeschalteterBlock)
         
     def resetField(self, Field):
         

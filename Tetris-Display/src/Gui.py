@@ -31,7 +31,6 @@ class Gui(AVGApp):
         self.keepCountingToStart = True
         self.player= avg.Player.get()
         self.rootNode= self._parentNode
-        self.switchAttacker = True
         self.checkMsgTimer = self.player.setInterval(10, self.checkMsg)
         
         self.mainMenu = MainMenue(self.rootNode)
@@ -73,17 +72,17 @@ class Gui(AVGApp):
         #rollenzuweisung
         if(self.zumtestenaberloeschbar):
             if(self.lobbyMenu.modus == 4 ):
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], self.lobbyMenu.playerIP[3]+"###"+"attacker")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[3], "attacker")
             if(self.lobbyMenu.modus == 3 ):
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], self.lobbyMenu.playerIP[2]+"###"+"attacker")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[2], "attacker")
             if(self.lobbyMenu.modus == 2 ):
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], self.lobbyMenu.playerIP[0]+"###"+"defender")
-                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], self.lobbyMenu.playerIP[1]+"###"+"defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[0], "defender")
+                ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
     
@@ -177,12 +176,13 @@ class Gui(AVGApp):
           
         
         befehl = ''.join(l)
-        
-        print "befehl: ",befehl,"ip: ",ip   
+        if((befehl == "moveLeft") | (befehl == "moveRight") | (befehl == "RotateR") | (befehl == "RotateL") | (befehl == "speedDown")):
+            pass 
+        else:
+            print "befehl: ",befehl,"   ip: ",ip
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
-           
             self.lobbyMenu.updateJoinedPlayerNumber(ip, befehl[9:befehl.__len__()])
             
         elif((befehl == "disconnect") & (self.zustand ==1)):
@@ -266,12 +266,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.inverseControl()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.inverseControl()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.inverseControl()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.inverseControl()
+                self.gameMenu.attackerNormalField1.inverseControl()
+                             
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
                     
@@ -282,12 +279,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.leftFreeze()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.leftFreeze()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.leftFreeze()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.leftFreeze()
+                self.gameMenu.attackerNormalField1.leftFreeze()
+                              
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -298,12 +292,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.rightFreeze()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.rightFreeze()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.rightFreeze()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.rightFreeze()
+                self.gameMenu.attackerNormalField1.rightFreeze()
+                          
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -314,12 +305,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.rotateFreeze()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.rotateFreeze()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.rotateFreeze()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.rotateFreeze()
+                self.gameMenu.attackerNormalField1.rotateFreeze()
+                              
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -330,12 +318,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.speedUp()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.speedUp()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.speedUp()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.speedUp()
+                self.gameMenu.attackerNormalField1.speedUp()
+                            
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -346,12 +331,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.makeBlockInvisible()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.makeBlockInvisible()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.makeBlockInvisible()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.makeBlockInvisible()
+                self.gameMenu.attackerNormalField1.makeBlockInvisible()
+                      
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -362,12 +344,9 @@ class Gui(AVGApp):
                 elif(ip == self.lobbyMenu.playerIP[3]):
                     self.gameMenu.attackerNormalField1.noPoints()
             elif(self.modus == 3):
-                if(self.switchAttacker):
-                    self.gameMenu.attackerNormalField2.noPoints()
-                    self.switchAttacker = False
-                else:
-                    self.gameMenu.attackerNormalField1.noPoints()
-                    self.switchAttacker = True          
+                self.gameMenu.attackerNormalField2.noPoints()
+                self.gameMenu.attackerNormalField1.noPoints()
+                         
             else:
                 raise SyntaxError(" Falscher spieler wollte normal attacker skill ausfuehren")
             
@@ -516,7 +495,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
          
     def onOpen(self):
         ipStorage.addNewClient(self.peer.host, self) ##adds current Connection and Client IP to the Storage
-        ipStorage.sendMessageToOneIP(self.peer.host, str(self.peer.host))
+        ipStorage.sendIp(self.peer.host)
         print "Client joined"
           
     def onMessage(self, msg, binary):

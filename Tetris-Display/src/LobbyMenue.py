@@ -222,34 +222,11 @@ class LobbyMenue(object):
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer]
             
 #----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            ui.DragRecognizer(eventNode = self.firstPlayer, eventSource = avg.TOUCH , moveHandler = self.onMove,  friction = 4)
+            ui.DragRecognizer(eventNode = self.firstPlayer, eventSource = avg.TOUCH , moveHandler = self.onMove, friction = 4, upHandler = self.swapPlayer)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     def onMove(self, event, offset):
-        print "test"
         node = event.node
-        if(self.modus == 4):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = False
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = False
-            if(node != self.thirdPlayer):
-                self.thirdPlayer.sensitive = False
-            if(node != self.forthPlayer):
-                self.forthPlayer.sensitive = False
-        elif(self.modus == 3):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = False
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = False
-            if(node != self.thirdPlayer):
-                self.thirdPlayer.sensitive = False
-        elif(self.modus == 2):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = False
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = False
-        
         if self.oldPos != None:
             node.pos = node.pos + offset
         else:
@@ -265,30 +242,30 @@ class LobbyMenue(object):
             print self.oldPos
             self.oldPos = None
         
-        if(self.modus == 4):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = True
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = True
-            if(node != self.thirdPlayer):
-                self.thirdPlayer.sensitive = True
-            if(node != self.forthPlayer):
-                self.forthPlayer.sensitive = True
-        elif(self.modus == 3):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = True
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = True
-            if(node != self.thirdPlayer):
-                self.thirdPlayer.sensitive = True
-        elif(self.modus == 2):
-            if(node != self.firstPlayer):
-                self.firstPlayer.sensitive = True
-            if(node != self.secondPlayer):
-                self.secondPlayer.sensitive = True
+#         if(self.modus == 4):
+#             if(node != self.firstPlayer):
+#                 self.firstPlayer.sensitive = True
+#             if(node != self.secondPlayer):
+#                 self.secondPlayer.sensitive = True
+#             if(node != self.thirdPlayer):
+#                 self.thirdPlayer.sensitive = True
+#             if(node != self.forthPlayer):
+#                 self.forthPlayer.sensitive = True
+#         elif(self.modus == 3):
+#             if(node != self.firstPlayer):
+#                 self.firstPlayer.sensitive = True
+#             if(node != self.secondPlayer):
+#                 self.secondPlayer.sensitive = True
+#             if(node != self.thirdPlayer):
+#                 self.thirdPlayer.sensitive = True
+#         elif(self.modus == 2):
+#             if(node != self.firstPlayer):
+#                 self.firstPlayer.sensitive = True
+#             if(node != self.secondPlayer):
+#                 self.secondPlayer.sensitive = True
 
        
-    def swapPlayer(self,offset):
+    def swapPlayer(self,event, offset):
         print "test"
         pass#TODO:
 #         if(self.modus == 4):
