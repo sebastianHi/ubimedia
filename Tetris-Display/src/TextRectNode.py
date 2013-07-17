@@ -5,9 +5,9 @@ Created on 20.06.2013
 '''
 from libavg import avg
 
-class TextRectNode(avg.RectNode):
+class TextRectNode(avg.ImageNode):
     
-    def addText(self, text , color = "000000"):
+    def addText(self, text , color = "F0F0F0"):
         self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]/2, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.5*self.size[1], 
                                       text ="Classic-Mode", 
@@ -22,7 +22,7 @@ class TextRectNode(avg.RectNode):
         self.textNode.text = text
             
         
-    def addTextGameTypeAndMain(self, text , color = "000000"):
+    def addTextGameTypeAndMain(self, text , color = "F0F0F0"):
         self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]/2, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.5*self.size[1], 
                                       text ="Classic-Mode", 
@@ -50,7 +50,10 @@ class TextRectNode(avg.RectNode):
         self.textNode.active = True
         self.active = True
         
-    def addTextForBackButton(self, text, color = "000000"):
+    def setActivity(self, value):
+        self.active = value
+        
+    def addTextForBackButton(self, text, color = "F0F0F0"):
         self.textNode = avg.WordsNode(pos = (self.pos[0] + self.size[0]/2, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.45*self.size[1], 
                                       text =text, 
@@ -63,7 +66,7 @@ class TextRectNode(avg.RectNode):
         self.textNode.text = text
         
         
-    def addTextForLobbyLine(self, textA, textB , color = "000000" ):
+    def addTextForLobbyLine(self, textA, textB , color = "F0F0F0" ):
         self.textNodeA = avg.WordsNode(pos = (self.pos[0]+ self.size[0]*0.1, self.pos[1]+ self.size[1]/2 - (0.30*self.size[1]/2)),
                                       fontsize = 0.45*self.size[1], 
                                       text ="Players connected:", 

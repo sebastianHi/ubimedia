@@ -47,21 +47,17 @@ class LobbyMenue(object):
             
         
         self.divNodelobbyMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
-        self.background = avg.RectNode(parent = self.divNodelobbyMenue, pos = (0,0), fillcolor = "0040FF", fillopacity = 1, color = "0040FF", size = self.divNodelobbyMenue.size )  
-        
+        self.background = avg.ImageNode(parent = self.divNodelobbyMenue, href = "DatBG.png", size = self.divNodelobbyMenue.size)
+            
         self.gameName = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "0040FF",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.gameName.addTextForLobbyLine("IP:",socket.gethostbyname(socket.gethostname()))
         
         self.type = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,0),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "0040FF",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         if(self.typ == 0):
             self.type.addTextForLobbyLine("Type:" , "Classic")
@@ -70,42 +66,32 @@ class LobbyMenue(object):
         
         self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "0040FF",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.playStyle.addTextForLobbyLine("Playstyle:" , self.playstyleModus)
         
         self.numberPlayers = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "0040FF",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         
         self.numberPlayers.addTextForLobbyLine("Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
         
         self.backButton =  TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2.4,0),
-                                   fillcolor ="0404B4",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(2*(self.divNodelobbyMenue.size[0]/2- self.divNodelobbyMenue.size[0]/2.4), self.divNodelobbyMenue.size[1]*0.14))
         self.backButton.addTextForBackButton("Back")
         
         self.teamOne = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamOne.addText("Team 1")
         
         self.teamTwo = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamTwo.addText("Team 2")
         
@@ -115,17 +101,13 @@ class LobbyMenue(object):
         if(self.modus == 4):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -133,17 +115,13 @@ class LobbyMenue(object):
             
             self.thirdPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.thirdPlayer.addText(self.player[2])
             
             self.forthPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.forthPlayer.addText(self.player[3])
             
@@ -159,17 +137,13 @@ class LobbyMenue(object):
         elif(self.modus == 2):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -183,17 +157,13 @@ class LobbyMenue(object):
         else:
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -201,9 +171,7 @@ class LobbyMenue(object):
             
             self.thirdPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/4,aktuelleHoehe),
-                                   fillcolor ="0040FF",
-                                   fillopacity=1,
-                                   color = "000000",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.thirdPlayer.addText(self.player[2])
             
