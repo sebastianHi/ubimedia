@@ -39,7 +39,7 @@ class Gui(AVGApp):
         self.mainMenu.button1vs1vs1.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.mainMenu.button1vs1vs1, self.onClickMain1v1v1)
         self.mainMenu.divNodeMainMenue.active = True 
 
-        
+    #initialierst das Menue zur spieleType auswahl   
     def initWhatGame(self):
         self.typeMenu = GameTypeMenue(self.rootNode)
         self.typeMenu.buttonEqualMode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.typeMenu.buttonEqualMode, self.onClickEqual)
@@ -47,7 +47,8 @@ class Gui(AVGApp):
         self.typeMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.typeMenu.buttonNormalMode, self.backToMenue) 
         self.mainMenu.divNodeMainMenue.active = False 
         self.typeMenu.divNodeTypeMenue.active = True                           
-        
+    
+    #initialisiert die lobby    
     def initLobby(self):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
@@ -59,7 +60,8 @@ class Gui(AVGApp):
         if(not(self.alreadyServerRunning)) : 
             self.alreadyServerRunning = True
             thread.start_new_thread(self.initializeWebSocket, ())##start the WebSocket in new Thread         
-        
+    
+    #initialisiert das spiel    
     def initGame(self):
         self.gameMenu = GameMenue(self.rootNode, self.player, self.gtype, self)
         self.lobbyMenu.divNodelobbyMenue.active = False 
@@ -82,7 +84,7 @@ class Gui(AVGApp):
                 ipStorage.sendMessageToOneIP(self.lobbyMenu.playerIP[1], "defender")
 
 #-----------------------------------------------Lobby Methoden----------------------------------------------------------------------------------------------------------------------------
-    
+    #startet gamecounter  (zum uebergang von lobby -> Game)
     def gameCounter(self):
         self.count = 9
         if(self.lobbyMenu.modus == 2):
@@ -102,23 +104,22 @@ class Gui(AVGApp):
          
         self.countNode = TextRectNode(parent = self.lobbyMenu.divNodelobbyMenue, 
                                    pos = (self.lobbyMenu.divNodelobbyMenue.size[0]/4,self.lobbyMenu.divNodelobbyMenue.size[1]*0.45),
-                                   fillcolor ="0404B4",
-                                   fillopacity=1,
-                                   color = "0404B4",
+                                   href = "DatBG.png",
                                    size = avg.Point2D(self.lobbyMenu.divNodelobbyMenue.size[0]/2,self.lobbyMenu.divNodelobbyMenue.size[1]*0.35))
         self.lobbyMenu.backButton.setInactiv()
-        self.countNode.addText("Gamestart: "+ str(self.count), "000000")  
+        self.countNode.addText("Gamestart: "+ str(self.count), "F0F0F0")  
         self.countNode.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.countNode, self.interruptCount)
         self.timer = self.player.setInterval(1000, self.countCount)
         self.gameStartTimer = self.player.setInterval(10000, self.maybeStart)
-        
+    
+    #unterbricht den counter    
     def interruptCount(self, event):
         self.keepCountingToStart = False
         self.lobbyMenu.rdyPlayer =  [False,False,False,False]
         ipStorage.updateAll("notRdy")
         self.maybeStart()
         
-        
+    # ueberprueft ob der counter unterbrochen wurde, wenn ja starte nicht    
     def maybeStart(self):
         self.player.clearInterval(self.gameStartTimer)
         self.player.clearInterval(self.timer)
@@ -154,9 +155,9 @@ class Gui(AVGApp):
        
     
 #-----------------------------------------------Interaction with App/socket--------------------------------------------------------------------------------------------------------------
-
-    def eventHandler(self,msg):
 ##parser
+# bekommt die befehle vom smartphone und gibt diese weiter
+    def eventHandler(self,msg):
 
         ip = ""
         l = []

@@ -1,4 +1,4 @@
-from libavg import avg,ui
+from libavg import avg
 from TextRectNode import TextRectNode
 import socket
 
@@ -47,53 +47,67 @@ class LobbyMenue(object):
             
         
         self.divNodelobbyMenue = avg.DivNode(parent = self.rootNode, size  = self.rootNode.size, active = False)
-        self.background = avg.ImageNode(parent = self.divNodelobbyMenue, href = "DatBG.png", size = self.divNodelobbyMenue.size)
-            
+        self.background = avg.ImageNode(parent = self.divNodelobbyMenue, 
+                                        href = "Overlay1.png",
+                                        pos = (0,self.divNodelobbyMenue.size[1]*0.29),  
+                                        size = (self.divNodelobbyMenue.size[0],self.divNodelobbyMenue.size[1]*0.71))
+         
+        self.settingsImage = avg.ImageNode(parent = self.divNodelobbyMenue, 
+                                           href = "Overlay1.png",
+                                           pos = (0,0), 
+                                           size = (self.divNodelobbyMenue.size[0],self.divNodelobbyMenue.size[1]*0.29))  
+          
         self.gameName = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.gameName.addTextForLobbyLine("IP:",socket.gethostbyname(socket.gethostname()))
+        self.gameName.setActivity(False)
         
         self.type = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         if(self.typ == 0):
             self.type.addTextForLobbyLine("Type:" , "Classic")
         else:
             self.type.addTextForLobbyLine("Type:" , "EqualMode")
+        self.type.setActivity(False)
         
         self.playStyle = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4 ,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         self.playStyle.addTextForLobbyLine("Playstyle:" , self.playstyleModus)
+        self.playStyle.setActivity(False)
         
         self.numberPlayers = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0] - self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2.4,self.divNodelobbyMenue.size[1]*0.07))
         
         self.numberPlayers.addTextForLobbyLine("Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
+        self.numberPlayers.setActivity(False)
         
         self.backButton =  TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2.4,0),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(2*(self.divNodelobbyMenue.size[0]/2- self.divNodelobbyMenue.size[0]/2.4), self.divNodelobbyMenue.size[1]*0.14))
         self.backButton.addTextForBackButton("Back")
         
         self.teamOne = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamOne.addText("Team 1")
+        self.teamOne.setActivity(False)
         
         self.teamTwo = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.15))
         self.teamTwo.addText("Team 2")
+        self.teamTwo.setActivity(False)
         
         aktuelleHoehe = self.divNodelobbyMenue.size[1]*0.07+self.divNodelobbyMenue.size[1]*0.07 + self.divNodelobbyMenue.size[1]*0.15
         
@@ -101,13 +115,13 @@ class LobbyMenue(object):
         if(self.modus == 4):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -115,13 +129,13 @@ class LobbyMenue(object):
             
             self.thirdPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.thirdPlayer.addText(self.player[2])
             
             self.forthPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.forthPlayer.addText(self.player[3])
             
@@ -130,6 +144,7 @@ class LobbyMenue(object):
             self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.firstPlayer,  self.onClick )
             self.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.secondPlayer,  self.onClick )
             self.thirdPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.thirdPlayer,  self.onClick )
+            self.forthPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.forthPlayer,  self.onClick )
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,13 +152,13 @@ class LobbyMenue(object):
         elif(self.modus == 2):
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -157,13 +172,13 @@ class LobbyMenue(object):
         else:
             self.firstPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (0,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.firstPlayer.addText(self.player[0])
             
             self.secondPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/2,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.secondPlayer.addText(self.player[1])
             
@@ -171,7 +186,7 @@ class LobbyMenue(object):
             
             self.thirdPlayer = TextRectNode(parent = self.divNodelobbyMenue, 
                                    pos = (self.divNodelobbyMenue.size[0]/4,aktuelleHoehe),
-                                   href = "DatBG.png",
+                                   href = "Overlay1.png",
                                    size = avg.Point2D(self.divNodelobbyMenue.size[0]/2,self.divNodelobbyMenue.size[1]*0.35))
             self.thirdPlayer.addText(self.player[2])
             
@@ -180,9 +195,8 @@ class LobbyMenue(object):
             self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.firstPlayer,  self.onClick )
             self.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.secondPlayer,  self.onClick )
             self.thirdPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.thirdPlayer,  self.onClick )
-            self.forthPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.forthPlayer,  self.onClick )
 
- 
+    #zum swappen der spieler
     def onClick(self,event):
         if(self.whoToSwap == -1):
             if(self.modus == 2):
@@ -260,7 +274,7 @@ class LobbyMenue(object):
         
         
         
-       
+    # tauscht die spieler (verschiedene arrays muessen umbeschrieben werden)   
     def swapPlayer(self,x, y ):# angefangen bei 0 bis 3
         if(x == y):
             pass
@@ -278,13 +292,15 @@ class LobbyMenue(object):
             self.rectNodPlayerArr[y].updateTextNode(self.player[y])
             self.gui.sendMsgToAll("notRdy")
     
+    # setzt rdy wert eines spielers auf false
     def playerNotRdyAnylonge(self,ip):
         i = 0
         for i in range(self.modus):
             if(ip == self.playerIP[i]):
                 self.rdyPlayer[i] = False
                 break
- 
+            
+    # setzt rdy wert eines spieler auf true und startet counter falls alle fertig
     def playerGotRdy(self,ip):
         i = -1
         for k in self.playerIP:
@@ -298,7 +314,7 @@ class LobbyMenue(object):
         if p:
             self.gui.gameCounter()
             
-            
+    # setzt den spieler auf notrdy (false)        
     def playerStopBeingRdy(self,ip):
         i = 0
         for k in self.playerIP:
@@ -307,7 +323,7 @@ class LobbyMenue(object):
             i+=1
         self.rdyPlayer[i] = False
         
-         
+    # updatet die array wenn spieler das spiel verlaesst     
     def updatePlayerLeft(self, ip):
         self.connectedPlayers-=1
         self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers)+"/"+ str(self.modus))
@@ -349,10 +365,10 @@ class LobbyMenue(object):
            
         self.gui.sendMsgToAll("notRdy")
         
-        
+    # updatet die anzahl der spieler    
     def updateJoinedPlayerNumber(self, ip, name):
         if(self.connectedPlayers+1>self.modus):
-            raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
+            pass
         else:
             i = 0
             for i in range (self.modus):

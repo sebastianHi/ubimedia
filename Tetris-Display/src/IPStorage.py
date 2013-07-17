@@ -25,12 +25,14 @@ class IPStorage():
             if (self._ipList[key] != None):
                 print "Nachricht An Kevin: "+ key+"###"+msg
                 self._ipList[key].sendMessage(key+"###"+msg)
-        
+    
+    #sendet nachricht an nur eine ip    
     def sendMessageToOneIP(self,ip,msg):
         if (self._ipList[ip] != None):
             print "Nachricht An Kevin: "+ ip+"###"+msg
             self._ipList[ip].sendMessage(ip+"###"+msg)
-            
+     
+    #sendet ip an sich selbst        
     def sendIp(self,ip):
         if (self._ipList[ip] != None):
             self._ipList[ip].sendMessage(ip)

@@ -1,7 +1,14 @@
 from libavg import avg
 
 class reverseZFallingBlock(object):
-
+    #moveBlockLeft                :  Laesst block nach links bewegen
+    #moveBlockRight               :  Laesst block nach rechts bewegen
+    #rotateLeft                   :  Laesst block nach linkts rotieren
+    #rotateRight                  :  Laesst block nach rechts rotieren
+    #hitGround                    :  Gibt wahr zurueck, wenn hindernis unten beruehrt.
+    #checkRightBound              :  Gibt false zurueck, wenn ein hindernis rechts befindetet
+    #checkLeftBound               :  Gibt false zurueck, wenn ein hindernis links befindetet
+    #checkCollisionAtRotation     :  Gibt false zurueck, wenn rotation nach rechts nicht moeglich
 
 
     def __init__(self, GameMenue, Field):

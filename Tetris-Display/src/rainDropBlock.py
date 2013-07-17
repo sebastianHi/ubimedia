@@ -2,6 +2,12 @@ from libavg import avg
 
 class rainDropBlock(object):
 
+    #moveBlockLeft                :  Laesst block nach links bewegen
+    #moveBlockRight               :  Laesst block nach rechts bewegen
+    #rotateLeft                   :  Laesst block nach linkts rotieren
+    #rotateRight                  :  Laesst block nach rechts rotieren
+    #hitGround                    :  Gibt wahr zurueck, wenn hindernis unten beruehrt.
+
     def __init__(self, GameMenue, Field, CurrentPosition):
         
         

@@ -1,6 +1,5 @@
 from libavg import avg
 from Field import Field
-from TextRectNode import TextRectNode
 from WinLooseMenue import WinLooseMenue
 from OptionMenue import OptionMenue
 import random
@@ -59,7 +58,7 @@ class GameMenue(object):
                                       fontsize = 0.022*self.divNodeGameMenue.size[1], 
                                       text ="TimeLimit", 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         
@@ -75,7 +74,7 @@ class GameMenue(object):
                                       fontsize = fontS, 
                                       text =str(self.rundenDauer ), 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         
@@ -88,7 +87,7 @@ class GameMenue(object):
                                       fontsize = fontS, 
                                       text ="Round", 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken +=  fontS + fontS*0.5
@@ -98,7 +97,7 @@ class GameMenue(object):
                                       fontsize = fontS, 
                                       text =str(self.round), 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken +=  4*fontS
@@ -108,7 +107,7 @@ class GameMenue(object):
                                       fontsize = fontS, 
                                       text ="Speed", 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken +=  fontS + fontS*0.5
@@ -117,7 +116,7 @@ class GameMenue(object):
                                       fontsize = fontS, 
                                       text ="1", 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         self.hoeheMitlererBalken += 4*fontS
@@ -127,7 +126,7 @@ class GameMenue(object):
                                       fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0", 
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
           
@@ -135,7 +134,7 @@ class GameMenue(object):
                                       fontsize = 0.035*self.divNodeGameMenue.size[1], 
                                       text ="Score :   0",  
                                       parent = self.divNodeGameMenue, 
-                                      color = "000000", font = "arial", 
+                                      color = "F0F0F0", font = "arial", 
                                       alignment = "center",
                                       sensitive = False)
         #Optionevents
@@ -151,8 +150,8 @@ class GameMenue(object):
         self.attackerNormalField1 = AttackerSkills(self.field1,self.player)
         self.attackerNormalField2 = AttackerSkills(self.field2,self.player)
         
-        self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player)
-        self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player)
+        self.attackerSpezialonField1 = AttackerSpecials(self.field2, self.field1,self.player,self.gui)
+        self.attackerSpezialonField2 = AttackerSpecials(self.field1, self.field2,self.player,self.gui)
         
         self.defenderSkillsField1 = DefenderSkills(self.field1, self.player)
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
@@ -167,7 +166,7 @@ class GameMenue(object):
 #buttoms werden initialisiert
         
 
-
+#fuehrt  Bewegung des Felds auf
     def eventMoveLinks(self,event):
         self.field1.moveLeft()
     
@@ -190,7 +189,7 @@ class GameMenue(object):
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
-        
+    #berechneLinkesXUntenYFeld1    
     def berechneLinkesXUntenYFeld1(self,rechteKante, untereSchranke, obereSchranke):
         linkesX = int(self.divNodeGameMenue.size[0] * 0.03) 
         size = rechteKante - linkesX
@@ -205,7 +204,7 @@ class GameMenue(object):
                 
         
 #----------------------------------------------Rundenuebergang---------------------------------------------------------------------------------------------------    
-        
+    # Time Counter Fuer Game    
     def timerLCountDown (self):
         count = int (self.timerLimit.text)
         if(self.modus == 1):#EqualModus, dh reihen loeschen bei der mitte und fallender stein wird geloescht
@@ -265,6 +264,7 @@ class GameMenue(object):
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    # beended spiel, deaktiviert alle intervalle und geht zum gametypemenue zurueck
     def endeSpiel(self, winner = "check"):
         if(not self.alreadyFinished):
             if(winner == "check"):
@@ -294,6 +294,7 @@ class GameMenue(object):
         x = value % 14
         return value - x
     
+    #initialisiert das grafische feld
     def initFeld (self, startX, endX, oben):
 #linker Rahmen
         avg.RectNode(parent = self.divNodeGameMenue, sensitive = False,
@@ -314,25 +315,26 @@ class GameMenue(object):
                                   size = avg.Point2D(endX-startX+2*int(self.divNodeGameMenue.size[0]*0.025) ,self.rahmenbreite)
                                   )
                                   
-                                  
+    #event um optionmenu zu aktivieren                              
     def startOptionMenu(self, event):
         self.divNodeGameMenue.active = False
         self.optionMenu.divNodeOptionMenue.active = True
         self.field1.gravityPausieren()
         self.player.clearInterval(self.timeLimitCounter)
-        
+    
+    #event um optionmenu zu deaktivieren    
     def stopOptionMenue(self, event):
         self.divNodeGameMenue.active = True
         self.optionMenu.divNodeOptionMenue.active = False
         self.field1.gravityWiederStarten()
         self.timeLimitCounter = self.player.setInterval(1000, self.timerLCountDown)
         
-        
+    #event im menue zum beenden des spiels    
     def finishEarly(self, event):
         self.field1.score = 0
         self.field2.score = 0
         self.endeSpiel()
-        
+    #event im menue zum beenden der sounds   
     def turnSoundOff(self, event):
         text = self.optionMenu.buttonSound.getTextNode().text
         if(text == "Sound:  ON"):
@@ -342,7 +344,8 @@ class GameMenue(object):
             self.activateSound()
             self.optionMenu.buttonSound.updateTextNode("Sound:  ON")
 
-    def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
+    #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei, nur im 3 und 4 modus aktiviert
+    def activateOneSkill(self): 
         print "ICH BIN FREI"
         randomNumber = random.randint(1,7)
         freigeschalteterBlock = ""
@@ -418,7 +421,8 @@ class GameMenue(object):
                 ip2 = self.gui.lobbyMenu.playerIP[3]
                 self.gui.sendMsgToOne(ip1,freigeschalteterBlock)
                 self.gui.sendMsgToOne(ip2,freigeschalteterBlock)
-        
+    
+    # reseted das feld    
     def resetField(self, Field):
         
         Field.inverseSteuerung = False
@@ -432,7 +436,8 @@ class GameMenue(object):
         Field.tetrisRainActivated = False
         Field.noMoneyForYou = False
         Field.rainDropCount = 0
-        
+    
+    #initialisiert die sounds   
     def initSounds(self):
         self.deniedSound = avg.SoundNode(href="denied.mp3", loop=False, volume=1.0, parent = self.rootNode)
         self.skillUnlockedSound = avg.SoundNode(href="skillUnlocked.mp3", loop=False, volume=1.0, parent = self.rootNode)
@@ -444,7 +449,8 @@ class GameMenue(object):
         self.rainSound = avg.SoundNode(href="rain.mp3", loop=False, volume=1.0, parent = self.rootNode)
         self.bombSound = avg.SoundNode(href="bomb.wav", loop=False, volume=1.0, parent = self.rootNode)
         self.cashSound = avg.SoundNode(href="cash.mp3", loop=False, volume=1.0, parent = self.rootNode)
-        
+    
+    #ueberprueft welchen sound er abspielen soll    
     def playSound(self, String):
         if (String == "rain"):
             self.rainSound.play()
@@ -468,8 +474,8 @@ class GameMenue(object):
             self.skillUnlockedSound.play()
         else:
             pass
-        
-    def deactivateSound(self): #deactivates all sound nodes
+    #deactivates all sound nodes    
+    def deactivateSound(self): 
         self.bombSound.volume = 0.0
         self.cashSound.volume = 0.0
         self.deniedSound.volume = 0.0
@@ -479,8 +485,9 @@ class GameMenue(object):
         self.roundSound.volume = 0.0
         self.skillUnlockedSound.volume = 0.0
         self.thunderSound.volume = 0.0
-        
-    def activateSound(self): #activates all sound nodes
+     
+    #activates all sound nodes   
+    def activateSound(self): 
         self.bombSound.volume = 1.0
         self.cashSound.volume = 1.0
         self.deniedSound.volume = 1.0
