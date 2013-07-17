@@ -1,40 +1,42 @@
 //Initialize Queue
 var queue = [];
-var DATCooldown
+var kuhldown = false;
+var spezkuhldown = false;
 
+//Queue Management
 function addI() {
     addToQueue("I-Shape");
-}
+};
 
 function addCircle() {
     addToQueue("Circle");
-}
+};
 
 function addL() {
     addToQueue("L-Shape");
-}
+};
 
 function addInvL() {
     addToQueue("Inv-L-Shape");
-}
+};
 
 function addS() {
     addToQueue("S-Shape");
-}
+};
 
 function addZ() {
     addToQueue("Z-Shape");
-}
+};
 
 function addT() {
     addToQueue("T-Shape");
-}
+};
 
 function addToQueue (item) {
     queue.push(item);
     console.log("Pushed " + item + " to Queue.");
     updateQueueList();
-}
+};
 
 function updateQueueList() {
     //This is where da magic happens.
@@ -44,8 +46,8 @@ function updateQueueList() {
     for (var i = (queue.length)-1; i >= 0; i--){
     $('ul').append('<li>'+'<br>'+'<img src='+'"'+'img/'+queue[i]+'.png"'+'</li>').listview('refresh');
     }
-}
-
+};
+//Queue Verarbeitung
 function tickList() {
     var next = queue.shift();
     console.log("Shifted Next Element, which is: "+next);
@@ -77,15 +79,14 @@ function tickList() {
         case "T-Shape":
             console.log("Sending Signal to Server.");
             send(ip+"###cross");
-        
     }
     updateQueueList();
     if(next.length == null){
         document.getElementById('nextblock').innerHTML = '<p>Queue empty. Random Block.</p>';
     } else { document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png">'; }
-    
-}
+};
 
+//Schaue ob die Queue voll ist
 function checkLength() {
 if(queue.length > 4){
 //Disable all Buttons while Queue is bigger than 5
@@ -105,91 +106,116 @@ if(queue.length > 4){
     $('#bt6').removeClass('ui-disabled');
     $('#bt7').removeClass('ui-disabled');
 }
-}
-
+};
+//Skill und Cooldown managemtn
 function inverseControl() {
     send(ip+"###inverseControl");
     $('#invControl').addClass('ui-disabled');
     disableSkills();
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    kuhldown = true;
+};
 
 function leftFreeze() {
-    send(ip+"###freezeLeft");
+    send(ip+"###leftFreeze");
     $('#frzLeft').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-    
-}
+    disableSkills();
+    kuhldown = true;
+};
 
 function rightFreeze() {
-    send(ip+"###freezeRight");
+    send(ip+"###rightFreeze");
     $('#frzRight').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    disableSkills();
+    kuhldown = true;
+};
 
 function rotateFreeze(){
-    send(ip+"###freezeRotate");
+    send(ip+"###rotateFreeze");
     $('#frzRotate').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    disableSkills();
+    kuhldown = true;
+};
 
 function speedUp() {
     send(ip+"###speedUp");
     $('#spdUp').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    disableSkills();
+    kuhldown = true;
+};
 
 function invisBlock() {
     send(ip+"###makeBlockInvisible");
     $('#invBlock').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    disableSkills();
+    kuhldown = true;
+};
 
 function noPoints() {
     send(ip+"###noPoints");
     $('#noPts').addClass('ui-disabled');
-    DATCooldown = setInterval("cooldown()", 30000);
-}
+    $('#blockrain').addClass('ui-disabled');
+    $('#supblock').addClass('ui-disabled');
+    disableSkills();
+    kuhldown = true;
+};
 
 function superBlock() {
+    if (solo) {
+     $('#noPts').addClass('ui-disabled');
+    $('#blockrain').addClass('ui-disabled');
+    $('#supblock').addClass('ui-disabled');
+    spezkuhldown = true;
+    }
     send(ip+"###orderSuperBlock");
-}
+};
 
 function rainOfBlocks() {
+    if (solo) {
+    $('#noPts').addClass('ui-disabled');
+    $('#blockrain').addClass('ui-disabled');
+    $('#supblock').addClass('ui-disabled');
+    spezkuhldown = true;
+    }
     send(ip+"###orderRainOfBlocks");
-}
+};
 
 function callThunder() {
+    if (solo) {
+    $('#noPts').addClass('ui-disabled');
+    $('#blockrain').addClass('ui-disabled');
+    $('#supblock').addClass('ui-disabled');
+    spezkuhldown = true;
+    }
     send(ip+"###orderThunder");
-}
+};
 
 function unlockFreezeRight() {
 $('#frzRight').removeClass('ui-disabled');
-}
+};
 
 function unlockFreezeLeft() {
 $('#frzLeft').removeClass('ui-disabled');
-}
+};
 
 function unlockFreezeRotate() {
 $('#frzRotate').removeClass('ui-disabled');
-}
+};
 
 function unlockNoPts() {
 $('#noPts').removeClass('ui-disabled');
-}
+};
 
 function unlockInvControl() {
 $('#invControl').removeClass('ui-disabled');
-}
+};
 
 function unlockInvisBlock() {
 $('#invBlock').removeClass('ui-disabled');
-}
+};
 
 function unlockSpdUp() {
 $('#spdUp').removeClass('ui-disabled');
-}
+};
 
 function disableSkills(){
 console.log("Skills disabled. As asked.");
@@ -200,9 +226,9 @@ $('#noPts').addClass('ui-disabled');
 $('#invControl').addClass('ui-disabled');
 $('#invBlock').addClass('ui-disabled');
 $('#spdUp').addClass('ui-disabled');
-}
+};
 
-cooldown() {
+function cooldown(){
     if (invControlUnlocked){
     $('#invControl').removeClass('ui-disabled');
     }
@@ -224,5 +250,14 @@ cooldown() {
     if (noPointsUnlocked){
     $('#noPts').removeClass('ui-disabled');
     }
-    window.clearInterval(DATCooldown);
+    kuhldown = false;
+};
+
+function specials(){
+    if (solo){
+    $('#thunderstruck').removeClass('ui-disabled');
+    $('#blockrain').removeClass('ui-disabled');
+    $('#supblock').removeClass('ui-disabled');
+    }
+    spezkuhldown = false;
 }

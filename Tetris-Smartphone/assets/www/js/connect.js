@@ -1,3 +1,4 @@
+//Socket initialisierung... Sorry fürs Denglisch xD
 var sock = null;
 var wsuri = "ws://localhost:9000";
 var ip = null;
@@ -6,7 +7,9 @@ var currCmd = null;
 var nickname = null;
 var readyvalue = false;
 var invControlUnlocked, leftFreezeUnlocked, rightFreezeUnlocked, rotateFreezeUnlocked, speedUPUnlocked, invisBlockUnlocked, noPointsUnlocked = false;
+var solo = false;
 
+//Bau den Host auf
 function buildHost() {
     sock = new WebSocket(wsuri);
     
@@ -38,14 +41,14 @@ function buildHost() {
                     console.log("Got Test Signal. Parser seems to work.");
                 break;
             case "attacker":
+                //Signal für Attacker, wenn 1vs1vs1 dann haben Spezials Cooldowns
+                solo = false;
                 $.mobile.changePage("attacker.html");
                 break;
             case "defender":
+                //Defender
                 $.mobile.changePage("defender.html");
                 startWatch();
-                break;
-            case "GAME_START":
-                    //game start signal
                 break;
             case "DISC_CLNT":
                     disconnect();
@@ -54,9 +57,7 @@ function buildHost() {
                     console.log("TickList. Proceed.");
                     tickList();    
                 break;
-            case "GAME_PAUSE":
-                    //pauses the game
-                break;
+            //Erkennung der cubes
             case "cube":
                 document.getElementById('CurrBlock').innerHTML = '<img src="img/Circle.png">';    
                 break;
@@ -78,48 +79,57 @@ function buildHost() {
             case "cross":
                 document.getElementById('CurrBlock').innerHTML = '<img src="img/T-Shape.png">';
                 break;
+            //Not ready signal
             case "notRdy":
                 resetReady();
                 break;
+            //Spiel beenden
             case "gameEnds":
                 disconnect();    
                 break;
+            //Nächster Block angefordert
             case "NXT_BLOCK":
                 tickList();
                 break;
+            //Falls 1vs1vs1
+            case "attackerSolo":
+                solo = true;
+                $.mobile.changePage("attacker.html");
+                break;
+            //Skill unlocks
             case "unlockRightFreeze":
                 console.log("Skill unlocked!");
-                unlockFreezeRight();
+                if(kuhldown){ } else { unlockFreezeRight(); }
                 rightFreezeUnlocked = true;
                 break;
             case "unlockLeftFreeze":
                 console.log("Skill unlocked!");
-                unlockFreezeLeft();
+                if(kuhldown){ } else { unlockFreezeLeft(); }
                 leftFreezeUnlocked = true;
                 break;
             case "unlockRotateFreeze":
                 console.log("Skill unlocked!");
-                unlockFreezeRotate();
+                if(kuhldown){ } else { unlockFreezeRotate(); }
                 rotateFreezeUnlocked = true;
                 break;
             case "unlockNoPoints":
                 console.log("Skill unlocked!");
-                unlockNoPts();
+                if(kuhldown){ } else { unlockNoPts(); }
                 noPointsUnlocked = true;
                 break;
             case "unlockInverseControl":
                 console.log("Skill unlocked!");
-                unlockInvControl();
+                if(kuhldown){ } else { unlockInvControl(); }
                 invControlUnlocked = true;
                 break;
             case "unlockBlockInvisible":
                 console.log("Skill unlocked!");
-                unlockInvisBlock();
+                if(kuhldown){ } else { unlockInvisBlock(); }
                 invisBlockUnlocked = true;
                 break;
             case "unlockSpeedUp":
                 console.log("Skill unlocked!");
-                unlockSpdUp();
+                if(kuhldown){ } else { unlockSpdUp(); }
                 speedUPUnlocked = true;
                 break;
             }
@@ -129,17 +139,17 @@ function buildHost() {
         document.getElementById('connection').innerHTML = '<p>' + e.data + '</p>';
     }
    };
-
+    //Socket bauen
     function prepareSocket(){
         buildHost();
         
     }
-
+    //Socket send
     function send(e) {
         var msg = e;
         sock.send(msg);
     }
-
+    //Transmit nickname
     function transmitNickname(){
         console.log("Transmitting command:"+ ip+"###nickname:"+nickname);
         if(nickname.length > 10){
@@ -150,7 +160,7 @@ function buildHost() {
         }
         send(ip+"###nickname:"+nickname);
     }
-		
+    //Set IP
     function setIp() {
         wsuri = "ws://" + document.getElementById('ipinput').value + ":55555";
     }
@@ -188,16 +198,16 @@ function buildHost() {
      currIp = ip.join("");
      currCmd = cmd.join("");
 }
-
+//Get nickname
 function getNickname(){
      document.getElementById('nick2').innerHTML = document.getElementById('nick').value;
 };
-
+//Set nickname
 function setNickname(){
     nickname = document.getElementById('nick').value;
     console.log("Nickname set as: "+ nickname);
 };
-
+//Bewegungen
 function moveLeft(){
     send(ip+"###moveLeft");
 };
@@ -205,25 +215,25 @@ function moveLeft(){
 function moveRight(){
     send(ip+"###moveRight");
 };
-
+//Ready fuer loby
 function ready(){
     $('#readybutton').addClass('ui-disabled');
     send(ip+"###rdy");
     readyvalue = true;
     console.log("sent ready.");
 };
-
+//Disconnect 
 function disconnect(){
  send(ip+"###disconnect"); 
  ip = null;
  sock.close();
  $.mobile.changePage("connect.html");
 };
-
+//Soft Drop, steine nach unten fallen
 function softDrop(){
     send(ip+"###speedDown");
 };
-
+//Setze Ready zurück
 function resetReady(){
     $('#readybutton').removeClass('ui-disabled');
     readyvalue = false;

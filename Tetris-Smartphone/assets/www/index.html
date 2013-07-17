@@ -23,16 +23,16 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-         <meta name="viewport" content="width=device-width, initial-scale=1">
-   		 <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+   	    <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
 		<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
     	<script type="text/javascript" src="cordova-2.7.0.js"></script>
         <script type="text/javascript" src="phonegap-websocket.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-         <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript" src="js/connect.js"></script>
         <script type="text/javascript" src="js/defender.js"></script>
-         <script src="js/attacker.js"></script>
+        <script src="js/attacker.js"></script>
         <script type="text/javascript">
             app.initialize();
             $.mobile.buttonMarkup.hoverDelay = 0;
@@ -58,7 +58,7 @@
             </div>
             
             <div class="ui-grid-solo">
-	           <div class="ui-block-a"><a href="index.html" data-role="button" data-theme="b">Exit</a></div>
+	           <div class="ui-block-a"><a href="index.html" data-role="button" data-theme="b" ontouchstart="navigator.app.exitApp();">Exit</a></div>
                 </div>
         </div><!-- /content -->
     </div>    

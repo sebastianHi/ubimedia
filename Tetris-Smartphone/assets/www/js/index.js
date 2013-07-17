@@ -50,4 +50,4 @@ var app = {
 
 function testRedirect(){
     $.mobile.changePage("attacker.html");
-}
+};
