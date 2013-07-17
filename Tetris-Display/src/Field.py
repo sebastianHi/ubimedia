@@ -41,7 +41,8 @@ class Field(object):
         self.matrixSteadyRectNodes = [[None for i in range(19)] for j in range(14)]#@UnusedVariable
         self.initBlock();
         self.timer = self.player.setInterval(self.speed, self.gravity)
-             
+    
+    #erzeugt einen neuen fallenden block         
     def initBlock(self):
 
         if (self.tetrisRainActivated):
@@ -56,7 +57,7 @@ class Field(object):
                 self.processSpecialsQueue(string)
                 self.block = self.newFallingStone()
   
-   
+    # wenn block boden beruehrt werden reihen ueberprueft und neuer block erzeugt
     def blockHitGround(self, spezialblock = ""):
         self.checkRows()
         if(spezialblock == ""):
@@ -77,7 +78,7 @@ class Field(object):
         self.initBlock()
         self.timer = self.player.setInterval(self.speed, self.gravity)
         
-    
+    # fuegt fallenden block der matrix hinzu
     def steadyBlock(self):
         self.matrixSteadyRectNodes[self.block.currPos1[0]][self.block.currPos1[1]] = self.block.part1
         self.matrixSteadyRectNodes[self.block.currPos2[0]][self.block.currPos2[1]] = self.block.part2
@@ -90,18 +91,7 @@ class Field(object):
         self.player.clearInterval(self.timer)
         
         
-# #prints fuer felder
-#         for y in range(0,19):
-#             s = ""
-#             for x in range(0,14):
-#                 if(self.matrix[x][y]):
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y])+" " + "  ")
-#                 else:
-#                     s +=( str(y)+"  "+str(x)+": "+ str(self.matrix[x][y]) + "  ")
-#             print s
-#             print ""
-#             print ""
-                  
+    # ueberprueft die reihen nach eventuell vollen              
     def checkRows(self):
         amountOfRows = 0
         for j  in range(0,19):
@@ -125,7 +115,8 @@ class Field(object):
                     self.updateScore(5)#<-----5 fuer 3
                 elif(amountOfRows == 4):
                     self.updateScore(7)#<-----7 fuer 4
-        
+    
+    #vergibt punkte , erhoeht score    
     def updateScore(self, points):
         self.score += points
         s = ""
@@ -138,6 +129,7 @@ class Field(object):
         s += str(self.score)
         self.feldScore.text = s
     
+    # loescht row aus der matrix und versetzt alle anderen nodes nach unten
     def dropOneRow(self, row):
         for l in range (14):
             self.matrix[l][row] = False
@@ -157,7 +149,8 @@ class Field(object):
             self.matrix[s][0] = False
             self.matrixSteadyRectNodes[s][0] = None
         self.gameMenue.playSound("cash")
-                   
+    
+    #generiert einen zufaelligen block               
     def generateRandomBlock(self):
         RandomNumber = random.randint(1,7)
 
@@ -280,6 +273,7 @@ class Field(object):
             #self.specialsQueue.append("super")
             return reverseLFallingBlock.reverseLFallingBlock(self.gameMenue, self)
     
+    # erzeugt neuen fallingblock fuer init
     def newFallingStone(self):
         
         if(self.thunderActivated):
@@ -408,8 +402,8 @@ class Field(object):
                 else:
                     self.gameMenue.endeSpiel("Team 1 gewinnt")
         
-    
-    def checkSpawn(self, string): # returns False if spawn is not possible, true otherwise
+    # returns False if spawn is not possible, true otherwise
+    def checkSpawn(self, string): 
         if (string == "cube"):
             if (self.matrix[7][0] == True) or (self.matrix[8][0] == True) or (self.matrix[7][1] == True) or (self.matrix[8][1] == True):
                 return False
@@ -461,6 +455,7 @@ class Field(object):
         else:
             return False
 
+    # ist fuer das fallen der bloecke zustaendig
     def gravity(self):
         if (self.block is None):
             pass
@@ -506,27 +501,27 @@ class Field(object):
             self.block.part4.pos = (self.block.part4.pos[0],self.block.part4.pos[1] + self.gameMenue.blocksize)
             
 
-        
+    # gibt bewegung an fallenden block weiter    
     def moveLeft(self):
-        if((self.block is None) | self.freezeLeft):
+        if((self.block == None) | self.freezeLeft):
             self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.block.moveBlockRight()
         else:
             self.block.moveBlockLeft()
     
-    
+    # gibt bewegung an fallenden block weiter 
     def moveRight(self):
-        if((self.block is None)| self.freezeRight):
+        if((self.block == None)| self.freezeRight):
             self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.block.moveBlockLeft()
         else:
             self.block.moveBlockRight()
     
-    
+    # gibt bewegung an fallenden block weiter 
     def rotateLeft(self):
-        if((self.block is None)| self.freezeRotate):
+        if((self.block == None)| self.freezeRotate):
             self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.gameMenue.playSound("rotate")
@@ -535,9 +530,9 @@ class Field(object):
             self.gameMenue.playSound("rotate")
             self.block.rotateLeft()
             
-    
+    # gibt bewegung an fallenden block weiter 
     def rotateRight(self):
-        if((self.block is None)| self.freezeRotate):
+        if((self.block == None)| self.freezeRotate):
             self.gameMenue.playSound("denied")
         elif(self.inverseSteuerung):
             self.gameMenue.playSound("rotate")
@@ -545,14 +540,17 @@ class Field(object):
         else:
             self.gameMenue.playSound("rotate")
             self.block.rotateRight()
-            
+    
+    #erhoeht die geschwindigkeit        
     def speedDown(self):
         self.chanceSpeed(50)
-            
+        
+    # setzt geschwindigkeit der gravity auf neuen wert        
     def chanceSpeed(self, newSpeedInMs):
         self.player.clearInterval(self.timer)
         self.timer = self.player.setInterval(newSpeedInMs, self.gravity)
     
+    # loescht im equalmodus die obersten 9 reihen
     def equalModus(self):
         for reihe in range(0,10):
             for spalte in range (14):
@@ -561,9 +559,10 @@ class Field(object):
                     (self.matrixSteadyRectNodes[spalte][reihe]).unlink()
                     self.matrixSteadyRectNodes[spalte][reihe] = None
     
+    # runden wechsel, alle intervalle werden umgesetzt
     def clearForNextRound(self):
         self.player.clearInterval(self.timer)
-        if (self.block is None):
+        if (self.block == None):
             pass
         elif(self.block.blockType == "super"):
             self.block.part1.unlink()
@@ -585,14 +584,17 @@ class Field(object):
             self.block.part4.unlink()
         self.block = None
         self.equalModus()  
-        
+    
+    #pausiert gravity    
     def gravityPausieren(self):
         self.player.clearInterval(self.timer)
-        
+     
+    #starten gravity    
     def gravityWiederStarten(self):
         self.timer = self.player.setInterval(self.speed, self.gravity)
 
-    def letItRain(self, RandomNumber): #returns a rainDrop at a random location at the top or ends the game
+    #returns a rainDrop at a random location at the top or ends the game
+    def letItRain(self, RandomNumber): 
 
         if (self.matrix[RandomNumber][0]):
             if(self.id == 1):
@@ -603,6 +605,7 @@ class Field(object):
             
             return rainDropBlock.rainDropBlock(self.gameMenue, self, (self.randomNumber,0))
     
+    #Wirft 30 Rainblocks in das tetrisfeld
     def letItRainScript(self):
         
         b = True
@@ -642,7 +645,7 @@ class Field(object):
         else:
             pass
 
-    
+    #arbeitet die spezialfaehigkeitenqueue ab
     def processSpecialsQueue(self, QueueString):
         if (QueueString == "rain"):
             self.tetrisRainActivated = True
