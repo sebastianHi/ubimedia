@@ -27,7 +27,6 @@ function buildHost() {
             console.log("IP Regocnized and transmitted.");
             transmitNickname();
         } else {
-            console.log("Parsed other data: " +e.data + "however ip: " +ip);
         parse(e.data);
         
         if (currIp != ip) {
@@ -81,30 +80,40 @@ function buildHost() {
             case "notRdy":
                 resetReady();
                 break;
+            case "gameEnds":
+                disconnect();    
+                break;
             case "NXT_BLOCK":
-                    tickList();
-                    break;
+                tickList();
+                break;
             case "unlockRightFreeze":
-                    $('#frzRight').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockFreezeRight();
+                break;
             case "unlockLeftFreeze":
-                    $('#frzLeft').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockFreezeLeft();
+                break;
             case "unlockRotateFreeze":
-                    $('#frzRotate').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockFreezeRotate();
+                break;
             case "unlockNoPoints":
-                    $('#noPts').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockNoPts();
+                break;
             case "unlockInverseControl":
-                    $('#invControl').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockable = "InverseControl";
+                break;
             case "unlockBlockInvisible":
-                    $('#invBlock').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockInvisBlock();
+                break;
             case "unlockSpeedUp":
-                    $('#spdUp').removeClass('ui-disabled');
-                    break;
+                console.log("Skill unlocked!");
+                unlockSpdUp();
+                break;
             }
         }
         }

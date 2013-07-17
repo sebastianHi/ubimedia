@@ -20,13 +20,12 @@
 	</style>
 </head> 
 
-<body> 
+<body>
 	<div id="attacker" data-role="page" style="max-height:440px; min-height:440px;" class="type-home" class="ui-responsive-panel">
 		<div data-role="header">
     		<h1>Game On!</h1>
 		</div>
 		<div data-role="content"> 
-			<script>setInterval("checkLength()", 100);</script>
             <div class="ui-grid-d">
 	           <div class="ui-block-a">
                    <a href="#passive" data-role="button" data-inline="true" data-mini="true">Normal Skills</a>
@@ -73,13 +72,13 @@
 					
 			<div class="panel-content">
 				<h3>Normal Skills</h3><hr>
-                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="inverseControl();" id="invControl" class="ui-disabled">Inverse Control</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="freezeLeft();" id="frzLeft" class="ui-disabled">Freeze Left</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="arrow-r" data-inline="true" ontouchstart="freezeRight();" id="frzRight" class="ui-disabled">Freeze Right</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="refresh" data-inline="true" ontouchstart="freezeRotate();" id="frzRotate" class="ui-disabled">Freeze Rotate</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="gear" data-inline="true" ontouchstart="speedUp();" id="spdUp" class="ui-disabled">Speed Up</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="search" data-inline="true" ontouchstart="invisBlock();" id="invBlock" class="ui-disabled">Invisible Block</a>
-                <a href="#" data-role="button" data-theme="a" data-icon="delete" data-inline="true" ontouchstart="noPoints();" id="noPts" class="ui-disabled">No Points</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="inverseControl();" id="invControl">Inverse Control</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-l" data-inline="true" ontouchstart="leftFreeze();" id="frzLeft">Freeze Left</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="arrow-r" data-inline="true" ontouchstart="rightFreeze();" id="frzRight">Freeze Right</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="refresh" data-inline="true" ontouchstart="rotateFreeze();" id="frzRotate">Freeze Rotate</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="gear" data-inline="true" ontouchstart="speedUp();" id="spdUp">Speed Up</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="search" data-inline="true" ontouchstart="invisBlock();" id="invBlock">Invisible Block</a>
+                <a href="#" data-role="button" data-theme="a" data-icon="delete" data-inline="true" ontouchstart="noPoints();" id="noPts">No Points</a>
 				<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
 			</div><!-- /content wrapper for padding -->
 				
@@ -98,7 +97,10 @@
 	
    		</div><!-- /rightpanel1 -->
 	
-
-   	</div> 
+ <script>var lengthcheck = setInterval("checkLength()", 10);
+         disableSkills();
+</script>
+   	</div>
+   
 </body>
 </html>

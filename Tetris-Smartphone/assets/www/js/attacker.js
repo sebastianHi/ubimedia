@@ -1,51 +1,52 @@
 //Initialize Queue
 var queue = [];
+var unlockable = "";
 
-function addI(){
+function addI() {
     addToQueue("I-Shape");
-};
+}
 
-function addCircle(){
+function addCircle() {
     addToQueue("Circle");
-};
+}
 
-function addL(){
+function addL() {
     addToQueue("L-Shape");
-};
+}
 
-function addInvL(){
-    addToQueue("Inv-L-Shape");   
-};
+function addInvL() {
+    addToQueue("Inv-L-Shape");
+}
 
-function addS(){
+function addS() {
     addToQueue("S-Shape");
-};
+}
 
-function addZ(){
+function addZ() {
     addToQueue("Z-Shape");
-};
+}
 
-function addT(){
+function addT() {
     addToQueue("T-Shape");
-};
+}
 
-function addToQueue (item){
+function addToQueue (item) {
     queue.push(item);
     console.log("Pushed " + item + " to Queue.");
     updateQueueList();
-};
+}
 
-function updateQueueList(){
+function updateQueueList() {
     //This is where da magic happens.
     //Powered by Erdinger Weißbier
     //'n Shit!
-     $('ul').empty();
-    for(var i = (queue.length)-1; i >= 0; i--){
+    $('ul').empty();
+    for (var i = (queue.length)-1; i >= 0; i--){
     $('ul').append('<li>'+'<br>'+'<img src='+'"'+'img/'+queue[i]+'.png"'+'</li>').listview('refresh');
     }
-};
+}
 
-function tickList(){
+function tickList() {
     var next = queue.shift();
     console.log("Shifted Next Element, which is: "+next);
     switch(next){
@@ -79,10 +80,13 @@ function tickList(){
         
     }
     updateQueueList();
-    document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png">';
-};
+    if(next.length == null){
+        document.getElementById('nextblock').innerHTML = '<p>Queue empty. Random Block.</p>';
+    } else { document.getElementById('nextblock').innerHTML = '<img src="'+'img/'+next+'.png">'; }
+    
+}
 
-function checkLength(){
+function checkLength() {
 if(queue.length > 4){
 //Disable all Buttons while Queue is bigger than 5
     $('#bt1').addClass('ui-disabled');
@@ -101,44 +105,83 @@ if(queue.length > 4){
     $('#bt6').removeClass('ui-disabled');
     $('#bt7').removeClass('ui-disabled');
 }
-};
+}
 
-function inverseControl(){
+function inverseControl() {
     send(ip+"###inverseControl");
-};
+}
 
-function leftFreeze(){
-    send(ip+"###freezeRight");
-};
-
-function rightFreeze(){
+function leftFreeze() {
     send(ip+"###freezeLeft");
-};
+}
+
+function rightFreeze() {
+    send(ip+"###freezeRight");
+}
 
 function rotateFreeze(){
     send(ip+"###freezeRotate");
-};
+}
 
-function speedUp(){
+function speedUp() {
     send(ip+"###speedUp");
-};
+}
 
-function invisBlock(){
+function invisBlock() {
     send(ip+"###makeBlockInvisible");
-};
+}
 
-function noPoints(){
+function noPoints() {
     send(ip+"###noPoints");
-};
+}
 
-function superBlock(){
+function superBlock() {
     send(ip+"###orderSuperBlock");
-};
+}
 
-function rainOfBlocks(){
+function rainOfBlocks() {
     send(ip+"###orderRainOfBlocks");
-};
+}
 
-function callThunder(){
+function callThunder() {
     send(ip+"###orderThunder");
-};
+}
+
+function unlockFreezeRight() {
+$('#frzRight').removeClass('ui-disabled');
+}
+
+function unlockFreezeLeft() {
+$('#frzLeft').removeClass('ui-disabled');
+}
+
+function unlockFreezeRotate() {
+$('#frzRotate').removeClass('ui-disabled');
+}
+
+function unlockNoPts() {
+$('#noPts').removeClass('ui-disabled');
+}
+
+function unlockInvControl() {
+$('#invControl').removeClass('ui-disabled');
+}
+
+function unlockInvisBlock() {
+$('#invBlock').removeClass('ui-disabled');
+}
+
+function unlockSpdUp() {
+$('#spdUp').removeClass('ui-disabled');
+}
+
+function disableSkills(){
+console.log("Skills disabled. As asked.");
+$('#frzRight').addClass('ui-disabled');
+$('#frzLeft').addClass('ui-disabled');
+$('#frzRotate').addClass('ui-disabled');
+$('#noPts').addClass('ui-disabled');
+$('#invControl').addClass('ui-disabled');
+$('#invBlock').addClass('ui-disabled');
+$('#spdUp').addClass('ui-disabled');
+}
