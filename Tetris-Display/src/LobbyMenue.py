@@ -24,7 +24,7 @@ class LobbyMenue(object):
         self.rdyPlayer = [False,False,False,False]
         self.rectNodPlayerArr = [None,None,None,None]
         self.connectedPlayers = 0
-        self.oldPos = None
+        self.whoToSwap = -1
         self.playstyleModus = ""
         self.modus = modus
         if(self.modus==2):
@@ -148,19 +148,10 @@ class LobbyMenue(object):
             self.forthPlayer.addText(self.player[3])
             
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer,self.forthPlayer]
-#----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            self.firstPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.firstPlayer, self.onMouseDown)
-            self.firstPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.firstPlayer, self.onMouseMove)
-            self.firstPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.firstPlayer, self.onMouseUp)
-            self.secondPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.secondPlayer, self.onMouseDown)
-            self.secondPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.secondPlayer, self.onMouseMove)
-            self.secondPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.secondPlayer, self.onMouseUp)
-            self.thirdPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.thirdPlayer, self.onMouseDown)
-            self.thirdPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.thirdPlayer, self.onMouseMove)
-            self.thirdPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.thirdPlayer, self.onMouseUp)
-            self.forthPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.forthPlayer, self.onMouseDown)
-            self.forthPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.forthPlayer, self.onMouseMove)
-            self.forthPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.forthPlayer, self.onMouseUp)
+            
+            self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.firstPlayer,  self.onClick )
+            self.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.secondPlayer,  self.onClick )
+            self.thirdPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.thirdPlayer,  self.onClick )
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,13 +174,10 @@ class LobbyMenue(object):
             self.secondPlayer.addText(self.player[1])
             
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer]
-#----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            self.firstPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.firstPlayer, self.onMouseDown)
-            self.firstPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.firstPlayer, self.onMouseMove)
-            self.firstPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.firstPlayer, self.onMouseUp)
-            self.secondPlayer.connectEventHandler(avg.CURSORDOWN,avg.TOUCH, self.secondPlayer, self.onMouseDown)
-            self.secondPlayer.connectEventHandler(avg.CURSORMOTION,avg.TOUCH, self.secondPlayer, self.onMouseMove)
-            self.secondPlayer.connectEventHandler(avg.CURSORUP,avg.TOUCH, self.secondPlayer, self.onMouseUp)
+            
+            self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.firstPlayer,  self.onClick )
+            self.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.secondPlayer,  self.onClick )
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------      
             
         else:
@@ -221,55 +209,106 @@ class LobbyMenue(object):
             
             self.rectNodPlayerArr = [self.firstPlayer,self.secondPlayer,self.thirdPlayer]
             
-#----Eventhandler fuer player swap ------------------------------------------------------------------------------------------------------------------------------------------------------
-            ui.DragRecognizer(eventNode = self.firstPlayer, eventSource = avg.TOUCH , moveHandler = self.onMove, friction = 4, upHandler = self.swapPlayer)
+            self.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.firstPlayer,  self.onClick )
+            self.secondPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.secondPlayer,  self.onClick )
+            self.thirdPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.thirdPlayer,  self.onClick )
+            self.forthPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH,self.forthPlayer,  self.onClick )
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    def onMove(self, event, offset):
-        node = event.node
-        if self.oldPos != None:
-            node.pos = node.pos + offset
+ 
+    def onClick(self,event):
+        if(self.whoToSwap == -1):
+            if(self.modus == 2):
+                if(event.node == self.firstPlayer):
+                    self.whoToSwap = 0
+                elif(event.node == self.secondPlayer):
+                    self.whoToSwap = 1
+                else:
+                    raise SyntaxError ("Wtf")
+                
+            elif(self.modus == 3):
+                if(event.node == self.firstPlayer):
+                    self.whoToSwap = 0
+                elif(event.node == self.secondPlayer):
+                    self.whoToSwap = 1
+                elif(event.node == self.thirdPlayer):
+                    self.whoToSwap = 2
+                else:
+                    raise SyntaxError ("Wtf")
+                
+            elif(self.modus == 4):
+                if(event.node == self.firstPlayer):
+                    self.whoToSwap = 0
+                elif(event.node == self.secondPlayer):
+                    self.whoToSwap = 1
+                elif(event.node == self.thirdPlayer):
+                    self.whoToSwap = 2
+                elif(event.node == self.forthPlayer):
+                    self.whoToSwap = 3
+                else:
+                    raise SyntaxError ("Wtf")
+            else:
+                raise SyntaxError ("Wtf")
         else:
-            self.oldPos = node.pos
-
-    def onUp(self, event, offset):
-        print "UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
-        node = event.node
-        print node
-        if self.oldPos != None:
-            self.swapPlayer(node.pos)
-            node.pos = self.oldPos
-            print self.oldPos
-            self.oldPos = None
+            if(self.modus == 2):
+                if(event.node == self.firstPlayer):
+                    self.swapPlayer(self.whoToSwap, 0)
+                    self.whoToSwap = -1
+                elif(event.node == self.secondPlayer):
+                    self.swapPlayer(self.whoToSwap, 1)
+                    self.whoToSwap = -1
+                else:
+                    raise SyntaxError ("Wtf")
+                
+            elif(self.modus == 3):
+                if(event.node == self.firstPlayer):
+                    self.swapPlayer(self.whoToSwap, 0)
+                    self.whoToSwap = -1
+                elif(event.node == self.secondPlayer):
+                    self.swapPlayer(self.whoToSwap, 1)
+                    self.whoToSwap = -1
+                elif(event.node == self.thirdPlayer):
+                    self.swapPlayer(self.whoToSwap, 2)
+                    self.whoToSwap = -1
+                else:
+                    raise SyntaxError ("Wtf")
+                
+            elif(self.modus == 4):
+                if(event.node == self.firstPlayer):
+                    self.swapPlayer(self.whoToSwap, 0)
+                    self.whoToSwap = -1
+                elif(event.node == self.secondPlayer):
+                    self.swapPlayer(self.whoToSwap, 1)
+                    self.whoToSwap = -1
+                elif(event.node == self.thirdPlayer):
+                    self.swapPlayer(self.whoToSwap, 2)
+                    self.whoToSwap =-1
+                elif(event.node == self.forthPlayer):
+                    self.swapPlayer(self.whoToSwap, 3)
+                    self.whoToSwap = -1
+                else:
+                    raise SyntaxError ("Wtf")
+            else:
+                raise SyntaxError ("Wtf")
         
-#         if(self.modus == 4):
-#             if(node != self.firstPlayer):
-#                 self.firstPlayer.sensitive = True
-#             if(node != self.secondPlayer):
-#                 self.secondPlayer.sensitive = True
-#             if(node != self.thirdPlayer):
-#                 self.thirdPlayer.sensitive = True
-#             if(node != self.forthPlayer):
-#                 self.forthPlayer.sensitive = True
-#         elif(self.modus == 3):
-#             if(node != self.firstPlayer):
-#                 self.firstPlayer.sensitive = True
-#             if(node != self.secondPlayer):
-#                 self.secondPlayer.sensitive = True
-#             if(node != self.thirdPlayer):
-#                 self.thirdPlayer.sensitive = True
-#         elif(self.modus == 2):
-#             if(node != self.firstPlayer):
-#                 self.firstPlayer.sensitive = True
-#             if(node != self.secondPlayer):
-#                 self.secondPlayer.sensitive = True
-
+        
+        
        
-    def swapPlayer(self,event, offset):
-        print "test"
-        pass#TODO:
-#         if(self.modus == 4):
-#             if((self.firstPlayer.pos[0]+self.firstPlayer.size[0]))
+    def swapPlayer(self,x, y ):# angefangen bei 0 bis 3
+        if(x == y):
+            pass
+        else:
+            tmp = self.player[x]
+            self.player[x] = self.player[y]
+            self.player[y] = tmp
+            
+            tmp = self.playerIP[x]
+            self.playerIP[x] = self.playerIP[y]
+            self.playerIP[y] = tmp
+            self.rdyPlayer = [False,False,False,False]
+            
+            self.rectNodPlayerArr[x].updateTextNode(self.player[x])
+            self.rectNodPlayerArr[y].updateTextNode(self.player[y])
+            self.gui.sendMsgToAll("notRdy")
     
     def playerNotRdyAnylonge(self,ip):
         i = 0
@@ -347,9 +386,13 @@ class LobbyMenue(object):
         if(self.connectedPlayers+1>self.modus):
             raise SyntaxError("Mehr Spieler als erlaubt; updateJoinedPlayerNumber")
         else:
-            self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers+1)+"/"+ str(self.modus))
-            self.player[self.connectedPlayers] = name
-            (self.rectNodPlayerArr[self.connectedPlayers]).updateTextNode(name)
-            self.playerIP[self.connectedPlayers] = ip
-            self.connectedPlayers+=1
+            i = 0
+            for i in range (self.modus):
+                if(self.playerIP[i] == ""):
+                    self.numberPlayers.updateTextForLobbyLine( "Players connected:", str(self.connectedPlayers+1)+"/"+ str(self.modus))
+                    self.player[i] = name
+                    (self.rectNodPlayerArr[i]).updateTextNode(name)
+                    self.playerIP[i] = ip
+                    self.connectedPlayers+=1
+                    break
             

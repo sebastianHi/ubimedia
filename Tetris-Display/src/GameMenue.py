@@ -158,65 +158,15 @@ class GameMenue(object):
         self.defenderSkillsField2 = DefenderSkills(self.field2, self.player)
         
         self.playSound("gameStart")
-        self.SkillActivator = self.player.setInterval(10000, self.activateOneSkill)
+        if(self.gui.lobbyMenu.modus != 2):
+            self.SkillActivator = self.player.setInterval(10000, self.activateOneSkill)
         
         
         #print "Tetrisfeldbegrenzungen:   lF1:",self.xstartFeld1,"  rF1: ",self.xendFeld1,"   lF1F2: ",self.xstartFeld2,"  rF2:  ",self.xendFeld2,"  yO: ", self.yOben," yU: ", self.yUnten
         #print "Ein Feld:  Blocksize:  ", self.blocksize, "    Hoehe:   ", self.tetrishoehe, "    Breite:  ", self.xendFeld1-self.xstartFeld1
 #buttoms werden initialisiert
         
-#-------------------------------------------------------------Tests UPDOWNROTATE---loeschbar spaeter----------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        self.buttonMoveL = TextRectNode(parent = self.divNodeGameMenue, 
-                                       pos = (self.divNodeGameMenue.size[0]*0.05,self.divNodeGameMenue.size[1] * 0.9),
-                                       fillcolor ="000000",
-                                       fillopacity=1,
-                                       color = "000000",
-                                       size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
-        self.buttonMoveL.addTextGameTypeAndMain("L","FFFFFF")
-        
-        self.buttonRotateL = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.3,self.divNodeGameMenue.size[1] * 0.9),
-                                   fillcolor ="000000",
-                                   fillopacity=1,
-                                   color = "000000",
-                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
-        self.buttonRotateL.addTextGameTypeAndMain("RL","FFFFFF")
-        
-        self.buttonRotateR = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.6,self.divNodeGameMenue.size[1] * 0.9),
-                                   fillcolor ="000000",
-                                   fillopacity=1,
-                                   color = "000000",
-                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
-        self.buttonRotateR.addTextGameTypeAndMain("RR","FFFFFF")
-        
-        self.buttonMoveR = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.9,self.divNodeGameMenue.size[1] * 0.9),
-                                   fillcolor ="000000",
-                                   fillopacity=1,
-                                   color = "000000",
-                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
-        self.buttonMoveR.addTextGameTypeAndMain("R","FFFFFF")
-        
-        self.buttonSpeed = TextRectNode(parent = self.divNodeGameMenue, 
-                                   pos = (self.divNodeGameMenue.size[0]*0.45,self.divNodeGameMenue.size[1] * 0.9),
-                                   fillcolor ="000000",
-                                   fillopacity=1,
-                                   color = "000000",
-                                   size = avg.Point2D(self.divNodeGameMenue.size[0]*0.1,self.divNodeGameMenue.size[1]*0.1))
-        self.buttonSpeed.addTextGameTypeAndMain("SD","FFFFFF")
-        
-        self.buttonMoveL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveL, self.eventMoveLinks) 
-        self.buttonRotateL.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateL, self.eventRotateLinks) 
-        self.buttonRotateR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonRotateR, self.eventRotateRechts) 
-        self.buttonMoveR.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonMoveR, self.eventMoveRechts)
-        self.buttonSpeed.connectEventHandler(avg.CURSORDOWN, avg.MOUSE, self.buttonSpeed, self.eventSpeedDown )
+
 
     def eventMoveLinks(self,event):
         self.field1.moveLeft()
@@ -285,7 +235,6 @@ class GameMenue(object):
                 if(self.round > 5):
                     self.field1.clearForNextRound()
                     self.player.clearInterval(self.timeLimitCounter)
-                    
                     self.endeSpiel()
                 else:
                     self.roundNumber.text = str(self.round)
@@ -327,7 +276,8 @@ class GameMenue(object):
                     winner = "Team 1 gewinnt"
                 elif(scoreTeam1 < scoreTeam2):
                     winner = "Team 2 gewinnt"
-            self.player.clearInterval(self.SkillActivator)
+            if(self.gui.lobbyMenu.modus != 2):
+                self.player.clearInterval(self.SkillActivator)
             self.alreadyFinished = True
             self.field1.gravityPausieren()
             self.field2.gravityPausieren()
@@ -385,12 +335,12 @@ class GameMenue(object):
         
     def turnSoundOff(self, event):
         text = self.optionMenu.buttonSound.getTextNode().text
-        if(text == "Sound:  An"):
+        if(text == "Sound:  ON"):
             self.deactivateSound()
-            self.optionMenu.buttonSound.updateTextNode("Sound:  Aus")
+            self.optionMenu.buttonSound.updateTextNode("Sound:  OFF")
         else:
             self.activateSound()
-            self.optionMenu.buttonSound.updateTextNode("Sound:  An")
+            self.optionMenu.buttonSound.updateTextNode("Sound:  ON")
 
     def activateOneSkill(self): #schaltet nach 2 minuten einen cooldown fuer den Angreifer frei
         print "ICH BIN FREI"

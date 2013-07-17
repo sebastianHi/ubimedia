@@ -52,9 +52,6 @@ class Gui(AVGApp):
         self.lobbyMenu = LobbyMenue(self.rootNode, self.modus,self,self.gtype) 
         self.lobbyMenu.backButton.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.backButton, self.backToType)
         
-#-------------------------------ZUM TESTEN ------------------------------------------------------------------------------------------------------------------------------------
-        #TODO: Zum Testen self.lobbyMenu.firstPlayer.connectEventHandler(avg.CURSORDOWN, avg.TOUCH, self.lobbyMenu.firstPlayer, self.test)   
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         self.mainMenu.divNodeMainMenue.active = False 
         self.lobbyMenu.divNodelobbyMenue.active = True 
         self.zustand = 1
@@ -179,7 +176,7 @@ class Gui(AVGApp):
         if((befehl == "moveLeft") | (befehl == "moveRight") | (befehl == "RotateR") | (befehl == "RotateL") | (befehl == "speedDown")):
             pass 
         else:
-            print "befehl: ",befehl,"   ip: ",ip
+            print "befehl: ",befehl,"   ip: ",ip,"  ", self.zustand
 ##eigentlicher eventhander mit befehl:
 #----------------------Anmeldung Des Clients-------------------------------
         if((befehl[0:9]== 'nickname:' )& (self.zustand == 1)):
@@ -416,14 +413,7 @@ class Gui(AVGApp):
             else:
                 raise SyntaxError(" Falscher spieler wollte defender skill ausfuehren")     
             
-#-------------------------------------------------MenuesOffSwitches-----------------------------------------------------------------------------------------------------------------------
-
-    
-    def test(self, event):  ## <<-----------------loeschbar nur zum gamestart mit mausklick
-        self.initGame()
-        self.zumtestenaberloeschbar = False
-    
-    
+   
 #----------------------------------------------------------EventHandlerButtoms----------------------------------------------------------------------------------------------------------
     
     def onClickMain1v1(self, event):
@@ -450,6 +440,7 @@ class Gui(AVGApp):
         self.lobbyMenu.divNodelobbyMenue.active = False
         self.typeMenu.divNodeTypeMenue.active = True
         for ip in self.ipStorage.getAllCurrentConnections():
+            ipStorage.updateAll("DISC_CLNT")
             self.ipStorage.dropConnection(ip)
         
     def backToMenue(self, event):

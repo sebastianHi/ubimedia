@@ -14,6 +14,7 @@ class Field(object):
         else:
             self.feldScore = self.gameMenue.scoreTeam2
         self.countBlocks = 0
+        
         self.inverseSteuerung = False
         self.freezeLeft = False
         self.freezeRight = False
@@ -24,6 +25,7 @@ class Field(object):
         self.thunderActivated = False
         self.tetrisRainActivated = False
         self.noMoneyForYou = False
+        
         self.rainDropCount = 0
         self.player = player
         self.speed = self.gameMenue.speed[0]
@@ -67,7 +69,7 @@ class Field(object):
                 else:
                     if(self.gameMenue.field1.countBlocks < self.countBlocks):
                         self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[2], "dropBlock")
-            else:
+            elif(self.gui.lobbyMenu.modus == 4):
                 if(id == 1):
                     self.gui.sendMsgToOne(self.gui.lobbyMenu.playerIP[3], "dropBlock")
                 else:
