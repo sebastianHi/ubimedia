@@ -153,15 +153,13 @@ function invisBlock() {
 function noPoints() {
     send(ip+"###noPoints");
     $('#noPts').addClass('ui-disabled');
-    $('#blockrain').addClass('ui-disabled');
-    $('#supblock').addClass('ui-disabled');
     disableSkills();
     kuhldown = true;
 };
 
 function superBlock() {
     if (solo) {
-     $('#noPts').addClass('ui-disabled');
+     $('#thunderstruck').addClass('ui-disabled');
     $('#blockrain').addClass('ui-disabled');
     $('#supblock').addClass('ui-disabled');
     spezkuhldown = true;
@@ -171,7 +169,7 @@ function superBlock() {
 
 function rainOfBlocks() {
     if (solo) {
-    $('#noPts').addClass('ui-disabled');
+    $('#thunderstruck').addClass('ui-disabled');
     $('#blockrain').addClass('ui-disabled');
     $('#supblock').addClass('ui-disabled');
     spezkuhldown = true;
@@ -181,7 +179,7 @@ function rainOfBlocks() {
 
 function callThunder() {
     if (solo) {
-    $('#noPts').addClass('ui-disabled');
+    $('#thunderstruck').addClass('ui-disabled');
     $('#blockrain').addClass('ui-disabled');
     $('#supblock').addClass('ui-disabled');
     spezkuhldown = true;
