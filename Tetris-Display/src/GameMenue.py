@@ -124,7 +124,7 @@ class GameMenue(object):
          
         self.scoreTeam1 = avg.WordsNode(pos = ((self.xstartFeld1 + self.xendFeld1)/2 , self.divNodeGameMenue.size[1] * 0.94),
                                       fontsize = 0.035*self.divNodeGameMenue.size[1], 
-                                      text ="Score :   0", 
+                                      text ="Score :   100", 
                                       parent = self.divNodeGameMenue, 
                                       color = "F0F0F0", font = "arial", 
                                       alignment = "center",
@@ -132,7 +132,7 @@ class GameMenue(object):
           
         self.scoreTeam2 = avg.WordsNode(pos = ((self.xstartFeld2 + self.xendFeld2)/2 , self.divNodeGameMenue.size[1] * 0.94),
                                       fontsize = 0.035*self.divNodeGameMenue.size[1], 
-                                      text ="Score :   0",  
+                                      text ="Score :   100",  
                                       parent = self.divNodeGameMenue, 
                                       color = "F0F0F0", font = "arial", 
                                       alignment = "center",
