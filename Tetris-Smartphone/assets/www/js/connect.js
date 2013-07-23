@@ -19,6 +19,8 @@ function buildHost() {
     sock.onclose = function (e) {
         console.log("connection closed (" + e.code + ")");
         document.getElementById('connection').innerHTML += '<p>connection closed (' + e.code + ')';
+        ip = null;
+        $.mobile.changePage("connect.html");
        
     };
     sock.onmessage = function (e) {
