@@ -12,7 +12,8 @@ from autobahn.websocket import WebSocketServerFactory,WebSocketServerProtocol, l
 import sys,thread 
 
 class Gui(AVGApp):
-
+    multitouch = True
+    
     def init(self):
 
 ############################################################
