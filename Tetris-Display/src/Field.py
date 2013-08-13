@@ -7,7 +7,7 @@ class Field(object):
     def __init__(self, xWertLinksOben, xWertRechtsOben, yWertOben, yWertUnten, blocksize, player,gameMenue, idd, gui):
         self.gui = gui
         self.id = idd
-        self.score = 100
+        self.score = 0
         self.gameMenue = gameMenue
         if(xWertLinksOben <= (self.gameMenue.divNodeGameMenue.size[0]/2)):
             self.feldScore = self.gameMenue.scoreTeam1
